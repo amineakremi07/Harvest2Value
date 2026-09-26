@@ -1,0 +1,61 @@
+{
+  "producer": {
+    "id": "prod_tn_001",
+    "name": "Cooperative Oliviere Sfax",
+    "region": "Sfax",
+    "country": "Tunisia",
+    "harvest_kg": 12000,
+    "storage_capacity_kg": 4000,
+    "storage_cost_per_kg_per_day": 0.03,
+    "shelf_life_days": 45
+  },
+  "crop": {
+    "name": "olives",
+    "type": "semi_perishable",
+    "unit": "kg"
+  },
+  "buyers": [
+    {
+      "id": "buyer_tn_01",
+      "name": "Huilerie Sfax Export",
+      "location": "Sfax",
+      "max_demand_kg": 5000,
+      "price_per_kg": 2.4,
+      "distance_km": 12,
+      "transport_cost_per_kg_per_km": 0.004
+    },
+    {
+      "id": "buyer_tn_02",
+      "name": "Marche Central Tunis",
+      "location": "Tunis",
+      "max_demand_kg": 3500,
+      "price_per_kg": 2.1,
+      "distance_km": 270,
+      "transport_cost_per_kg_per_km": 0.0035
+    },
+    {
+      "id": "buyer_tn_03",
+      "name": "Cooperative Export Sousse",
+      "location": "Sousse",
+      "max_demand_kg": 4000,
+      "price_per_kg": 2.25,
+      "distance_km": 140,
+      "transport_cost_per_kg_per_km": 0.0038
+    },
+    {
+      "id": "buyer_tn_04",
+      "name": "EU Import Consortium",
+      "location": "Port de Radès",
+      "max_demand_kg": 6000,
+      "price_per_kg": 2.9,
+      "distance_km": 260,
+      "transport_cost_per_kg_per_km": 0.005
+    }
+  ],
+  "logistics": {
+    "available_vehicles": 3,
+    "vehicle_capacity_kg": 3000,
+    "refrigerated_required": false,
+    "road_condition": "fair"
+  }
+}

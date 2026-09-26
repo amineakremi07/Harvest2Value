@@ -1,0 +1,61 @@
+{
+  "producer": {
+    "id": "prod_sn_001",
+    "name": "Cooperative Maraichere Niayes",
+    "region": "Niayes",
+    "country": "Senegal",
+    "harvest_kg": 8000,
+    "storage_capacity_kg": 1500,
+    "storage_cost_per_kg_per_day": 0.06,
+    "shelf_life_days": 7
+  },
+  "crop": {
+    "name": "tomatoes",
+    "type": "perishable",
+    "unit": "kg"
+  },
+  "buyers": [
+    {
+      "id": "buyer_sn_01",
+      "name": "Marche Sandaga Dakar",
+      "location": "Dakar",
+      "max_demand_kg": 3000,
+      "price_per_kg": 0.55,
+      "distance_km": 45,
+      "transport_cost_per_kg_per_km": 0.006
+    },
+    {
+      "id": "buyer_sn_02",
+      "name": "Usine Concentre SOCAS",
+      "location": "Savoigne",
+      "max_demand_kg": 4000,
+      "price_per_kg": 0.38,
+      "distance_km": 20,
+      "transport_cost_per_kg_per_km": 0.005
+    },
+    {
+      "id": "buyer_sn_03",
+      "name": "Grossiste Thies",
+      "location": "Thies",
+      "max_demand_kg": 2500,
+      "price_per_kg": 0.48,
+      "distance_km": 70,
+      "transport_cost_per_kg_per_km": 0.0065
+    },
+    {
+      "id": "buyer_sn_04",
+      "name": "Export Sous-Regional CEDEAO",
+      "location": "Port de Dakar",
+      "max_demand_kg": 2000,
+      "price_per_kg": 0.62,
+      "distance_km": 50,
+      "transport_cost_per_kg_per_km": 0.007
+    }
+  ],
+  "logistics": {
+    "available_vehicles": 2,
+    "vehicle_capacity_kg": 2000,
+    "refrigerated_required": true,
+    "road_condition": "poor"
+  }
+}
