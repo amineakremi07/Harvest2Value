@@ -1,0 +1,61 @@
+{
+  "producer": {
+    "id": "prod_tn_002",
+    "name": "Groupement de Développement Agricole Djerid",
+    "region": "Tozeur",
+    "country": "Tunisia",
+    "harvest_kg": 18000,
+    "storage_capacity_kg": 10000,
+    "storage_cost_per_kg_per_day": 0.02,
+    "shelf_life_days": 180
+  },
+  "crop": {
+    "name": "deglet_nour_dates",
+    "type": "durable",
+    "unit": "kg"
+  },
+  "buyers": [
+    {
+      "id": "buyer_tn_d01",
+      "name": "Exportateur Dattes Tozeur Bio",
+      "location": "Tozeur",
+      "max_demand_kg": 6000,
+      "price_per_kg": 6.5,
+      "distance_km": 15,
+      "transport_cost_per_kg_per_km": 0.003
+    },
+    {
+      "id": "buyer_tn_d02",
+      "name": "Conditionnement & Export Radès",
+      "location": "Port de Radès",
+      "max_demand_kg": 8000,
+      "price_per_kg": 7.8,
+      "distance_km": 450,
+      "transport_cost_per_kg_per_km": 0.0035
+    },
+    {
+      "id": "buyer_tn_d03",
+      "name": "Marché de Gros Bir El Kassâa",
+      "location": "Tunis",
+      "max_demand_kg": 5000,
+      "price_per_kg": 5.2,
+      "distance_km": 430,
+      "transport_cost_per_kg_per_km": 0.0032
+    },
+    {
+      "id": "buyer_tn_d04",
+      "name": "Grossiste Fruits Secs Sfax",
+      "location": "Sfax",
+      "max_demand_kg": 4000,
+      "price_per_kg": 5.8,
+      "distance_km": 210,
+      "transport_cost_per_kg_per_km": 0.0033
+    }
+  ],
+  "logistics": {
+    "available_vehicles": 4,
+    "vehicle_capacity_kg": 5000,
+    "refrigerated_required": false,
+    "road_condition": "good"
+  }
+}
