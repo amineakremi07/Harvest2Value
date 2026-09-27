@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   AlertTriangle,
-  Bot,
   Loader2,
-  Send,
   Wheat,
   Warehouse,
   TrendingUp,
@@ -17,6 +15,7 @@ import AllocationTable from "@/app/components/AllocationTable";
 import RiskGauge, { RISK_CONFIG, getRiskLevel, getWasteRatio } from "@/app/components/RiskGauge";
 import FlowChart from "@/app/components/FlowChart";
 import SankeyChart from "@/app/components/SankeyChart";
+import UnifiedChat from "@/app/components/UnifiedChat";
 import {
   ApiError,
   MOCK_OPTIMIZE_RESPONSE,
@@ -26,6 +25,12 @@ import {
 } from "@/app/lib/api";
 
 type LoadStatus = "idle" | "loading" | "success" | "error";
+
+/** Matches MOCK_OPTIMIZE_RESPONSE so the demo plan and its dataset agree. */
+const DEMO_INPUT: HarvestInputValues = {
+  harvest_kg: MOCK_OPTIMIZE_RESPONSE.total_harvest_kg,
+  storage_capacity_kg: MOCK_OPTIMIZE_RESPONSE.stored_kg,
+};
 
 /**
  * HarvestInput only collects harvest_kg/storage_capacity_kg — buyers are
@@ -118,159 +123,10 @@ function KpiCard({
   );
 }
 
-interface ChatMessage {
-  id: number;
-  role: "assistant" | "user";
-  text: string;
-}
-
-const INITIAL_MESSAGES: ChatMessage[] = [
-  {
-    id: 1,
-    role: "assistant",
-    text: "Hello! I am your Dark Eco AI assistant. Ask me anything about your harvest allocations, transport routes, or what-if scenarios (e.g., \u201cWhat if buyer prices drop by 10%?\u201d).",
-  },
-  {
-    id: 2,
-    role: "user",
-    text: "What if buyer prices drop by 10%?",
-  },
-];
-
-const QUICK_PROMPTS = [
-  { emoji: "\u{1F4A1}", label: "Explain Allocation", prompt: "Explain this allocation." },
-  { emoji: "\u{1F4C9}", label: "Price Drop -10%", prompt: "What if buyer prices drop by 10%?" },
-  { emoji: "\u{1F69B}", label: "Optimize Routes", prompt: "How can I optimize transport routes?" },
-] as const;
-
-/**
- * Chat shell only. Answering a question means calling /api/v1/scenario and
- * /api/v1/explain through Member 3's `UnifiedChat.tsx`, which doesn't exist
- * yet — so sending a message echoes it into the feed and replies with a
- * stub. Swap `PENDING_REPLY` for the real call once that component lands.
- */
-const PENDING_REPLY =
-  "The assistant backend isn't wired up yet \u2014 @Member3's UnifiedChat.tsx will answer this against /api/v1/scenario and /api/v1/explain.";
-
-function AssistantCard() {
-  const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
-  const [draft, setDraft] = useState("");
-  const feedRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const feed = feedRef.current;
-    if (feed) {
-      feed.scrollTop = feed.scrollHeight;
-    }
-  }, [messages]);
-
-  function sendMessage(text: string) {
-    const trimmed = text.trim();
-    if (!trimmed) return;
-
-    setMessages((prev) => {
-      const nextId = prev.length > 0 ? prev[prev.length - 1].id + 1 : 1;
-      return [
-        ...prev,
-        { id: nextId, role: "user", text: trimmed },
-        { id: nextId + 1, role: "assistant", text: PENDING_REPLY },
-      ];
-    });
-    setDraft("");
-  }
-
-  return (
-    <section
-      className={`${card} flex h-full min-h-[420px] flex-col`}
-      aria-labelledby="assistant-heading"
-    >
-      {/* Header */}
-      <div className="mb-3 flex items-center justify-between gap-3 border-b border-slate-200 dark:border-[#1E293B] pb-3">
-        <div className="flex items-center gap-2 text-[#64748B] dark:text-slate-400">
-          <Bot className="h-4 w-4 text-[#059669] dark:text-[#10B981]" aria-hidden="true" />
-          <h2 id="assistant-heading" className="text-xs font-semibold uppercase tracking-wider">
-            AI Assistant
-          </h2>
-        </div>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-[#059669]/30 dark:border-[#10B981]/30 bg-[#059669]/10 dark:bg-[#10B981]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#059669] dark:text-[#10B981]">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#059669] dark:bg-[#10B981]" aria-hidden="true" />
-          Online
-        </span>
-      </div>
-
-      {/* Message feed */}
-      <div
-        ref={feedRef}
-        role="log"
-        aria-live="polite"
-        aria-label="Chat history"
-        className="flex-1 space-y-3 overflow-y-auto rounded-lg border border-slate-200 dark:border-[#1E293B] bg-[#F8FAFC]/60 dark:bg-[#0B101D]/60 p-4"
-      >
-        {messages.map((message) => {
-          const isUser = message.role === "user";
-          return (
-            <div key={message.id} className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
-              <p
-                className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed ${
-                  isUser
-                    ? "bg-[#E2E8F0] dark:bg-[#1E293B] text-[#0F172A] dark:text-white"
-                    : "border border-slate-200 dark:border-[#1E293B] bg-white dark:bg-[#131B2E] text-[#334155] dark:text-slate-300"
-                }`}
-              >
-                {message.text}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Quick prompt chips */}
-      <div className="mt-3 flex flex-wrap gap-2">
-        {QUICK_PROMPTS.map(({ emoji, label, prompt }) => (
-          <button
-            key={label}
-            type="button"
-            onClick={() => sendMessage(prompt)}
-            className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-slate-200 dark:border-[#1E293B] bg-[#F8FAFC] dark:bg-[#0B101D] px-3 py-1.5 text-xs font-semibold text-[#334155] dark:text-slate-300 hover:border-[#059669]/50 dark:hover:border-[#10B981]/50 hover:text-[#0F172A] dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-[#059669] dark:focus:ring-[#10B981]"
-          >
-            <span aria-hidden="true">{emoji}</span>
-            <span>{label}</span>
-          </button>
-        ))}
-      </div>
-
-      {/* Input row */}
-      <form
-        className="mt-3 flex items-center gap-2"
-        onSubmit={(event) => {
-          event.preventDefault();
-          sendMessage(draft);
-        }}
-      >
-        <input
-          type="text"
-          value={draft}
-          onChange={(event) => setDraft(event.target.value)}
-          placeholder="Type a question or what-if scenario..."
-          aria-label="Ask the assistant a question"
-          className="min-h-[44px] flex-1 rounded-lg border border-slate-200 dark:border-[#1E293B] bg-[#F8FAFC] dark:bg-[#0B101D] px-4 text-sm text-[#0F172A] dark:text-white placeholder:text-[#94A3B8] dark:placeholder:text-slate-500 focus:border-[#059669] dark:focus:border-[#10B981] focus:outline-none focus:ring-1 focus:ring-[#059669] dark:focus:ring-[#10B981]"
-        />
-        <button
-          type="submit"
-          disabled={draft.trim().length === 0}
-          aria-label="Send message"
-          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#059669] dark:bg-[#10B981] text-white dark:text-black hover:bg-emerald-700 dark:hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 dark:focus:ring-emerald-300 disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          <Send className="h-4 w-4" aria-hidden="true" />
-        </button>
-      </form>
-    </section>
-  );
-}
-
 export default function Home() {
   const [status, setStatus] = useState<LoadStatus>("idle");
   const [result, setResult] = useState<OptimizeResponse>(MOCK_OPTIMIZE_RESPONSE);
+  const [dataset, setDataset] = useState<OptimizeRequest>(() => buildOptimizeRequest(DEMO_INPUT));
   const [error, setError] = useState<string | null>(null);
   const [usingDemoData, setUsingDemoData] = useState(true);
 
@@ -279,7 +135,9 @@ export default function Home() {
     setError(null);
 
     try {
-      const response = await optimizeHarvest(buildOptimizeRequest(values));
+      const request = buildOptimizeRequest(values);
+      const response = await optimizeHarvest(request);
+      setDataset(request);
       // TEMP-DIAG
       console.log("[H2V-DIAG] before setResult", { values, total_harvest_kg: response.total_harvest_kg, wasted_kg: response.wasted_kg, stored_kg: response.stored_kg });
       setResult(response);
@@ -291,6 +149,17 @@ export default function Home() {
       setError(message);
       setStatus("error");
     }
+  }
+
+  /**
+   * A What-If answer carries a re-solved plan and the dataset it was solved
+   * on, so the KPIs, table and charts follow the conversation.
+   */
+  function handleScenarioResult(scenarioResult: OptimizeResponse) {
+    setResult(scenarioResult);
+    setUsingDemoData(false);
+    setError(null);
+    setStatus("success");
   }
 
   function useDemoData() {
@@ -387,7 +256,11 @@ export default function Home() {
             <div className="grid grid-cols-12 items-stretch gap-6 lg:min-h-[640px]">
               <div className="col-span-12 flex flex-col gap-6 lg:col-span-7">
                 <AllocationTable result={result} />
-                <AssistantCard />
+                <UnifiedChat
+                  data={dataset}
+                  result={result}
+                  onScenarioResult={handleScenarioResult}
+                />
               </div>
 
               <div className="col-span-12 lg:col-span-5">

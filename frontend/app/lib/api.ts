@@ -2,7 +2,11 @@
 // Types mirror backend/app/models/schemas.py exactly — keep in sync.
 // If a mismatch is found, notify Member 1 (Lead/Backend); do not edit backend files here.
 
-const API_BASE_URL = "http://localhost:8000/api/v1";
+const API_ROOT = (process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000").replace(/\/+$/, "");
+const API_BASE_URL = `${API_ROOT}/api/v1`;
+
+/** Backend origin, exported so the UI can name it in "can't reach the server" copy. */
+export const API_ORIGIN = API_ROOT;
 
 // ---- Request types ----
 
@@ -52,6 +56,18 @@ export interface ScenarioRequest {
   data: Record<string, unknown>;
 }
 
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export interface ChatRequest {
+  message: string;
+  data: Record<string, unknown>;
+  result?: Record<string, unknown> | null;
+  history?: ChatMessage[];
+}
+
 export interface ExplainRequest {
   result: Record<string, unknown>;
   data: Record<string, unknown>;
@@ -87,6 +103,18 @@ export interface ExplainResponse {
   explanation: string;
 }
 
+/**
+ * A general question comes back with `message` only. A What-If also returns
+ * `type: "what_if"` plus the re-solved plan and the dataset it was solved on,
+ * so the dashboard can swap to the new numbers.
+ */
+export interface ChatResponse {
+  message: string;
+  type?: "what_if";
+  result?: OptimizeResponse;
+  data?: Record<string, unknown>;
+}
+
 // ---- Error handling ----
 
 export class ApiError extends Error {
@@ -113,7 +141,7 @@ async function postJson<TResponse>(
     });
   } catch (err) {
     throw new ApiError(
-      `Network error calling ${path} — is the backend running on :8000?`,
+      `Network error calling ${path} — is the backend running at ${API_ROOT}?`,
       undefined,
       err,
     );
@@ -227,4 +255,8 @@ export async function explainAllocation(
     }
     throw err;
   }
+}
+
+export async function sendChatMessage(request: ChatRequest): Promise<ChatResponse> {
+  return postJson<ChatResponse>("/chat", request);
 }
