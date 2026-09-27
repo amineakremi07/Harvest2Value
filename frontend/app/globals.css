@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-navy-deep: #090D16;
+  --color-sidebar-surface: #0B101D;
+  --color-card-surface: #131B2E;
+  --color-card-border: #1E293B;
+  --color-emerald-accent: #10B981;
+  --color-cyan-accent: #06B6D4;
+  --font-sans: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", "Inter", system-ui,
+    sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "Fira Code", "JetBrains Mono", ui-monospace,
+    monospace;
+}
+
+body {
+  background: #090D16;
+  color: #F2F7F3;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
