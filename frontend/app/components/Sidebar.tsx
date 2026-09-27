@@ -8,7 +8,6 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { icon: LayoutDashboard, label: "Dashboard", active: true },
-  ,
 ];
 
 export default function Sidebar() {

@@ -7,7 +7,6 @@ import {
   Waypoints,
   MessageSquareText,
   Lightbulb,
-  Share2,
   Wheat,
   Warehouse,
   TrendingUp,
@@ -17,6 +16,8 @@ import Header from "@/app/components/Header";
 import HarvestInput, { type HarvestInputValues } from "@/app/components/HarvestInput";
 import AllocationTable from "@/app/components/AllocationTable";
 import RiskGauge, { RISK_CONFIG, getRiskLevel, getWasteRatio } from "@/app/components/RiskGauge";
+import FlowChart from "@/app/components/FlowChart";
+import SankeyChart from "@/app/components/SankeyChart";
 import {
   ApiError,
   MOCK_OPTIMIZE_RESPONSE,
@@ -152,6 +153,8 @@ export default function Home() {
 
     try {
       const response = await optimizeHarvest(buildOptimizeRequest(values));
+      // TEMP-DIAG
+      console.log("[H2V-DIAG] before setResult", { values, total_harvest_kg: response.total_harvest_kg, wasted_kg: response.wasted_kg, stored_kg: response.stored_kg });
       setResult(response);
       setUsingDemoData(false);
       setStatus("success");
@@ -248,11 +251,7 @@ export default function Home() {
 
               <div className="space-y-6">
                 <RiskGauge result={result} />
-                <ReservedSlot
-                  icon={Waypoints}
-                  category="Flow Chart"
-                  label="Reserved for @Member4 (FlowChart.tsx)"
-                />
+                <FlowChart result={result} />
               </div>
             </div>
 
@@ -268,11 +267,7 @@ export default function Home() {
                 category="Explanation View"
                 label="Reserved for @Member3 (ExplainView.tsx)"
               />
-              <ReservedSlot
-                icon={Share2}
-                category="Sankey Chart"
-                label="Reserved for @Member4 (SankeyChart.tsx)"
-              />
+              <SankeyChart result={result} />
             </div>
           </div>
         </div>
