@@ -12,7 +12,7 @@ propre ligne. Détails complets dans `.claude/plans/member{N}-*.md`.
 | P5 | NIM REST Client (extraction contraintes + explications) | 1h | @Member1 @Member3 | TODO |
 | P6 | Frontend Dashboard (HarvestInput, AllocationTable, RiskGauge) | 2h | @Member2 | TODO |
 | P7 | What-If Chat & XAI (WhatIfChat, ExplainView, scénarios) | 1h | @Member3 | TODO |
-| P8 | Docker Compose + Viz (Sankey/Flow) + Cleanup + README | 30m | @Member4 | TODO |
+| P8 | Docker Compose + Viz (Sankey/Flow) + Cleanup + README | 30m | @Member4 | DONE |
 
 ## Règles du sprint
 1. **Zéro dérive de périmètre** : chaque membre édite uniquement les fichiers
