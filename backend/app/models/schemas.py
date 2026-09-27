@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Literal, Optional
 from pydantic import BaseModel, Field
 
 
@@ -59,6 +59,18 @@ class ExplainRequest(BaseModel):
     data: Dict[str, Any]
 
 
+class ChatMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str = Field(..., max_length=4000)
+
+
+class ChatRequest(BaseModel):
+    message: str = Field(..., min_length=1, max_length=2000)
+    data: Dict[str, Any]
+    result: Optional[Dict[str, Any]] = None
+    history: List[ChatMessage] = Field(default_factory=list)
+
+
 # ---- Response models ----
 
 class AllocationDetail(BaseModel):
@@ -87,3 +99,12 @@ class OptimizeResponse(BaseModel):
 
 class ExplainResponse(BaseModel):
     explanation: str
+
+
+class ChatResponse(BaseModel):
+    """General answers carry only `message`; a What-If also returns the new plan and the data it was solved on."""
+
+    message: str
+    type: Optional[Literal["what_if"]] = None
+    result: Optional[OptimizeResponse] = None
+    data: Optional[Dict[str, Any]] = None

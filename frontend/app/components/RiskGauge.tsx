@@ -55,6 +55,15 @@ export function getWasteRatio(result: OptimizeResponse): number {
 
 const card = "bg-white dark:bg-[#131B2E] border border-slate-200 dark:border-[#1E293B] rounded-xl p-6";
 
+// Locale-independent "12,000.5" formatting (up to 3 decimals, like en-US) so the
+// server render and client hydration always produce identical text.
+function formatNumber(value: number): string {
+  const rounded = Math.round(value * 1000) / 1000;
+  const [integerPart, fractionPart] = Math.abs(rounded).toString().split(".");
+  const grouped = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return `${rounded < 0 ? "-" : ""}${grouped}${fractionPart ? `.${fractionPart}` : ""}`;
+}
+
 const RADIUS = 54;
 const STROKE_WIDTH = 10;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -66,6 +75,8 @@ export default function RiskGauge({ result }: RiskGaugeProps) {
   const level = getRiskLevel(ratio);
   const config = RISK_CONFIG[level];
   const Icon = config.icon;
+  // TEMP-DIAG
+  console.log("[H2V-DIAG] RiskGauge render", { total_harvest_kg: result.total_harvest_kg, wasted_kg: result.wasted_kg, percent });
 
   const dashOffset = CIRCUMFERENCE * (1 - clampedPercent / 100);
 
@@ -119,14 +130,14 @@ export default function RiskGauge({ result }: RiskGaugeProps) {
           <span>{config.label}</span>
           <span className="sr-only">
             : {percent.toFixed(1)} percent of harvest wasted (
-            {result.wasted_kg.toLocaleString()} kg of {result.total_harvest_kg.toLocaleString()}{" "}
+            {formatNumber(result.wasted_kg)} kg of {formatNumber(result.total_harvest_kg)}{" "}
             kg)
           </span>
         </div>
 
         <p className={`mt-3 text-center font-mono text-sm font-semibold tabular-nums ${config.textColor}`}>
-          {result.wasted_kg.toLocaleString()} kg wasted of{" "}
-          {result.total_harvest_kg.toLocaleString()} kg harvested
+          {formatNumber(result.wasted_kg)} kg wasted of{" "}
+          {formatNumber(result.total_harvest_kg)} kg harvested
         </p>
       </div>
 
