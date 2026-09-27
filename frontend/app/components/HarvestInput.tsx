@@ -18,12 +18,12 @@ type FieldErrors = {
   storage_capacity_kg?: string;
 };
 
-const card = "bg-[#131B2E] border border-[#1E293B] rounded-xl p-6";
+const card = "bg-white dark:bg-[#131B2E] border border-slate-200 dark:border-[#1E293B] rounded-xl p-6";
 
 const fieldBaseClasses =
-  "w-full min-h-[44px] rounded-xl border border-[#1E293B] bg-[#0A140B] px-4 py-3 " +
-  "font-mono text-base tabular-nums text-white placeholder:text-slate-500 " +
-  "focus:border-[#10B981] focus:outline-none focus:ring-2 focus:ring-[#10B981]/40";
+  "w-full min-h-[44px] rounded-xl border border-slate-200 dark:border-[#1E293B] bg-[#F8FAFC] dark:bg-[#0A140B] px-4 py-3 " +
+  "font-mono text-base tabular-nums text-[#0F172A] dark:text-white placeholder:text-[#94A3B8] dark:placeholder:text-slate-500 " +
+  "focus:border-[#059669] dark:focus:border-[#10B981] focus:outline-none focus:ring-2 focus:ring-[#059669]/40 dark:focus:ring-[#10B981]/40";
 
 function FieldLabel({
   icon: Icon,
@@ -35,8 +35,8 @@ function FieldLabel({
   htmlFor: string;
 }) {
   return (
-    <label htmlFor={htmlFor} className="mb-2 flex items-center gap-2 text-sm text-slate-400">
-      <Icon className="h-4 w-4 text-[#10B981]" aria-hidden="true" />
+    <label htmlFor={htmlFor} className="mb-2 flex items-center gap-2 text-sm text-[#64748B] dark:text-slate-400">
+      <Icon className="h-4 w-4 text-[#059669] dark:text-[#10B981]" aria-hidden="true" />
       <span>{label}</span>
     </label>
   );
@@ -45,7 +45,7 @@ function FieldLabel({
 function FieldError({ message }: { message?: string }) {
   if (!message) return null;
   return (
-    <p className="mt-2 flex items-center gap-2 text-xs font-medium text-rose-400" role="alert">
+    <p className="mt-2 flex items-center gap-2 text-xs font-medium text-rose-600 dark:text-rose-400" role="alert">
       <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
       <span>{message}</span>
     </p>
@@ -93,8 +93,8 @@ export default function HarvestInput({ onSubmit }: HarvestInputProps) {
 
   return (
     <div className={card}>
-      <div className="mb-6 flex items-center gap-2 text-slate-400">
-        <Sprout className="h-5 w-5 text-[#10B981]" aria-hidden="true" />
+      <div className="mb-6 flex items-center gap-2 text-[#64748B] dark:text-slate-400">
+        <Sprout className="h-5 w-5 text-[#059669] dark:text-[#10B981]" aria-hidden="true" />
         <span className="text-sm font-semibold uppercase tracking-wider">Harvest Input</span>
       </div>
 
@@ -147,14 +147,14 @@ export default function HarvestInput({ onSubmit }: HarvestInputProps) {
           )}
         </div>
 
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-[#64748B] dark:text-slate-400">
           Optimal buyers are selected automatically by the optimizer — no need to enter them
           yourself.
         </p>
 
         <button
           type="submit"
-          className="inline-flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full bg-[#10B981] px-6 py-4 text-lg font-bold text-black shadow-lg shadow-[#10B981]/20 transition-colors hover:bg-[#059669] focus:outline-none focus:ring-4 focus:ring-[#10B981]/50"
+          className="inline-flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full bg-[#059669] dark:bg-[#10B981] px-6 py-4 text-lg font-bold text-white dark:text-black shadow-lg shadow-[#10B981]/20 transition-colors hover:bg-[#047857] dark:hover:bg-[#059669] focus:outline-none focus:ring-4 focus:ring-[#059669]/50 dark:focus:ring-[#10B981]/50"
         >
           <Play className="h-6 w-6" aria-hidden="true" />
           <span>Run Optimization</span>

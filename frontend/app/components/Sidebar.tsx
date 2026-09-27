@@ -1,4 +1,4 @@
-import { Sprout, LayoutDashboard, FileText, BarChart3, UserCircle2 } from "lucide-react";
+import { Sprout, LayoutDashboard, UserCircle2 } from "lucide-react";
 
 interface NavItem {
   icon: typeof LayoutDashboard;
@@ -8,16 +8,15 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { icon: LayoutDashboard, label: "Dashboard", active: true },
-  ,
 ];
 
 export default function Sidebar() {
   return (
-    <aside className="hidden w-64 shrink-0 flex-col justify-between border-r border-[#1E293B] bg-[#0B101D] p-6 lg:fixed lg:inset-y-0 lg:left-0 lg:flex">
+    <aside className="hidden w-64 shrink-0 flex-col justify-between border-r border-slate-200 dark:border-[#1E293B] bg-white dark:bg-[#0B101D] p-6 lg:fixed lg:inset-y-0 lg:left-0 lg:flex">
       <div>
         <div className="mb-10 flex items-center gap-2">
-          <Sprout className="h-7 w-7 text-[#10B981]" aria-hidden="true" />
-          <span className="text-lg font-bold text-white">Harvest2Value</span>
+          <Sprout className="h-7 w-7 text-[#059669] dark:text-[#10B981]" aria-hidden="true" />
+          <span className="text-lg font-bold text-[#0F172A] dark:text-white">Harvest2Value</span>
         </div>
 
         <nav aria-label="Main navigation">
@@ -27,16 +26,16 @@ export default function Sidebar() {
                 {active ? (
                   <span
                     aria-current="page"
-                    className="flex items-center gap-3 rounded-lg border-l-4 border-[#10B981] bg-[#131B2E] px-3 py-2.5 text-sm font-semibold text-white"
+                    className="flex items-center gap-3 rounded-lg border-l-4 border-[#059669] dark:border-[#10B981] bg-white dark:bg-[#131B2E] px-3 py-2.5 text-sm font-semibold text-[#0F172A] dark:text-white"
                   >
-                    <Icon className="h-5 w-5 text-[#10B981]" aria-hidden="true" />
+                    <Icon className="h-5 w-5 text-[#059669] dark:text-[#10B981]" aria-hidden="true" />
                     <span>{label}</span>
                   </span>
                 ) : (
                   <span
                     aria-disabled="true"
                     title="Not available in this sprint"
-                    className="flex cursor-not-allowed items-center gap-3 rounded-lg border-l-4 border-transparent px-3 py-2.5 text-sm font-medium text-slate-500"
+                    className="flex cursor-not-allowed items-center gap-3 rounded-lg border-l-4 border-transparent px-3 py-2.5 text-sm font-medium text-[#64748B] dark:text-slate-500"
                   >
                     <Icon className="h-5 w-5" aria-hidden="true" />
                     <span>{label}</span>
@@ -48,11 +47,11 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      <div className="flex items-center gap-3 rounded-xl border border-[#1E293B] bg-[#131B2E] p-3">
-        <UserCircle2 className="h-9 w-9 text-[#10B981]" aria-hidden="true" />
+      <div className="flex items-center gap-3 rounded-xl border border-slate-200 dark:border-[#1E293B] bg-white dark:bg-[#131B2E] p-3">
+        <UserCircle2 className="h-9 w-9 text-[#059669] dark:text-[#10B981]" aria-hidden="true" />
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-white">My Farm</p>
-          <p className="truncate text-xs text-slate-400">Producer account</p>
+          <p className="truncate text-sm font-semibold text-[#0F172A] dark:text-white">My Farm</p>
+          <p className="truncate text-xs text-[#64748B] dark:text-slate-400">Producer account</p>
         </div>
       </div>
     </aside>

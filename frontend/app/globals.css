@@ -1,21 +1,54 @@
 @import "tailwindcss";
 
+/* Tailwind v4 has no `darkMode: 'class'` config key — the class strategy is
+   declared here instead. next-themes toggles `.dark` on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
+  /* Theme-aware tokens: these follow the palette variables below. */
+  --color-app-bg: var(--app-bg);
+  --color-card-surface: var(--card-surface);
+  --color-card-border: var(--card-border);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-accent: var(--accent);
+
+  /* Fixed brand hexes, kept for charts and one-off accents. */
   --color-navy-deep: #090D16;
   --color-sidebar-surface: #0B101D;
-  --color-card-surface: #131B2E;
-  --color-card-border: #1E293B;
-  --color-emerald-accent: #10B981;
   --color-cyan-accent: #06B6D4;
+
   --font-sans: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", "Inter", system-ui,
     sans-serif;
   --font-mono: var(--font-jetbrains-mono), "Fira Code", "JetBrains Mono", ui-monospace,
     monospace;
 }
 
+/* Light palette */
+:root {
+  --app-bg: #F8FAFC;
+  --card-surface: #FFFFFF;
+  --card-border: #E2E8F0;
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+  --accent: #059669;
+  color-scheme: light;
+}
+
+/* Dark palette (Clinical Eco) */
+.dark {
+  --app-bg: #090D16;
+  --card-surface: #131B2E;
+  --card-border: #1E293B;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --accent: #10B981;
+  color-scheme: dark;
+}
+
 body {
-  background: #090D16;
-  color: #F2F7F3;
+  background: var(--app-bg);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

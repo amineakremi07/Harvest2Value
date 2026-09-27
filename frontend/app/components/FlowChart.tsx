@@ -73,7 +73,7 @@ function formatKg(value: number): string {
 }
 
 function formatCurrency(value: number): string {
-  return `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  return `${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} DT`;
 }
 
 // ============================================================================
@@ -347,7 +347,7 @@ export default function FlowChart({
                 tick={{ fontSize: 11 }}
                 className="fill-slate-600 dark:fill-slate-400"
                 label={{
-                  value: "Cost ($)",
+                  value: "Cost (DT)",
                   angle: 90,
                   position: "insideRight",
                   style: { fontSize: 10, fill: "#64748b" },
@@ -369,7 +369,7 @@ export default function FlowChart({
                 yAxisId="right"
                 type="monotone"
                 dataKey="transport_cost"
-                name="Transport Cost ($)"
+                name="Transport Cost (DT)"
                 stroke="#f59e0b"
                 strokeWidth={3}
                 dot={{ r: 5, fill: "#f59e0b", strokeWidth: 2, stroke: "#fff" }}
@@ -411,11 +411,11 @@ export default function FlowChart({
                 dataKey="transport_cost"
                 name="Transport cost"
                 type="number"
-                tickFormatter={(v: number) => `$${v}`}
+                tickFormatter={(v: number) => `${v} DT`}
                 tick={{ fontSize: 11 }}
                 className="fill-slate-600 dark:fill-slate-400"
                 label={{
-                  value: "Transport Cost ($)",
+                  value: "Transport Cost (DT)",
                   angle: -90,
                   position: "insideLeft",
                   style: { fontSize: 10, fill: "#64748b" },
@@ -451,30 +451,38 @@ export default function FlowChart({
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 gap-3 border-t border-slate-100 pt-4 sm:grid-cols-4 dark:border-slate-800">
-        <div className="rounded-xl bg-slate-50 p-3 dark:bg-slate-800/60">
-          <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Total Shipped</p>
-          <p className="mt-1 text-base font-bold text-blue-600 dark:text-blue-400">
+        <div className="min-w-0 rounded-xl bg-slate-50 p-2.5 dark:bg-slate-800/60">
+          <p className="text-[10px] font-medium uppercase leading-tight text-slate-400">
+            Total Shipped
+          </p>
+          <p className="mt-1 break-words font-mono text-sm font-bold tabular-nums text-blue-600 sm:text-base dark:text-blue-400">
             {formatKg(totalShipped)}
           </p>
         </div>
 
-        <div className="rounded-xl bg-slate-50 p-3 dark:bg-slate-800/60">
-          <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Total Freight Cost</p>
-          <p className="mt-1 text-base font-bold text-amber-600 dark:text-amber-400">
+        <div className="min-w-0 rounded-xl bg-slate-50 p-2.5 dark:bg-slate-800/60">
+          <p className="text-[10px] font-medium uppercase leading-tight text-slate-400">
+            Total Freight Cost
+          </p>
+          <p className="mt-1 break-words font-mono text-sm font-bold tabular-nums text-amber-600 sm:text-base dark:text-amber-400">
             {formatCurrency(totalTransportCost)}
           </p>
         </div>
 
-        <div className="rounded-xl bg-slate-50 p-3 dark:bg-slate-800/60">
-          <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Avg Transport / kg</p>
-          <p className="mt-1 text-base font-bold text-slate-800 dark:text-slate-200">
-            {totalShipped > 0 ? formatCurrency(totalTransportCost / totalShipped) : "$0.00"}/kg
+        <div className="min-w-0 rounded-xl bg-slate-50 p-2.5 dark:bg-slate-800/60">
+          <p className="text-[10px] font-medium uppercase leading-tight text-slate-400">
+            Avg Transport / kg
+          </p>
+          <p className="mt-1 break-words font-mono text-sm font-bold tabular-nums text-slate-800 sm:text-base dark:text-slate-200">
+            {totalShipped > 0 ? formatCurrency(totalTransportCost / totalShipped) : "0.00 DT"}/kg
           </p>
         </div>
 
-        <div className="rounded-xl bg-slate-50 p-3 dark:bg-slate-800/60">
-          <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Net Optimized Profit</p>
-          <p className="mt-1 text-base font-bold text-emerald-600 dark:text-emerald-400">
+        <div className="min-w-0 rounded-xl bg-slate-50 p-2.5 dark:bg-slate-800/60">
+          <p className="text-[10px] font-medium uppercase leading-tight text-slate-400">
+            Net Optimized Profit
+          </p>
+          <p className="mt-1 break-words font-mono text-sm font-bold tabular-nums text-emerald-600 sm:text-base dark:text-emerald-400">
             {formatCurrency(totalProfit)}
           </p>
         </div>
