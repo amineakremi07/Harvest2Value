@@ -2,7 +2,11 @@
 
 Solves: given farmer's harvest, storage capacity, and multiple buyers,
 allocate every kilogram to maximize net profit while respecting
-storage, transport, distance, and shelf-life constraints.
+storage capacity, buyer demand, and vehicle capacity. Transport cost
+(distance x cost per kg per km) is part of the objective.
+
+Not modelled: shelf life (shelf_life_days is read but never constrains
+the plan), storage duration, road condition, and refrigeration.
 """
 
 from pulp import (
@@ -19,6 +23,10 @@ from pulp import (
 from typing import Any, Dict, List
 
 
+class InvalidScenarioError(ValueError):
+    """Raised when a requested scenario cannot be applied or solved as asked."""
+
+
 def solve_optimization(data: Dict[str, Any]) -> Dict[str, Any]:
     """Solve the harvest allocation MILP and return structured JSON output.
 
@@ -32,7 +40,7 @@ def solve_optimization(data: Dict[str, Any]) -> Dict[str, Any]:
     producer = data["producer"]
     buyers = data["buyers"]
     if not buyers:
-        raise ValueError(
+        raise InvalidScenarioError(
             "solve_optimization() requires at least one buyer; the buyers "
             "list is empty (a What-If scenario may have removed the last "
             "remaining buyer)."
@@ -92,7 +100,8 @@ def solve_optimization(data: Dict[str, Any]) -> Dict[str, Any]:
             f"Demand_{buyer['id']}",
         )
 
-    # 4. Shelf-life: waste cannot exceed what's not sold or stored
+    # 4. Named "Shelf_Life" but redundant with the supply equality above; it
+    #    never binds and does not use shelf_life_days.
     prob += (
         w <= harvest - lpSum([x[b["id"]] for b in buyers]) - s,
         "Shelf_Life",
@@ -191,7 +200,7 @@ def merge_constraints(
             continue
 
         if ctype == "add_buyer":
-            raise ValueError(
+            raise InvalidScenarioError(
                 "Unsupported constraint type 'add_buyer': adding a buyer is "
                 "not implemented by merge_constraints(). extract_constraints() "
                 "must never produce this type; refusing to apply it rather "
@@ -209,7 +218,7 @@ def merge_constraints(
             continue
 
         if ctype == "add_time_constraint":
-            raise ValueError(
+            raise InvalidScenarioError(
                 "Unsupported constraint type 'add_time_constraint': no time/"
                 "shelf-life logic exists in solve_optimization(). Refusing to "
                 "apply it rather than silently storing a value that has no "
