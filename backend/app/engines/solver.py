@@ -31,6 +31,12 @@ def solve_optimization(data: Dict[str, Any]) -> Dict[str, Any]:
     """
     producer = data["producer"]
     buyers = data["buyers"]
+    if not buyers:
+        raise ValueError(
+            "solve_optimization() requires at least one buyer; the buyers "
+            "list is empty (a What-If scenario may have removed the last "
+            "remaining buyer)."
+        )
     harvest = float(producer["harvest_kg"])
     storage_cap = float(producer["storage_capacity_kg"])
     shelf_life = int(producer["shelf_life_days"])
@@ -185,8 +191,12 @@ def merge_constraints(
             continue
 
         if ctype == "add_buyer":
-            data["buyers"].append(target)
-            continue
+            raise ValueError(
+                "Unsupported constraint type 'add_buyer': adding a buyer is "
+                "not implemented by merge_constraints(). extract_constraints() "
+                "must never produce this type; refusing to apply it rather "
+                "than appending an unvalidated value to the buyers list."
+            )
 
         if ctype == "modify_demand" or ctype == "modify_price" or ctype == "modify_transport_cost":
             for buyer in data["buyers"]:
@@ -199,7 +209,11 @@ def merge_constraints(
             continue
 
         if ctype == "add_time_constraint":
-            data.setdefault("time_constraints", []).append(target)
-            continue
+            raise ValueError(
+                "Unsupported constraint type 'add_time_constraint': no time/"
+                "shelf-life logic exists in solve_optimization(). Refusing to "
+                "apply it rather than silently storing a value that has no "
+                "effect on the optimization."
+            )
 
     return data
