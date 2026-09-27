@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from typing import Any, Dict
 from ..models.schemas import ScenarioRequest, OptimizeResponse
 from ..engines.solver import solve_optimization, merge_constraints
-from ..engines.nim_client import nim_client
+from ..engines.nim_client import NIMConfigurationError, nim_client
 
 router = APIRouter(prefix="/api/v1", tags=["scenario"])
 
@@ -23,5 +23,7 @@ async def scenario(request: ScenarioRequest):
         # 3. Re-run optimization
         result = solve_optimization(modified_data)
         return OptimizeResponse(**result)
+    except NIMConfigurationError as e:
+        raise HTTPException(status_code=503, detail=str(e))
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Scenario failed: {str(e)}")
+        raise HTTPException(status_code=502, detail=f"Scenario failed: {str(e)}")
