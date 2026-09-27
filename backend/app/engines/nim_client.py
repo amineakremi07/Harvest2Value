@@ -11,6 +11,14 @@ import re
 from typing import Any, Dict, List
 
 import httpx
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+
+class NIMConfigurationError(RuntimeError):
+    """Raised when required NVIDIA NIM configuration is unavailable."""
 
 
 class NIMClient:
@@ -24,6 +32,25 @@ class NIMClient:
         self.api_key = os.getenv("NIM_API_KEY", "")
         self.headers = {
             "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        }
+        self.nim_url = (
+            os.getenv("NIM_BASE_URL")
+            or os.getenv("NIM_ENDPOINT")
+            or self.nim_url
+        )
+
+    @staticmethod
+    def _request_headers() -> Dict[str, str]:
+        api_key = os.getenv("NIM_API_KEY", "").strip()
+        if not api_key:
+            raise NIMConfigurationError(
+                "NIM_API_KEY is not configured. Set it in the environment or a local .env file."
+            )
+
+        return {
+            "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
@@ -72,7 +99,7 @@ class NIMClient:
             response = await client.post(
                 self.nim_url,
                 json=payload,
-                headers=self.headers,
+                headers=self._request_headers(),
             )
             response.raise_for_status()
             result = response.json()
@@ -115,7 +142,7 @@ class NIMClient:
             response = await client.post(
                 self.nim_url,
                 json=payload,
-                headers=self.headers,
+                headers=self._request_headers(),
             )
             response.raise_for_status()
             return response.json()["choices"][0]["message"]["content"]
