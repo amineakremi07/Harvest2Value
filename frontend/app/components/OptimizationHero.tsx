@@ -36,7 +36,7 @@ export default function OptimizationHero() {
       <div className="relative">
         <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/60 bg-accent/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#8FB1FF]">
           <Zap className="h-3.5 w-3.5" aria-hidden="true" />
-          Core engine • Groq / AI solver ready
+          REGIONAL OPTIMIZATION ENGINE • ACTIVE PLANNER
         </span>
 
         <h2 id="opt-hero-title" className="mt-4 text-2xl font-bold leading-tight sm:text-3xl">
