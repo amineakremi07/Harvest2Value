@@ -153,7 +153,7 @@ function SankeyCustomTooltip({
   const percent = totalHarvest > 0 ? ((value / totalHarvest) * 100).toFixed(1) : "0.0";
 
   return (
-    <div className="z-50 min-w-[200px] rounded-lg border border-slate-200 bg-white/95 p-3 shadow-xl backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/95">
+    <div className="z-50 min-w-[200px] rounded-lg border border-card-border bg-white/95 p-3 shadow-xl backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/95">
       <div className="mb-1 flex items-center justify-between gap-2 border-b border-slate-100 pb-1.5 dark:border-slate-800">
         <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
           Flow Details
@@ -282,7 +282,7 @@ export default function SankeyChart({
   if (!mounted || !sankeyData) {
     return (
       <div
-        className={`flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-8 text-center dark:border-slate-800 dark:bg-slate-900/40 ${className}`}
+        className={`flex flex-col items-center justify-center rounded-2xl border border-dashed border-card-border bg-slate-50/70 p-8 text-center dark:border-slate-800 dark:bg-slate-900/40 ${className}`}
       >
         <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
           <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -308,7 +308,7 @@ export default function SankeyChart({
 
   return (
     <div
-      className={`flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 ${className}`}
+      className={`flex flex-col rounded-2xl border border-card-border bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 ${className}`}
     >
       {/* Header */}
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
@@ -368,7 +368,7 @@ export default function SankeyChart({
 
         <div className="rounded-lg bg-slate-50 p-2.5 dark:bg-slate-800/60">
           <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Post-Harvest Waste</p>
-          <p className={`mt-0.5 text-sm font-bold ${wastedKg > 0 ? "text-red-600 dark:text-red-400" : "text-emerald-600 dark:text-emerald-400"}`}>
+          <p className={`mt-0.5 text-sm font-bold ${wastedKg > 0 ? "text-red-600 dark:text-red-400" : "text-success"}`}>
             {wastedKg.toLocaleString()} kg
             <span className="ml-1 text-[11px] font-normal text-slate-400">
               ({totalHarvest > 0 ? ((wastedKg / totalHarvest) * 100).toFixed(0) : 0}%)

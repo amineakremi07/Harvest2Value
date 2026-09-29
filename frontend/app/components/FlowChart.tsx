@@ -99,7 +99,7 @@ function LogisticsTooltipContent({
   if (!active || !payload || payload.length === 0) return null;
 
   return (
-    <div className="z-50 min-w-[220px] rounded-xl border border-slate-200 bg-white/95 p-3.5 shadow-xl backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/95">
+    <div className="z-50 min-w-[220px] rounded-xl border border-card-border bg-white/95 p-3.5 shadow-xl backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/95">
       <div className="mb-2 border-b border-slate-100 pb-1.5 dark:border-slate-800">
         <p className="font-semibold text-slate-900 dark:text-white">{label}</p>
       </div>
@@ -154,7 +154,7 @@ function BubbleTooltipContent({
   };
 
   return (
-    <div className="z-50 min-w-[220px] rounded-xl border border-slate-200 bg-white/95 p-3.5 shadow-xl backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/95">
+    <div className="z-50 min-w-[220px] rounded-xl border border-card-border bg-white/95 p-3.5 shadow-xl backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/95">
       <p className="mb-2 border-b border-slate-100 pb-1 font-semibold text-slate-900 dark:text-white">
         {data.buyer_name}
       </p>
@@ -179,7 +179,7 @@ function BubbleTooltipContent({
         </div>
         <div className="mt-1.5 flex justify-between border-t border-slate-100 pt-1.5 dark:border-slate-800">
           <span className="font-medium text-slate-700 dark:text-slate-300">Net Profit:</span>
-          <span className="font-bold text-emerald-600 dark:text-emerald-400">
+          <span className="font-bold text-success">
             {formatCurrency(data.net_profit)}
           </span>
         </div>
@@ -252,7 +252,7 @@ export default function FlowChart({
   if (!mounted || !hasData) {
     return (
       <div
-        className={`flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-8 text-center dark:border-slate-800 dark:bg-slate-900/40 ${className}`}
+        className={`flex flex-col items-center justify-center rounded-2xl border border-dashed border-card-border bg-slate-50/70 p-8 text-center dark:border-slate-800 dark:bg-slate-900/40 ${className}`}
       >
         <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
           <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -282,7 +282,7 @@ export default function FlowChart({
 
   return (
     <div
-      className={`flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 ${className}`}
+      className={`flex flex-col gap-6 rounded-2xl border border-card-border bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 ${className}`}
     >
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-slate-800">
@@ -482,7 +482,7 @@ export default function FlowChart({
           <p className="text-[10px] font-medium uppercase leading-tight text-slate-400">
             Net Optimized Profit
           </p>
-          <p className="mt-1 break-words font-mono text-sm font-bold tabular-nums text-emerald-600 sm:text-base dark:text-emerald-400">
+          <p className="mt-1 break-words font-mono text-sm font-bold tabular-nums text-success sm:text-base">
             {formatCurrency(totalProfit)}
           </p>
         </div>

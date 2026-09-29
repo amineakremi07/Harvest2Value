@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from "next-themes";
 import type { ReactNode } from "react";
+import { DelegationProvider } from "@/app/context/DelegationProvider";
 
 /**
  * next-themes writes the `.dark` class onto <html> from an inline script, so
@@ -16,7 +17,7 @@ export default function Providers({ children }: { children: ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      {children}
+      <DelegationProvider>{children}</DelegationProvider>
     </ThemeProvider>
   );
 }

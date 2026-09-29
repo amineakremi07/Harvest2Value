@@ -9,14 +9,15 @@
   --color-app-bg: var(--app-bg);
   --color-card-surface: var(--card-surface);
   --color-card-border: var(--card-border);
+  --color-sidebar-surface: var(--sidebar-surface);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-accent: var(--accent);
-
-  /* Fixed brand hexes, kept for charts and one-off accents. */
-  --color-navy-deep: #090D16;
-  --color-sidebar-surface: #0B101D;
-  --color-cyan-accent: #06B6D4;
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-text: var(--accent-text);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
 
   --font-sans: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", "Inter", system-ui,
     sans-serif;
@@ -24,25 +25,37 @@
     monospace;
 }
 
-/* Light palette */
+/* Light palette — Electric Blue (see frontend/DESIGN.md) */
 :root {
-  --app-bg: #F8FAFC;
-  --card-surface: #FFFFFF;
-  --card-border: #E2E8F0;
-  --text-primary: #0F172A;
-  --text-secondary: #64748B;
-  --accent: #059669;
+  --app-bg: #f9fafb;
+  --card-surface: #ffffff;
+  --card-border: #e5e7eb;
+  --sidebar-surface: #ffffff;
+  --text-primary: #0b0f17;
+  --text-secondary: #5b616e;
+  --accent: #0052ff; /* backgrounds / buttons (white text on top) */
+  --accent-hover: #003ecb;
+  --accent-text: #0052ff; /* accent used as text or icon colour */
+  --success: #05b169;
+  --warning: #f0ad4e;
+  --danger: #df2935;
   color-scheme: light;
 }
 
-/* Dark palette (Clinical Eco) */
+/* Dark palette — deep slate, never pure black */
 .dark {
-  --app-bg: #090D16;
-  --card-surface: #131B2E;
-  --card-border: #1E293B;
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --accent: #10B981;
+  --app-bg: #0b0f17;
+  --card-surface: #111827;
+  --card-border: #1f293d;
+  --sidebar-surface: #070a0f;
+  --text-primary: #f3f4f6;
+  --text-secondary: #8a919e;
+  --accent: #0052ff;
+  --accent-hover: #003ecb;
+  --accent-text: #5b8dff; /* #0052FF fails 4.5:1 as small text on dark slate */
+  --success: #05b169;
+  --warning: #f0ad4e;
+  --danger: #df2935;
   color-scheme: dark;
 }
 

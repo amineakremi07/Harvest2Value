@@ -20,10 +20,10 @@ export const RISK_CONFIG: Record<RiskLevel, RiskConfig> = {
   low: {
     label: "Low Risk",
     icon: ShieldCheck,
-    ringColor: "#10B981",
-    textColor: "text-[#059669] dark:text-[#10B981]",
+    ringColor: "#05B169",
+    textColor: "text-accent-text dark:text-accent-text",
     glowClass: "drop-shadow-[0_0_18px_rgba(16,185,129,0.65)]",
-    badgeClasses: "bg-[#059669]/15 dark:bg-[#10B981]/15 border-[#059669]/30 dark:border-[#10B981]/30 text-[#059669] dark:text-[#10B981]",
+    badgeClasses: "bg-accent/15 dark:bg-accent/15 border-accent/30 dark:border-accent/30 text-accent-text dark:text-accent-text",
   },
   medium: {
     label: "Medium Risk",
@@ -53,7 +53,7 @@ export function getWasteRatio(result: OptimizeResponse): number {
   return result.total_harvest_kg > 0 ? result.wasted_kg / result.total_harvest_kg : 0;
 }
 
-const card = "bg-white dark:bg-[#131B2E] border border-slate-200 dark:border-[#1E293B] rounded-xl p-6";
+const card = "bg-white dark:bg-card-surface border border-card-border dark:border-card-border rounded-xl p-6";
 
 // Locale-independent "12,000.5" formatting (up to 3 decimals, like en-US) so the
 // server render and client hydration always produce identical text.
@@ -82,8 +82,8 @@ export default function RiskGauge({ result }: RiskGaugeProps) {
 
   return (
     <div className={card}>
-      <div className="mb-6 flex items-center gap-2 text-[#64748B] dark:text-slate-400">
-        <Recycle className="h-5 w-5 text-[#059669] dark:text-[#10B981]" aria-hidden="true" />
+      <div className="mb-6 flex items-center gap-2 text-text-secondary dark:text-slate-400">
+        <Recycle className="h-5 w-5 text-accent-text dark:text-accent-text" aria-hidden="true" />
         <span className="text-sm font-semibold uppercase tracking-wider">Waste Risk</span>
       </div>
 
@@ -95,7 +95,7 @@ export default function RiskGauge({ result }: RiskGaugeProps) {
               cy="60"
               r={RADIUS}
               fill="none"
-              stroke="#1E293B"
+              stroke="#1F293D"
               strokeWidth={STROKE_WIDTH}
             />
             <circle
@@ -113,12 +113,12 @@ export default function RiskGauge({ result }: RiskGaugeProps) {
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span
-              className={`${config.glowClass} font-mono text-3xl font-bold tabular-nums text-[#0F172A] dark:text-white md:text-4.5xl`}
+              className={`${config.glowClass} font-mono text-3xl font-bold tabular-nums text-text-primary dark:text-white md:text-4.5xl`}
               aria-hidden="true"
             >
               {percent.toFixed(1)}%
             </span>
-            <span className="text-sm font-medium text-[#64748B] dark:text-slate-400">wasted</span>
+            <span className="text-sm font-medium text-text-secondary dark:text-slate-400">wasted</span>
           </div>
         </div>
 
@@ -141,16 +141,16 @@ export default function RiskGauge({ result }: RiskGaugeProps) {
         </p>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-2 border-t border-slate-200 dark:border-[#1E293B] pt-4 sm:grid-cols-3">
-        <div className="flex items-center gap-2 text-sm text-[#64748B] dark:text-slate-400">
-          <ShieldCheck className="h-5 w-5 text-[#059669] dark:text-[#10B981]" aria-hidden="true" />
+      <div className="mt-6 grid grid-cols-1 gap-2 border-t border-card-border dark:border-card-border pt-4 sm:grid-cols-3">
+        <div className="flex items-center gap-2 text-sm text-text-secondary dark:text-slate-400">
+          <ShieldCheck className="h-5 w-5 text-accent-text dark:text-accent-text" aria-hidden="true" />
           <span>Low: &lt; 15%</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-[#64748B] dark:text-slate-400">
+        <div className="flex items-center gap-2 text-sm text-text-secondary dark:text-slate-400">
           <ShieldAlert className="h-5 w-5 text-amber-500" aria-hidden="true" />
           <span>Medium: &lt; 30%</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-[#64748B] dark:text-slate-400">
+        <div className="flex items-center gap-2 text-sm text-text-secondary dark:text-slate-400">
           <ShieldX className="h-5 w-5 text-rose-500" aria-hidden="true" />
           <span>High: &ge; 30%</span>
         </div>

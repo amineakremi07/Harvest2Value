@@ -35,7 +35,7 @@ const HISTORY_TURNS = 10;
  * into `ApiError.cause`. Use the server's own wording when it is there, and
  * fall back to something the user can act on when it isn't.
  */
-function describeError(err: unknown): string {
+export function describeError(err: unknown): string {
   if (!(err instanceof ApiError)) {
     return "Something went wrong talking to the assistant. Please try again.";
   }
@@ -134,20 +134,20 @@ export default function UnifiedChat({
 
   return (
     <section
-      className={`flex h-full min-h-[420px] flex-col rounded-xl border border-slate-200 bg-white p-6 dark:border-[#1E293B] dark:bg-[#131B2E] ${className}`}
+      className={`flex h-full min-h-[420px] flex-col rounded-xl border border-card-border bg-white p-6 dark:border-card-border dark:bg-card-surface ${className}`}
       aria-labelledby="assistant-heading"
     >
       {/* Header */}
-      <div className="mb-3 flex items-center justify-between gap-3 border-b border-slate-200 pb-3 dark:border-[#1E293B]">
-        <div className="flex items-center gap-2 text-[#64748B] dark:text-slate-400">
-          <Bot className="h-4 w-4 text-[#059669] dark:text-[#10B981]" aria-hidden="true" />
+      <div className="mb-3 flex items-center justify-between gap-3 border-b border-card-border pb-3 dark:border-card-border">
+        <div className="flex items-center gap-2 text-text-secondary dark:text-slate-400">
+          <Bot className="h-4 w-4 text-accent-text dark:text-accent-text" aria-hidden="true" />
           <h2 id="assistant-heading" className="text-xs font-semibold uppercase tracking-wider">
             AI Assistant
           </h2>
         </div>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-[#059669]/30 bg-[#059669]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#059669] dark:border-[#10B981]/30 dark:bg-[#10B981]/10 dark:text-[#10B981]">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-accent-text dark:border-accent/30 dark:bg-accent/10 dark:text-accent-text">
           <span
-            className="h-1.5 w-1.5 rounded-full bg-[#059669] dark:bg-[#10B981]"
+            className="h-1.5 w-1.5 rounded-full bg-accent dark:bg-accent"
             aria-hidden="true"
           />
           Online
@@ -161,15 +161,15 @@ export default function UnifiedChat({
         aria-live="polite"
         aria-busy={pending}
         aria-label="Chat history"
-        className="flex-1 space-y-3 overflow-y-auto rounded-lg border border-slate-200 bg-[#F8FAFC] p-4 dark:border-[#1E293B] dark:bg-[#0B101D]/60"
+        className="flex-1 space-y-3 overflow-y-auto rounded-lg border border-card-border bg-app-bg p-4 dark:border-card-border dark:bg-sidebar-surface/60"
       >
         {bubbles.map((bubble) => {
           const isUser = bubble.role === "user";
           const tone = bubble.isError
             ? "border border-rose-500/40 bg-rose-500/10 text-rose-700 dark:text-rose-300"
             : isUser
-              ? "bg-[#E2E8F0] text-[#0F172A] dark:bg-[#1E293B] dark:text-white"
-              : "border border-slate-200 bg-white text-[#334155] dark:border-[#1E293B] dark:bg-[#131B2E] dark:text-slate-300";
+              ? "bg-[#E2E8F0] text-text-primary dark:bg-card-border dark:text-white"
+              : "border border-card-border bg-white text-[#334155] dark:border-card-border dark:bg-card-surface dark:text-slate-300";
           return (
             <div key={bubble.id} className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
               <p
@@ -183,9 +183,9 @@ export default function UnifiedChat({
 
         {pending && (
           <div className="flex justify-start">
-            <p className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-[#64748B] dark:border-[#1E293B] dark:bg-[#131B2E] dark:text-slate-400">
+            <p className="inline-flex items-center gap-2 rounded-lg border border-card-border bg-white px-3 py-2 text-sm text-text-secondary dark:border-card-border dark:bg-card-surface dark:text-slate-400">
               <Loader2
-                className="h-4 w-4 animate-spin text-[#059669] dark:text-[#10B981]"
+                className="h-4 w-4 animate-spin text-accent-text dark:text-accent-text"
                 aria-hidden="true"
               />
               <span>Thinking&hellip;</span>
@@ -202,7 +202,7 @@ export default function UnifiedChat({
             type="button"
             onClick={() => send(prompt)}
             disabled={pending}
-            className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-slate-200 bg-[#F8FAFC] px-3 py-1.5 text-xs font-semibold text-[#334155] hover:border-[#059669]/50 hover:text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#059669] disabled:cursor-not-allowed disabled:opacity-50 dark:border-[#1E293B] dark:bg-[#0B101D] dark:text-slate-300 dark:hover:border-[#10B981]/50 dark:hover:text-white dark:focus:ring-[#10B981]"
+            className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-card-border bg-app-bg px-3 py-1.5 text-xs font-semibold text-[#334155] hover:border-accent/50 hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-accent disabled:cursor-not-allowed disabled:opacity-50 dark:border-card-border dark:bg-sidebar-surface dark:text-slate-300 dark:hover:border-accent/50 dark:hover:text-white dark:focus:ring-accent"
           >
             <span aria-hidden="true">{emoji}</span>
             <span>{label}</span>
@@ -225,13 +225,13 @@ export default function UnifiedChat({
           disabled={pending}
           placeholder="Type a question or what-if scenario..."
           aria-label="Ask the assistant a question"
-          className="min-h-[44px] flex-1 rounded-lg border border-slate-200 bg-[#F8FAFC] px-4 text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:border-[#059669] focus:outline-none focus:ring-1 focus:ring-[#059669] disabled:opacity-60 dark:border-[#1E293B] dark:bg-[#0B101D] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-[#10B981] dark:focus:ring-[#10B981]"
+          className="min-h-[44px] flex-1 rounded-lg border border-card-border bg-app-bg px-4 text-sm text-text-primary placeholder:text-[#94A3B8] focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent disabled:opacity-60 dark:border-card-border dark:bg-sidebar-surface dark:text-white dark:placeholder:text-slate-500 dark:focus:border-accent dark:focus:ring-accent"
         />
         <button
           type="submit"
           disabled={pending || draft.trim().length === 0}
           aria-label="Send message"
-          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#059669] text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-600 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-[#10B981] dark:text-black dark:hover:bg-emerald-400 dark:focus:ring-emerald-300"
+          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-accent text-white hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent disabled:cursor-not-allowed disabled:opacity-40 dark:bg-accent dark:text-white dark:hover:bg-accent-hover dark:focus:ring-accent"
         >
           {pending ? (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />

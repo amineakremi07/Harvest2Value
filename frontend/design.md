@@ -1,29 +1,77 @@
-# Verdana Health Design System
+# Harvest2Value — CRDA Enterprise Design System (Electric Blue)
 
-## Overview
+Enterprise dark-slate theme with vibrant electric blue as the single primary
+accent, for the CRDA Regional Agricultural Dashboard. This supersedes the
+earlier emerald "Agritech" and navy "Clinicalism" specs.
 
-Verdana Health is a calm, trustworthy design system built for digital health platforms, telehealth dashboards, and patient-facing wellness applications. Its foundation of deep navy and soft sage greens evokes clinical precision tempered by warmth. The system prioritizes readability, accessibility, and a sense of reassurance across every touchpoint.
+Light and dark are both first-class (`next-themes`, `.dark` class on `<html>`).
+Every color lives in a CSS variable in `app/globals.css` and is exposed to
+Tailwind as a token. **Never hardcode hex in components**; use the tokens.
 
 ---
 
-# Harvest2Value — Analytics Suite Layout System
+## 1. Color tokens
 
-Ultra-sleek dark analytics dashboard layout inspired by Clinicalism / Verdana Health UI.
+| Token (Tailwind) | Light | Dark | Use |
+|---|---|---|---|
+| `app-bg` | `#F9FAFB` | `#0B0F17` | Page canvas |
+| `sidebar-surface` | `#FFFFFF` | `#070A0F` | Sidebar (deepest layer) |
+| `card-surface` | `#FFFFFF` | `#111827` (alt `#161F30`) | Cards, inputs, menus |
+| `card-border` | `#E5E7EB` | `#1F293D` (alt `#2D3748`) | All borders / dividers |
+| `accent` | `#0052FF` | `#0052FF` | Buttons, active nav, brand fills (white text on top) |
+| `accent-hover` | `#003ECB` | `#003ECB` | Hover for `accent` fills |
+| `accent-text` | `#0052FF` | `#5B8DFF` | Accent as text/icons (raw `#0052FF` is < 4.5:1 on dark) |
+| `text-primary` | `#0B0F17` | `#F3F4F6` | Headings, values |
+| `text-secondary` | `#5B616E` | `#8A919E` | Labels, muted copy |
+| `success` | `#05B169` | `#05B169` | Good delta, healthy status |
+| `warning` | `#F0AD4E` | `#F0AD4E` | Filling / caution |
+| `danger` | `#DF2935` | `#DF2935` | Bad delta, critical status |
 
-## Palette & Surface
-- App Background: `#090D16` (Deep Charcoal Navy)
-- Card Surface: `#131B2E` (Dark Slate Surface)
-- Card Border: `1px solid #1E293B`
-- Left Sidebar Background: `#0B101D`
-- Accent Emerald/Teal: `#10B981` / `#06B6D4`
-- Text Primary: `#FFFFFF`
-- Text Secondary: `#94A3B8`
+Rules
+- Primary action = `bg-accent text-white hover:bg-accent-hover`.
+- Text on `accent` is always white.
+- Status is never color alone: pair with an icon, arrow or label.
+- Crop chart series (fixed, theme-independent): Tomatoes `#F87171`, Wheat `#FACC15`,
+  Olives `#A3E635`, Citrus `#FB923C` (see `CROP_COLORS` in `types/index.ts`).
 
-## Key Visual Mechanics
-1. **KPI Cards Top Row**: Compact horizontal cards featuring a 3px accent line on the left border (`border-l-4 border-emerald-500`). Large white numbers with inline small trend/unit indicators.
-2. **Sidebar Navigation**: Fixed left bar with app logo at top, active item (`Dashboard`) highlighted in subtle active fill `#1E293B`, and user avatar footer at the bottom.
-3. **Structured Grid Layout**:
-   - Left Sidebar: `w-64`
-   - Main Content Area: `flex-1` containing KPI row, Chart/Analytics card, and Allocation/Activity Table.
-   - Right Panel (Optional/Desktop): Summary panel for Risk Gauge & Quick Stats.
-4. **Chart Styling**: Clean dark backgrounds with vibrant cyan/teal gradient bars and ring charts (Donut Chart with central metric).
+## 2. Surfaces
+- **Card**: `rounded-2xl border border-card-border bg-card-surface p-5` (flat, no blur).
+- Interactive hover: `hover:border-accent/50 transition-colors`.
+- Focus (every interactive element): `outline-none focus-visible:ring-2 focus-visible:ring-accent`.
+- Numerics: `font-mono tabular-nums`. Body font: Plus Jakarta Sans.
+
+## 3. Global layout rules
+- **Theme toggle**: fixed **top-right** on every page and layout (mounted once in
+  `app/layout.tsx`, `fixed right-4 top-4 z-40`). Page headers reserve `pr-14`
+  so nothing sits underneath it.
+- **Collapsible sidebar** (dashboard shell): `w-64` expanded, `w-[72px]`
+  icon-only when collapsed; toggle button `←` / `→` (`aria-expanded`); collapsed
+  items keep an `aria-label` and `title` tooltip. In normal flow (`sticky top-0 h-screen`)
+  so content reflows automatically. Hidden below `lg` (mobile drawer is a follow-up).
+- **Header**: search, Delegation selector (Mornag / Tebourba / Kelibia), date
+  range, delegation weather widget (e.g. `24°C Sunny • Mornag`).
+
+## 4. Routes & user journey
+```
+/                 Landing hero → "Get Started / CRDA Portal →"
+/auth/login       CRDA Agent credentials (Email, Delegation ID, Agent Code)
+/auth/2fa         Simulated 6-digit email code → /dashboard
+/dashboard        KPIs, weather, quick-add farmer, multi-crop summary
+/farmers          Farmer table + CRDAFarmerInput modal + Δ badges
+/storage          Silo / cold-storage monitoring
+/analytics        Δ Income & Δ Waste trend charts
+/ai-assistant     Chat history panel + Groq Llama-3 chat + prompt chips
+/settings         Delegation config & account preferences
+/support          FAQ, documentation, contact
+```
+Sidebar nav: Dashboard, Farmers, Storage Facilities, Analytics, AI Assistant,
+Settings, Help & Support, Log Out (clears auth state → `/`).
+
+## 5. Delta badges
+- Income ↑ good (`success`), ↓ bad (`danger`). Waste ↓ good, ↑ bad.
+- Arrow shows direction, color shows good/bad; neutral/no data uses `text-secondary` with "—".
+
+## 6. Implementation rules
+- Colocate component prop types; shared domain types in `types/index.ts`.
+- Accessible: 4.5:1 text contrast, labelled inputs, `aria-label` on icon-only buttons.
+- Domain mocks in `types/index.ts`; API types in `app/lib/api.ts` (mirrors backend).
