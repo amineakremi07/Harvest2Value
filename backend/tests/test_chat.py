@@ -251,4 +251,4 @@ def test_explain_is_unchanged():
 
 @pytest.mark.parametrize("path", ["/api/v1/optimize", "/api/v1/scenario", "/api/v1/explain", "/api/v1/chat"])
 def test_routes_are_registered(path):
-    assert path in {route.path for route in app.routes}
+    assert path in app.openapi()["paths"]

@@ -1,0 +1,194 @@
+{
+  "schema_version": "2.0",
+  "currency": "TND",
+  "producer": {
+    "name": "Société Mutuelle de Services Agricoles Menzel Bouzelfa",
+    "region": "Cap Bon",
+    "country": "Tunisia",
+    "latitude": null,
+    "longitude": null,
+    "farm_size_ha": null
+  },
+  "crops": [
+    {
+      "id": "maltese_oranges",
+      "name": "maltese_oranges",
+      "variety": "Maltaise",
+      "type": "semi_perishable",
+      "unit": "kg",
+      "reference_price_per_kg": 1.875,
+      "shelf_life_ambient_days": 30,
+      "shelf_life_cold_days": 60,
+      "quality_decay_pct_per_day": 0.5,
+      "loss_rate_pct_per_day_ambient": 0.5,
+      "loss_rate_pct_per_day_cold": 0.15,
+      "requires_cold_chain": false
+    }
+  ],
+  "harvest_lots": [
+    {
+      "id": "citrus_week1",
+      "crop_id": "maltese_oranges",
+      "quantity_kg": 6000.0,
+      "available_day": 0,
+      "quality_grade": null
+    },
+    {
+      "id": "citrus_week2",
+      "crop_id": "maltese_oranges",
+      "quantity_kg": 6000.0,
+      "available_day": 7,
+      "quality_grade": null
+    },
+    {
+      "id": "citrus_week3",
+      "crop_id": "maltese_oranges",
+      "quantity_kg": 4000.0,
+      "available_day": 14,
+      "quality_grade": null
+    }
+  ],
+  "buyers": [
+    {
+      "id": "buyer_tn_c01",
+      "name": "Groupement Interprofessionnel des Fruits (Export Marseille)",
+      "location": "Port de La Goulette",
+      "crop_ids": [
+        "maltese_oranges"
+      ],
+      "price_per_kg": 2.8,
+      "price_schedule": null,
+      "max_demand_kg": 7000.0,
+      "max_per_day_kg": null,
+      "min_contract_kg": null,
+      "min_order_kg": 2000.0,
+      "window_start_day": 5,
+      "window_end_day": null,
+      "requires_cold_chain": false,
+      "payment_terms_days": null,
+      "priority": "spot"
+    },
+    {
+      "id": "buyer_tn_c02",
+      "name": "Marché de Gros Bir El Kassâa",
+      "location": "Ben Arous",
+      "crop_ids": [
+        "maltese_oranges"
+      ],
+      "price_per_kg": 1.85,
+      "price_schedule": null,
+      "max_demand_kg": 5000.0,
+      "max_per_day_kg": null,
+      "min_contract_kg": null,
+      "min_order_kg": null,
+      "window_start_day": null,
+      "window_end_day": null,
+      "requires_cold_chain": false,
+      "payment_terms_days": null,
+      "priority": "spot"
+    },
+    {
+      "id": "buyer_tn_c03",
+      "name": "Usine Jus & Nectar Cap Bon",
+      "location": "Grombalia",
+      "crop_ids": [
+        "maltese_oranges"
+      ],
+      "price_per_kg": 1.25,
+      "price_schedule": null,
+      "max_demand_kg": 6000.0,
+      "max_per_day_kg": null,
+      "min_contract_kg": 2000.0,
+      "min_order_kg": null,
+      "window_start_day": null,
+      "window_end_day": null,
+      "requires_cold_chain": false,
+      "payment_terms_days": null,
+      "priority": "contract"
+    },
+    {
+      "id": "buyer_tn_c04",
+      "name": "Marché Régional Nabeul",
+      "location": "Nabeul",
+      "crop_ids": [
+        "maltese_oranges"
+      ],
+      "price_per_kg": 1.6,
+      "price_schedule": null,
+      "max_demand_kg": 3000.0,
+      "max_per_day_kg": 400.0,
+      "min_contract_kg": null,
+      "min_order_kg": null,
+      "window_start_day": null,
+      "window_end_day": null,
+      "requires_cold_chain": false,
+      "payment_terms_days": null,
+      "priority": "spot"
+    }
+  ],
+  "storage_facilities": [
+    {
+      "id": "shed_menzel_bouzelfa",
+      "name": "Hangar Menzel Bouzelfa",
+      "capacity_kg": 4000.0,
+      "refrigerated": false,
+      "cost_per_kg_per_day": 0.035
+    },
+    {
+      "id": "cold_room_nabeul",
+      "name": "Chambre froide Nabeul",
+      "capacity_kg": 2000.0,
+      "refrigerated": true,
+      "cost_per_kg_per_day": 0.07
+    }
+  ],
+  "vehicle_types": [
+    {
+      "id": "truck_4t",
+      "name": "Camion 4 t",
+      "capacity_kg": 4000.0,
+      "count": 3,
+      "refrigerated": false,
+      "fixed_cost_per_trip": 40.0,
+      "cost_per_km": 1.1,
+      "avg_speed_kmh": 60.0,
+      "hours_per_day": 12.0,
+      "loading_hours_per_trip": 1.0,
+      "max_trips_per_day": null
+    }
+  ],
+  "routes": [
+    {
+      "buyer_id": "buyer_tn_c01",
+      "distance_km": 65.0,
+      "road_condition": "good",
+      "road_factor_override": null,
+      "legacy_cost_per_kg_per_km": null,
+      "toll_per_trip": null
+    },
+    {
+      "buyer_id": "buyer_tn_c02",
+      "distance_km": 55.0,
+      "road_condition": "good",
+      "road_factor_override": null,
+      "legacy_cost_per_kg_per_km": null,
+      "toll_per_trip": null
+    },
+    {
+      "buyer_id": "buyer_tn_c03",
+      "distance_km": 20.0,
+      "road_condition": "good",
+      "road_factor_override": null,
+      "legacy_cost_per_kg_per_km": null,
+      "toll_per_trip": null
+    },
+    {
+      "buyer_id": "buyer_tn_c04",
+      "distance_km": 25.0,
+      "road_condition": "good",
+      "road_factor_override": null,
+      "legacy_cost_per_kg_per_km": null,
+      "toll_per_trip": null
+    }
+  ]
+}

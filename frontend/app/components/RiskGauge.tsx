@@ -75,8 +75,6 @@ export default function RiskGauge({ result }: RiskGaugeProps) {
   const level = getRiskLevel(ratio);
   const config = RISK_CONFIG[level];
   const Icon = config.icon;
-  // TEMP-DIAG
-  console.log("[H2V-DIAG] RiskGauge render", { total_harvest_kg: result.total_harvest_kg, wasted_kg: result.wasted_kg, percent });
 
   const dashOffset = CIRCUMFERENCE * (1 - clampedPercent / 100);
 

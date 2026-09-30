@@ -1,0 +1,737 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harvest2value.local/schema/dataset-2.0.json",
+  "$defs": {
+    "Buyer": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "location": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Location",
+          "type": "string"
+        },
+        "crop_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Crop Ids",
+          "type": "array"
+        },
+        "price_per_kg": {
+          "maximum": 10000.0,
+          "minimum": 0,
+          "title": "Price Per Kg",
+          "type": "number"
+        },
+        "price_schedule": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/PricePoint"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Price Schedule"
+        },
+        "max_demand_kg": {
+          "exclusiveMinimum": 0,
+          "maximum": 100000000.0,
+          "title": "Max Demand Kg",
+          "type": "number"
+        },
+        "max_per_day_kg": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 100000000.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Per Day Kg"
+        },
+        "min_contract_kg": {
+          "anyOf": [
+            {
+              "maximum": 100000000.0,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Contract Kg"
+        },
+        "min_order_kg": {
+          "anyOf": [
+            {
+              "maximum": 100000000.0,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Order Kg"
+        },
+        "window_start_day": {
+          "anyOf": [
+            {
+              "maximum": 365,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Window Start Day"
+        },
+        "window_end_day": {
+          "anyOf": [
+            {
+              "maximum": 365,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Window End Day"
+        },
+        "requires_cold_chain": {
+          "default": false,
+          "title": "Requires Cold Chain",
+          "type": "boolean"
+        },
+        "payment_terms_days": {
+          "anyOf": [
+            {
+              "maximum": 365,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Payment Terms Days"
+        },
+        "priority": {
+          "$ref": "#/$defs/BuyerPriority",
+          "default": "spot"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "location",
+        "crop_ids",
+        "price_per_kg",
+        "max_demand_kg"
+      ],
+      "title": "Buyer",
+      "type": "object"
+    },
+    "BuyerPriority": {
+      "enum": [
+        "contract",
+        "spot"
+      ],
+      "title": "BuyerPriority",
+      "type": "string"
+    },
+    "Crop": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "variety": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Variety"
+        },
+        "type": {
+          "$ref": "#/$defs/CropType"
+        },
+        "unit": {
+          "const": "kg",
+          "default": "kg",
+          "title": "Unit",
+          "type": "string"
+        },
+        "reference_price_per_kg": {
+          "minimum": 0,
+          "title": "Reference Price Per Kg",
+          "type": "number"
+        },
+        "shelf_life_ambient_days": {
+          "maximum": 730,
+          "minimum": 1,
+          "title": "Shelf Life Ambient Days",
+          "type": "integer"
+        },
+        "shelf_life_cold_days": {
+          "anyOf": [
+            {
+              "maximum": 730,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Shelf Life Cold Days"
+        },
+        "quality_decay_pct_per_day": {
+          "default": 0.0,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Quality Decay Pct Per Day",
+          "type": "number"
+        },
+        "loss_rate_pct_per_day_ambient": {
+          "default": 0.0,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Loss Rate Pct Per Day Ambient",
+          "type": "number"
+        },
+        "loss_rate_pct_per_day_cold": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Loss Rate Pct Per Day Cold"
+        },
+        "requires_cold_chain": {
+          "default": false,
+          "title": "Requires Cold Chain",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "reference_price_per_kg",
+        "shelf_life_ambient_days"
+      ],
+      "title": "Crop",
+      "type": "object"
+    },
+    "CropType": {
+      "enum": [
+        "perishable",
+        "semi_perishable",
+        "durable"
+      ],
+      "title": "CropType",
+      "type": "string"
+    },
+    "HarvestLot": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "crop_id": {
+          "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+          "title": "Crop Id",
+          "type": "string"
+        },
+        "quantity_kg": {
+          "exclusiveMinimum": 0,
+          "maximum": 100000000.0,
+          "title": "Quantity Kg",
+          "type": "number"
+        },
+        "available_day": {
+          "default": 0,
+          "maximum": 365,
+          "minimum": 0,
+          "title": "Available Day",
+          "type": "integer"
+        },
+        "quality_grade": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quality Grade"
+        }
+      },
+      "required": [
+        "id",
+        "crop_id",
+        "quantity_kg"
+      ],
+      "title": "HarvestLot",
+      "type": "object"
+    },
+    "PricePoint": {
+      "additionalProperties": false,
+      "description": "From `day` on (until the next point), the buyer pays `price`.",
+      "properties": {
+        "day": {
+          "maximum": 365,
+          "minimum": 0,
+          "title": "Day",
+          "type": "integer"
+        },
+        "price": {
+          "maximum": 10000.0,
+          "minimum": 0,
+          "title": "Price",
+          "type": "number"
+        }
+      },
+      "required": [
+        "day",
+        "price"
+      ],
+      "title": "PricePoint",
+      "type": "object"
+    },
+    "Producer": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "region": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Region",
+          "type": "string"
+        },
+        "country": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Country",
+          "type": "string"
+        },
+        "latitude": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Latitude"
+        },
+        "longitude": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Longitude"
+        },
+        "farm_size_ha": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Farm Size Ha"
+        }
+      },
+      "required": [
+        "name",
+        "region",
+        "country"
+      ],
+      "title": "Producer",
+      "type": "object"
+    },
+    "RoadCondition": {
+      "enum": [
+        "good",
+        "fair",
+        "poor"
+      ],
+      "title": "RoadCondition",
+      "type": "string"
+    },
+    "Route": {
+      "additionalProperties": false,
+      "properties": {
+        "buyer_id": {
+          "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+          "title": "Buyer Id",
+          "type": "string"
+        },
+        "distance_km": {
+          "maximum": 5000,
+          "minimum": 0,
+          "title": "Distance Km",
+          "type": "number"
+        },
+        "road_condition": {
+          "$ref": "#/$defs/RoadCondition",
+          "default": "fair"
+        },
+        "road_factor_override": {
+          "anyOf": [
+            {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Road Factor Override"
+        },
+        "legacy_cost_per_kg_per_km": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Legacy Cost Per Kg Per Km"
+        },
+        "toll_per_trip": {
+          "anyOf": [
+            {
+              "maximum": 100000.0,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Toll Per Trip"
+        }
+      },
+      "required": [
+        "buyer_id",
+        "distance_km"
+      ],
+      "title": "Route",
+      "type": "object"
+    },
+    "StorageFacility": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "capacity_kg": {
+          "maximum": 100000000.0,
+          "minimum": 0,
+          "title": "Capacity Kg",
+          "type": "number"
+        },
+        "refrigerated": {
+          "default": false,
+          "title": "Refrigerated",
+          "type": "boolean"
+        },
+        "cost_per_kg_per_day": {
+          "maximum": 1000.0,
+          "minimum": 0,
+          "title": "Cost Per Kg Per Day",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "capacity_kg",
+        "cost_per_kg_per_day"
+      ],
+      "title": "StorageFacility",
+      "type": "object"
+    },
+    "VehicleType": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "capacity_kg": {
+          "exclusiveMinimum": 0,
+          "maximum": 1000000.0,
+          "title": "Capacity Kg",
+          "type": "number"
+        },
+        "count": {
+          "maximum": 1000,
+          "minimum": 0,
+          "title": "Count",
+          "type": "integer"
+        },
+        "refrigerated": {
+          "default": false,
+          "title": "Refrigerated",
+          "type": "boolean"
+        },
+        "fixed_cost_per_trip": {
+          "default": 0.0,
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "title": "Fixed Cost Per Trip",
+          "type": "number"
+        },
+        "cost_per_km": {
+          "default": 0.0,
+          "maximum": 10000.0,
+          "minimum": 0,
+          "title": "Cost Per Km",
+          "type": "number"
+        },
+        "avg_speed_kmh": {
+          "default": 50.0,
+          "exclusiveMinimum": 0,
+          "maximum": 200,
+          "title": "Avg Speed Kmh",
+          "type": "number"
+        },
+        "hours_per_day": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 24,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 10.0,
+          "title": "Hours Per Day"
+        },
+        "loading_hours_per_trip": {
+          "default": 0.5,
+          "maximum": 24,
+          "minimum": 0,
+          "title": "Loading Hours Per Trip",
+          "type": "number"
+        },
+        "max_trips_per_day": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Trips Per Day"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "capacity_kg",
+        "count"
+      ],
+      "title": "VehicleType",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0",
+      "default": "2.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "currency": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Z]{3}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Currency"
+    },
+    "producer": {
+      "$ref": "#/$defs/Producer"
+    },
+    "crops": {
+      "items": {
+        "$ref": "#/$defs/Crop"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Crops",
+      "type": "array"
+    },
+    "harvest_lots": {
+      "items": {
+        "$ref": "#/$defs/HarvestLot"
+      },
+      "maxItems": 60,
+      "minItems": 1,
+      "title": "Harvest Lots",
+      "type": "array"
+    },
+    "buyers": {
+      "items": {
+        "$ref": "#/$defs/Buyer"
+      },
+      "maxItems": 50,
+      "minItems": 1,
+      "title": "Buyers",
+      "type": "array"
+    },
+    "storage_facilities": {
+      "items": {
+        "$ref": "#/$defs/StorageFacility"
+      },
+      "maxItems": 20,
+      "title": "Storage Facilities",
+      "type": "array"
+    },
+    "vehicle_types": {
+      "items": {
+        "$ref": "#/$defs/VehicleType"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Vehicle Types",
+      "type": "array"
+    },
+    "routes": {
+      "items": {
+        "$ref": "#/$defs/Route"
+      },
+      "maxItems": 50,
+      "minItems": 1,
+      "title": "Routes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "producer",
+    "crops",
+    "harvest_lots",
+    "buyers",
+    "vehicle_types",
+    "routes"
+  ],
+  "title": "Harvest2Value dataset (schema 2.0)",
+  "type": "object"
+}

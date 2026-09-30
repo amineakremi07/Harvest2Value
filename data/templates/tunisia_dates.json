@@ -1,0 +1,199 @@
+{
+  "schema_version": "2.0",
+  "currency": "TND",
+  "producer": {
+    "name": "Groupement de Développement Agricole Djerid",
+    "region": "Tozeur",
+    "country": "Tunisia",
+    "latitude": null,
+    "longitude": null,
+    "farm_size_ha": null
+  },
+  "crops": [
+    {
+      "id": "deglet_nour_dates",
+      "name": "deglet_nour_dates",
+      "variety": "Deglet Nour",
+      "type": "durable",
+      "unit": "kg",
+      "reference_price_per_kg": 6.325,
+      "shelf_life_ambient_days": 180,
+      "shelf_life_cold_days": 365,
+      "quality_decay_pct_per_day": 0.1,
+      "loss_rate_pct_per_day_ambient": 0.05,
+      "loss_rate_pct_per_day_cold": 0.02,
+      "requires_cold_chain": false
+    }
+  ],
+  "harvest_lots": [
+    {
+      "id": "dates_first",
+      "crop_id": "deglet_nour_dates",
+      "quantity_kg": 8000.0,
+      "available_day": 0,
+      "quality_grade": null
+    },
+    {
+      "id": "dates_second",
+      "crop_id": "deglet_nour_dates",
+      "quantity_kg": 6000.0,
+      "available_day": 10,
+      "quality_grade": null
+    },
+    {
+      "id": "dates_third",
+      "crop_id": "deglet_nour_dates",
+      "quantity_kg": 4000.0,
+      "available_day": 20,
+      "quality_grade": null
+    }
+  ],
+  "buyers": [
+    {
+      "id": "buyer_tn_d01",
+      "name": "Exportateur Dattes Tozeur Bio",
+      "location": "Tozeur",
+      "crop_ids": [
+        "deglet_nour_dates"
+      ],
+      "price_per_kg": 6.5,
+      "price_schedule": null,
+      "max_demand_kg": 6000.0,
+      "max_per_day_kg": 1000.0,
+      "min_contract_kg": null,
+      "min_order_kg": null,
+      "window_start_day": null,
+      "window_end_day": null,
+      "requires_cold_chain": false,
+      "payment_terms_days": null,
+      "priority": "spot"
+    },
+    {
+      "id": "buyer_tn_d02",
+      "name": "Conditionnement & Export Radès",
+      "location": "Port de Radès",
+      "crop_ids": [
+        "deglet_nour_dates"
+      ],
+      "price_per_kg": 7.8,
+      "price_schedule": [
+        {
+          "day": 30,
+          "price": 8.3
+        }
+      ],
+      "max_demand_kg": 8000.0,
+      "max_per_day_kg": null,
+      "min_contract_kg": null,
+      "min_order_kg": 3000.0,
+      "window_start_day": null,
+      "window_end_day": null,
+      "requires_cold_chain": false,
+      "payment_terms_days": null,
+      "priority": "spot"
+    },
+    {
+      "id": "buyer_tn_d03",
+      "name": "Marché de Gros Bir El Kassâa",
+      "location": "Tunis",
+      "crop_ids": [
+        "deglet_nour_dates"
+      ],
+      "price_per_kg": 5.2,
+      "price_schedule": null,
+      "max_demand_kg": 5000.0,
+      "max_per_day_kg": null,
+      "min_contract_kg": null,
+      "min_order_kg": null,
+      "window_start_day": null,
+      "window_end_day": null,
+      "requires_cold_chain": false,
+      "payment_terms_days": null,
+      "priority": "spot"
+    },
+    {
+      "id": "buyer_tn_d04",
+      "name": "Grossiste Fruits Secs Sfax",
+      "location": "Sfax",
+      "crop_ids": [
+        "deglet_nour_dates"
+      ],
+      "price_per_kg": 5.8,
+      "price_schedule": null,
+      "max_demand_kg": 4000.0,
+      "max_per_day_kg": 1500.0,
+      "min_contract_kg": null,
+      "min_order_kg": null,
+      "window_start_day": null,
+      "window_end_day": null,
+      "requires_cold_chain": false,
+      "payment_terms_days": null,
+      "priority": "spot"
+    }
+  ],
+  "storage_facilities": [
+    {
+      "id": "packhouse_tozeur",
+      "name": "Station de conditionnement Tozeur",
+      "capacity_kg": 10000.0,
+      "refrigerated": false,
+      "cost_per_kg_per_day": 0.02
+    },
+    {
+      "id": "cold_store_tozeur",
+      "name": "Entrepôt frigorifique Tozeur",
+      "capacity_kg": 3000.0,
+      "refrigerated": true,
+      "cost_per_kg_per_day": 0.05
+    }
+  ],
+  "vehicle_types": [
+    {
+      "id": "truck_5t",
+      "name": "Camion 5 t longue distance",
+      "capacity_kg": 5000.0,
+      "count": 4,
+      "refrigerated": false,
+      "fixed_cost_per_trip": 60.0,
+      "cost_per_km": 1.2,
+      "avg_speed_kmh": 70.0,
+      "hours_per_day": 16.0,
+      "loading_hours_per_trip": 1.0,
+      "max_trips_per_day": null
+    }
+  ],
+  "routes": [
+    {
+      "buyer_id": "buyer_tn_d01",
+      "distance_km": 15.0,
+      "road_condition": "good",
+      "road_factor_override": null,
+      "legacy_cost_per_kg_per_km": null,
+      "toll_per_trip": null
+    },
+    {
+      "buyer_id": "buyer_tn_d02",
+      "distance_km": 450.0,
+      "road_condition": "good",
+      "road_factor_override": null,
+      "legacy_cost_per_kg_per_km": null,
+      "toll_per_trip": null
+    },
+    {
+      "buyer_id": "buyer_tn_d03",
+      "distance_km": 430.0,
+      "road_condition": "good",
+      "road_factor_override": null,
+      "legacy_cost_per_kg_per_km": null,
+      "toll_per_trip": null
+    },
+    {
+      "buyer_id": "buyer_tn_d04",
+      "distance_km": 210.0,
+      "road_condition": "good",
+      "road_factor_override": null,
+      "legacy_cost_per_kg_per_km": null,
+      "toll_per_trip": null
+    }
+  ]
+}

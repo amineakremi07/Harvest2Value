@@ -153,8 +153,6 @@ export default function Home() {
 
     try {
       const response = await optimizeHarvest(buildOptimizeRequest(values));
-      // TEMP-DIAG
-      console.log("[H2V-DIAG] before setResult", { values, total_harvest_kg: response.total_harvest_kg, wasted_kg: response.wasted_kg, stored_kg: response.stored_kg });
       setResult(response);
       setUsingDemoData(false);
       setStatus("success");
