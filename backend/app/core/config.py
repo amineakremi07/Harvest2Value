@@ -48,6 +48,8 @@ class Settings(BaseSettings):
     llm_model: str | None = None
     llm_base_url: str | None = None
     llm_timeout_s: float = Field(default=30.0, gt=0, le=300)
+    # LLM_PROVIDER=mock only: JSON file of scripted replies (E2E tests, offline demos).
+    llm_mock_script: Path | None = None
 
     solver_time_limit_s: int = Field(default=30, ge=1, le=600)
     solver_max_concurrency: int = Field(default=2, ge=1, le=16)

@@ -1,0 +1,121 @@
+{
+ "run_id": "eab0049f-e49b-4513-9bc2-b5946cca0547",
+ "currency": "TND",
+ "realized_revenue": 31401.35,
+ "realized_profit": 29174.84,
+ "margin_pct": 92.91,
+ "ending_inventory_value": 0.0,
+ "economic_value": 29174.84,
+ "lost_value": 36.29,
+ "costs": {
+  "transport": 2000.88,
+  "storage": 225.63,
+  "disposal": 0.0,
+  "total": 2226.51
+ },
+ "waterfall": [
+  {
+   "label": "Realized revenue",
+   "value": 31401.35,
+   "kind": "start"
+  },
+  {
+   "label": "Transport",
+   "value": -2000.88,
+   "kind": "decrease"
+  },
+  {
+   "label": "Storage",
+   "value": -225.63,
+   "kind": "decrease"
+  },
+  {
+   "label": "Disposal",
+   "value": -0.0,
+   "kind": "decrease"
+  },
+  {
+   "label": "Realized profit",
+   "value": 29174.84,
+   "kind": "total"
+  }
+ ],
+ "by_buyer": [
+  {
+   "buyer_id": "buyer_tn_04",
+   "buyer_name": "EU Import Consortium",
+   "revenue": 17347.8,
+   "transport_cost": 1395.6,
+   "net_revenue": 15952.2,
+   "share_of_revenue_pct": 55.25
+  },
+  {
+   "buyer_id": "buyer_tn_01",
+   "buyer_name": "Huilerie Sfax Export",
+   "revenue": 9560.31,
+   "transport_cost": 211.08,
+   "net_revenue": 9349.23,
+   "share_of_revenue_pct": 30.45
+  },
+  {
+   "buyer_id": "buyer_tn_03",
+   "buyer_name": "Cooperative Export Sousse",
+   "revenue": 4493.24,
+   "transport_cost": 394.2,
+   "net_revenue": 4099.04,
+   "share_of_revenue_pct": 14.31
+  },
+  {
+   "buyer_id": "buyer_tn_02",
+   "buyer_name": "Marche Central Tunis",
+   "revenue": 0.0,
+   "transport_cost": 0.0,
+   "net_revenue": 0.0,
+   "share_of_revenue_pct": 0.0
+  }
+ ],
+ "daily": [
+  {
+   "day": 0,
+   "revenue": 8093.24,
+   "transport_cost": 464.56,
+   "storage_cost": 45.09,
+   "disposal_cost": 0.0
+  },
+  {
+   "day": 1,
+   "revenue": 3589.2,
+   "transport_cost": 70.36,
+   "storage_cost": 0.0,
+   "disposal_cost": 0.0
+  },
+  {
+   "day": 5,
+   "revenue": 2371.11,
+   "transport_cost": 70.36,
+   "storage_cost": 90.36,
+   "disposal_cost": 0.0
+  },
+  {
+   "day": 6,
+   "revenue": 0.0,
+   "transport_cost": 0.0,
+   "storage_cost": 90.18,
+   "disposal_cost": 0.0
+  },
+  {
+   "day": 7,
+   "revenue": 8647.8,
+   "transport_cost": 697.8,
+   "storage_cost": 0.0,
+   "disposal_cost": 0.0
+  },
+  {
+   "day": 10,
+   "revenue": 8700.0,
+   "transport_cost": 697.8,
+   "storage_cost": 0.0,
+   "disposal_cost": 0.0
+  }
+ ]
+}

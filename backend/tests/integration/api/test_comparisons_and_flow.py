@@ -142,6 +142,26 @@ V2_ROUTES = {
     ("POST", "/api/v2/scenarios/{scenario_id}/rebase"),
     ("POST", "/api/v2/scenarios/{scenario_id}/run"),
     ("POST", "/api/v2/comparisons"),
+    # phase 11 — copilot and AI text
+    ("POST", "/api/v2/copilot/conversations"),
+    ("GET", "/api/v2/copilot/conversations"),
+    ("GET", "/api/v2/copilot/conversations/{conversation_id}"),
+    ("DELETE", "/api/v2/copilot/conversations/{conversation_id}"),
+    ("POST", "/api/v2/copilot/conversations/{conversation_id}/messages"),
+    ("POST", "/api/v2/copilot/actions/{action_id}/confirm"),
+    ("POST", "/api/v2/copilot/actions/{action_id}/reject"),
+    ("GET", "/api/v2/copilot/tools"),
+    ("POST", "/api/v2/runs/{run_id}/explanation/narrative"),
+    ("POST", "/api/v2/comparisons/narrative"),
+    ("POST", "/api/v2/scenarios/parse"),
+    # phase 13 — reports
+    ("POST", "/api/v2/reports"),
+    ("GET", "/api/v2/reports"),
+    ("GET", "/api/v2/reports/sections"),
+    ("GET", "/api/v2/reports/{report_id}"),
+    ("DELETE", "/api/v2/reports/{report_id}"),
+    ("GET", "/api/v2/reports/{report_id}/export.json"),
+    ("GET", "/api/v2/reports/{report_id}/export.csv"),
 }
 
 

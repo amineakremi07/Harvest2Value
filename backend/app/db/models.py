@@ -183,3 +183,80 @@ class ScenarioChange(IdMixin, TimestampMixin, Base):
     enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     source: Mapped[str] = mapped_column(String(20), nullable=False)  # manual | ai_proposed | recommendation
     note: Mapped[str | None] = mapped_column(String(500), nullable=True)
+
+
+class Conversation(IdMixin, TimestampMixin, Base):
+    """A copilot conversation (phase 11). `aliases` and `refs` keep entity aliases (r1, d1) and every
+    number the tools returned, so later turns are verified against them."""
+
+    __tablename__ = "conversations"
+    __table_args__ = (Index("ix_conversations_workspace_updated", "workspace_id", "updated_at"),)
+
+    workspace_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("workspaces.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    title: Mapped[str] = mapped_column(String(160), nullable=False)
+    context: Mapped[dict[str, Any] | None] = mapped_column(JSONType, nullable=True)
+    aliases: Mapped[dict[str, Any] | None] = mapped_column(JSONType, nullable=True)
+    refs: Mapped[dict[str, Any] | None] = mapped_column(JSONType, nullable=True)
+
+
+class Message(IdMixin, TimestampMixin, Base):
+    __tablename__ = "messages"
+    __table_args__ = (
+        Index("ix_messages_conversation_created", "conversation_id", "created_at"),
+        UniqueConstraint("conversation_id", "seq", name="uq_messages_conversation_id_seq"),
+    )
+
+    conversation_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("conversations.id", ondelete="CASCADE"), nullable=False
+    )
+    # Order within the conversation: timestamps can tie (coarse clocks), the history must not.
+    seq: Mapped[int] = mapped_column(Integer, nullable=False)
+    role: Mapped[str] = mapped_column(String(20), nullable=False)  # user | assistant | error
+    content: Mapped[str] = mapped_column(Text, nullable=False)  # as written (refs unrendered for the assistant)
+    rendered: Mapped[str | None] = mapped_column(Text, nullable=True)  # numbers rendered by the backend
+    verification: Mapped[dict[str, Any] | None] = mapped_column(JSONType, nullable=True)
+    tool_trace: Mapped[list[dict[str, Any]] | None] = mapped_column(JSONType, nullable=True)
+    context: Mapped[dict[str, Any] | None] = mapped_column(JSONType, nullable=True)
+    prompt_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    model: Mapped[str | None] = mapped_column(String(120), nullable=True)
+
+
+class CopilotAction(IdMixin, TimestampMixin, Base):
+    """A change the copilot proposed; nothing happens until the user confirms it."""
+
+    __tablename__ = "copilot_actions"
+
+    conversation_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("conversations.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    message_id: Mapped[str | None] = mapped_column(
+        String(36), ForeignKey("messages.id", ondelete="SET NULL"), nullable=True
+    )
+    kind: Mapped[str] = mapped_column(String(32), nullable=False)  # create_scenario | run_optimization | generate_report
+    payload: Mapped[dict[str, Any]] = mapped_column(JSONType, nullable=False)
+    summary: Mapped[str] = mapped_column(Text, nullable=False)
+    status: Mapped[str] = mapped_column(String(20), nullable=False, index=True)  # pending | executed | rejected | expired | failed
+    idempotency_key: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
+    result: Mapped[dict[str, Any] | None] = mapped_column(JSONType, nullable=True)
+    error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    expires_at: Mapped[datetime] = mapped_column(UTCDateTime(), nullable=False)
+    decided_at: Mapped[datetime | None] = mapped_column(UTCDateTime(), nullable=True)
+
+
+class Report(IdMixin, TimestampMixin, Base):
+    """A frozen report (phase 13): `snapshot` is computed once at creation and never changes."""
+
+    __tablename__ = "reports"
+    __table_args__ = (Index("ix_reports_workspace_created", "workspace_id", "created_at"),)
+
+    workspace_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("workspaces.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    title: Mapped[str] = mapped_column(String(160), nullable=False)
+    spec: Mapped[dict[str, Any]] = mapped_column(JSONType, nullable=False)
+    snapshot: Mapped[dict[str, Any]] = mapped_column(JSONType, nullable=False)
+    snapshot_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    # No foreign key: the report must survive the deletion of its runs.
+    run_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)

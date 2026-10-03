@@ -1,0 +1,265 @@
+{
+ "base_version_no": 1,
+ "effective_payload": {
+  "schema_version": "2.0",
+  "currency": "TND",
+  "producer": {
+   "name": "Cooperative Oliviere Sfax",
+   "region": "Sfax",
+   "country": "Tunisia",
+   "latitude": null,
+   "longitude": null,
+   "farm_size_ha": null
+  },
+  "crops": [
+   {
+    "id": "olives",
+    "name": "olives",
+    "variety": "Chemlali",
+    "type": "semi_perishable",
+    "unit": "kg",
+    "reference_price_per_kg": 2.4125,
+    "shelf_life_ambient_days": 45,
+    "shelf_life_cold_days": 60,
+    "quality_decay_pct_per_day": 0.3,
+    "loss_rate_pct_per_day_ambient": 0.2,
+    "loss_rate_pct_per_day_cold": 0.1,
+    "requires_cold_chain": false
+   }
+  ],
+  "harvest_lots": [
+   {
+    "id": "olives_early",
+    "crop_id": "olives",
+    "quantity_kg": 5000.0,
+    "available_day": 0,
+    "quality_grade": null
+   },
+   {
+    "id": "olives_main",
+    "crop_id": "olives",
+    "quantity_kg": 4000.0,
+    "available_day": 5,
+    "quality_grade": null
+   },
+   {
+    "id": "olives_late",
+    "crop_id": "olives",
+    "quantity_kg": 3000.0,
+    "available_day": 10,
+    "quality_grade": null
+   }
+  ],
+  "buyers": [
+   {
+    "id": "buyer_tn_01",
+    "name": "Huilerie Sfax Export",
+    "location": "Sfax",
+    "crop_ids": [
+     "olives"
+    ],
+    "price_per_kg": 2.16,
+    "price_schedule": null,
+    "max_demand_kg": 5000.0,
+    "max_per_day_kg": 1500.0,
+    "min_contract_kg": null,
+    "min_order_kg": null,
+    "window_start_day": null,
+    "window_end_day": null,
+    "requires_cold_chain": false,
+    "payment_terms_days": null,
+    "priority": "spot"
+   },
+   {
+    "id": "buyer_tn_02",
+    "name": "Marche Central Tunis",
+    "location": "Tunis",
+    "crop_ids": [
+     "olives"
+    ],
+    "price_per_kg": 1.89,
+    "price_schedule": null,
+    "max_demand_kg": 3500.0,
+    "max_per_day_kg": 800.0,
+    "min_contract_kg": null,
+    "min_order_kg": null,
+    "window_start_day": null,
+    "window_end_day": null,
+    "requires_cold_chain": false,
+    "payment_terms_days": null,
+    "priority": "spot"
+   },
+   {
+    "id": "buyer_tn_03",
+    "name": "Cooperative Export Sousse",
+    "location": "Sousse",
+    "crop_ids": [
+     "olives"
+    ],
+    "price_per_kg": 2.025,
+    "price_schedule": null,
+    "max_demand_kg": 4000.0,
+    "max_per_day_kg": null,
+    "min_contract_kg": 1000.0,
+    "min_order_kg": null,
+    "window_start_day": null,
+    "window_end_day": null,
+    "requires_cold_chain": false,
+    "payment_terms_days": null,
+    "priority": "contract"
+   },
+   {
+    "id": "buyer_tn_04",
+    "name": "EU Import Consortium",
+    "location": "Port de Radès",
+    "crop_ids": [
+     "olives"
+    ],
+    "price_per_kg": 2.61,
+    "price_schedule": [
+     {
+      "day": 14,
+      "price": 2.745
+     }
+    ],
+    "max_demand_kg": 6000.0,
+    "max_per_day_kg": null,
+    "min_contract_kg": null,
+    "min_order_kg": 2000.0,
+    "window_start_day": 7,
+    "window_end_day": null,
+    "requires_cold_chain": false,
+    "payment_terms_days": null,
+    "priority": "spot"
+   }
+  ],
+  "storage_facilities": [
+   {
+    "id": "hangar_sfax",
+    "name": "Hangar ambiant Sfax",
+    "capacity_kg": 4000.0,
+    "refrigerated": false,
+    "cost_per_kg_per_day": 0.03
+   },
+   {
+    "id": "cold_room_sfax",
+    "name": "Chambre froide Sfax",
+    "capacity_kg": 1500.0,
+    "refrigerated": true,
+    "cost_per_kg_per_day": 0.08
+   }
+  ],
+  "vehicle_types": [
+   {
+    "id": "truck_3t",
+    "name": "Camion 3 t",
+    "capacity_kg": 3000.0,
+    "count": 3,
+    "refrigerated": false,
+    "fixed_cost_per_trip": 40.0,
+    "cost_per_km": 1.1,
+    "avg_speed_kmh": 60.0,
+    "hours_per_day": 12.0,
+    "loading_hours_per_trip": 1.0,
+    "max_trips_per_day": null
+   }
+  ],
+  "routes": [
+   {
+    "buyer_id": "buyer_tn_01",
+    "distance_km": 12.0,
+    "road_condition": "fair",
+    "road_factor_override": null,
+    "legacy_cost_per_kg_per_km": null,
+    "toll_per_trip": null
+   },
+   {
+    "buyer_id": "buyer_tn_02",
+    "distance_km": 270.0,
+    "road_condition": "fair",
+    "road_factor_override": null,
+    "legacy_cost_per_kg_per_km": null,
+    "toll_per_trip": null
+   },
+   {
+    "buyer_id": "buyer_tn_03",
+    "distance_km": 140.0,
+    "road_condition": "fair",
+    "road_factor_override": null,
+    "legacy_cost_per_kg_per_km": null,
+    "toll_per_trip": null
+   },
+   {
+    "buyer_id": "buyer_tn_04",
+    "distance_km": 260.0,
+    "road_condition": "fair",
+    "road_factor_override": null,
+    "legacy_cost_per_kg_per_km": null,
+    "toll_per_trip": null
+   }
+  ]
+ },
+ "diff": [
+  {
+   "path": "buyers[buyer_tn_01].price_per_kg",
+   "kind": "changed",
+   "before": 2.4,
+   "after": 2.16
+  },
+  {
+   "path": "buyers[buyer_tn_02].price_per_kg",
+   "kind": "changed",
+   "before": 2.1,
+   "after": 1.89
+  },
+  {
+   "path": "buyers[buyer_tn_03].price_per_kg",
+   "kind": "changed",
+   "before": 2.25,
+   "after": 2.025
+  },
+  {
+   "path": "buyers[buyer_tn_04].price_per_kg",
+   "kind": "changed",
+   "before": 2.9,
+   "after": 2.61
+  },
+  {
+   "path": "buyers[buyer_tn_04].price_schedule",
+   "kind": "changed",
+   "before": [
+    {
+     "day": 14,
+     "price": 3.05
+    }
+   ],
+   "after": [
+    {
+     "day": 14,
+     "price": 2.745
+    }
+   ]
+  }
+ ],
+ "applied": [
+  {
+   "index": 0,
+   "op": "buyer_price",
+   "target": "*",
+   "summary": "price_per_kg buyer_tn_01: 2.4 -> 2.16, buyer_tn_02: 2.1 -> 1.89, buyer_tn_03: 2.25 -> 2.025, buyer_tn_04: 2.9 -> 2.61 (+1 scheduled prices)",
+   "scenario_id": "6cf625f7-a969-40d3-b3b3-49bb87eab86c",
+   "change_id": "c0e3d6af-c839-4ab6-b634-38a61b7a9c81"
+  }
+ ],
+ "validation": {
+  "errors": [],
+  "warnings": [],
+  "assumptions": [
+   {
+    "code": "ROAD_FACTOR_DEFAULT",
+    "message": "Default road factors (good 1.00, fair 1.15, poor 1.35) are applied to distances for routes to ['buyer_tn_01', 'buyer_tn_02', 'buyer_tn_03', 'buyer_tn_04'].",
+    "path": "routes"
+   }
+  ]
+ }
+}

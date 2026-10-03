@@ -1,0 +1,87 @@
+{
+ "run_id": "eab0049f-e49b-4513-9bc2-b5946cca0547",
+ "best_buyer_id": "buyer_tn_04",
+ "buyers": [
+  {
+   "buyer_id": "buyer_tn_04",
+   "buyer_name": "EU Import Consortium",
+   "location": "Port de Radès",
+   "price_per_kg": 2.9,
+   "max_demand_kg": 6000.0,
+   "sold_kg": 6000.0,
+   "share_of_sales_pct": 50.06,
+   "fulfillment_pct": 100.0,
+   "revenue": 17347.8,
+   "transport_cost": 1395.6,
+   "net_revenue": 15952.2,
+   "net_price_per_kg": 2.6587,
+   "estimated_net_price_per_kg": 2.6674,
+   "market_rank": 1,
+   "distance_km": 260.0,
+   "served_days": [
+    7,
+    10
+   ]
+  },
+  {
+   "buyer_id": "buyer_tn_01",
+   "buyer_name": "Huilerie Sfax Export",
+   "location": "Sfax",
+   "price_per_kg": 2.4,
+   "max_demand_kg": 5000.0,
+   "sold_kg": 3987.96,
+   "share_of_sales_pct": 33.27,
+   "fulfillment_pct": 79.76,
+   "revenue": 9560.31,
+   "transport_cost": 211.08,
+   "net_revenue": 9349.23,
+   "net_price_per_kg": 2.3444,
+   "estimated_net_price_per_kg": 2.3531,
+   "market_rank": 2,
+   "distance_km": 12.0,
+   "served_days": [
+    0,
+    1,
+    5
+   ]
+  },
+  {
+   "buyer_id": "buyer_tn_03",
+   "buyer_name": "Cooperative Export Sousse",
+   "location": "Sousse",
+   "price_per_kg": 2.25,
+   "max_demand_kg": 4000.0,
+   "sold_kg": 1996.99,
+   "share_of_sales_pct": 16.66,
+   "fulfillment_pct": 49.92,
+   "revenue": 4493.24,
+   "transport_cost": 394.2,
+   "net_revenue": 4099.04,
+   "net_price_per_kg": 2.0526,
+   "estimated_net_price_per_kg": 2.1186,
+   "market_rank": 3,
+   "distance_km": 140.0,
+   "served_days": [
+    0
+   ]
+  },
+  {
+   "buyer_id": "buyer_tn_02",
+   "buyer_name": "Marche Central Tunis",
+   "location": "Tunis",
+   "price_per_kg": 2.1,
+   "max_demand_kg": 3500.0,
+   "sold_kg": 0.0,
+   "share_of_sales_pct": 0.0,
+   "fulfillment_pct": 0.0,
+   "revenue": 0.0,
+   "transport_cost": 0.0,
+   "net_revenue": 0.0,
+   "net_price_per_kg": null,
+   "estimated_net_price_per_kg": 1.1961,
+   "market_rank": 4,
+   "distance_km": 270.0,
+   "served_days": []
+  }
+ ]
+}

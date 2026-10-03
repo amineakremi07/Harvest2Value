@@ -1,0 +1,408 @@
+{
+ "run_id": "eab0049f-e49b-4513-9bc2-b5946cca0547",
+ "harvest_kg": 12000.0,
+ "sold_kg": 11984.96,
+ "lost_kg": 15.04,
+ "ending_inventory_kg": 0.0,
+ "rates": {
+  "sold_rate_pct": 99.87,
+  "waste_rate_pct": 0.13,
+  "storage_rate_pct": 37.63,
+  "fulfillment_rate_pct": 64.78,
+  "vehicle_utilization_pct": 1.51,
+  "load_factor_pct": 66.58,
+  "storage_utilization_peak_pct": 75.3,
+  "storage_utilization_avg_pct": 1.57
+ },
+ "waste_by_kind": {
+  "daily_loss": 15.04
+ },
+ "daily": [
+  {
+   "day": 0,
+   "sold_kg": 3496.99,
+   "stock_end_kg": 1503.01,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 1,
+   "sold_kg": 1500.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 3.01
+  },
+  {
+   "day": 2,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 3,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 4,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 5,
+   "sold_kg": 987.96,
+   "stock_end_kg": 3012.04,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 6,
+   "sold_kg": 0.0,
+   "stock_end_kg": 3006.01,
+   "lost_kg": 6.02
+  },
+  {
+   "day": 7,
+   "sold_kg": 3000.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 6.01
+  },
+  {
+   "day": 8,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 9,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 10,
+   "sold_kg": 3000.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 11,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 12,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 13,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 14,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 15,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 16,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 17,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 18,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 19,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 20,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 21,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 22,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 23,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 24,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 25,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 26,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 27,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 28,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 29,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 30,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 31,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 32,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 33,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 34,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 35,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 36,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 37,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 38,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 39,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 40,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 41,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 42,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 43,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 44,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 45,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 46,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 47,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 48,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 49,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 50,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 51,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 52,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 53,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 54,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 55,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 56,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 57,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 58,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  },
+  {
+   "day": 59,
+   "sold_kg": 0.0,
+   "stock_end_kg": 0.0,
+   "lost_kg": 0.0
+  }
+ ],
+ "storage": [
+  {
+   "facility_id": "hangar_sfax",
+   "name": "Hangar ambiant Sfax",
+   "capacity_kg": 4000.0,
+   "usable": true,
+   "stored_kg": 4515.05,
+   "peak_kg": 3012.04,
+   "peak_pct": 75.3,
+   "avg_pct": 3.13,
+   "full_days": [],
+   "cost": 225.63
+  },
+  {
+   "facility_id": "cold_room_sfax",
+   "name": "Chambre froide Sfax",
+   "capacity_kg": 1500.0,
+   "usable": true,
+   "stored_kg": 0.0,
+   "peak_kg": 0.0,
+   "peak_pct": 0.0,
+   "avg_pct": 0.0,
+   "full_days": [],
+   "cost": 0.0
+  }
+ ]
+}

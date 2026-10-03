@@ -37,7 +37,7 @@ async def meta(request: Request, settings: Settings = Depends(get_app_settings))
             max_body_bytes=settings.max_body_bytes,
             solver_time_limit_s=settings.solver_time_limit_s,
         ),
-        features=MetaFeatures(datasets=True, runs=True, scenarios=True, explainability=True),
+        features=MetaFeatures(datasets=True, runs=True, scenarios=True, explainability=True, copilot=settings.llm_configured, reports=True),
         objectives=[o.value for o in ObjectiveKind],
         run_statuses=[s.value for s in RunStatus],
         change_ops=_change_ops(),

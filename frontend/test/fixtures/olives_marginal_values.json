@@ -1,0 +1,181 @@
+{
+ "duals": [
+  {
+   "key": "demand_day|buyer_tn_01|0",
+   "label": "Daily demand limit of Huilerie Sfax Export (day 0)",
+   "family": "demand_day",
+   "value": 0.0,
+   "reliable": false,
+   "reason": "degenerate: binding with a zero dual (another binding constraint carries the value)"
+  },
+  {
+   "key": "demand_day|buyer_tn_01|1",
+   "label": "Daily demand limit of Huilerie Sfax Export (day 1)",
+   "family": "demand_day",
+   "value": 0.108231,
+   "reliable": true,
+   "reason": null
+  },
+  {
+   "key": "demand_max|buyer_tn_04|",
+   "label": "Maximum demand of EU Import Consortium",
+   "family": "demand_max",
+   "value": 0.412791,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|0",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 0)",
+   "family": "trip_capacity",
+   "value": 0.15,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|1",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 1)",
+   "family": "trip_capacity",
+   "value": 0.0,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|2",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 2)",
+   "family": "trip_capacity",
+   "value": 0.066392,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|3",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 3)",
+   "family": "trip_capacity",
+   "value": 0.024485,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|4",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 4)",
+   "family": "trip_capacity",
+   "value": 0.0,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|6",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 6)",
+   "family": "trip_capacity",
+   "value": 0.0,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|7",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 7)",
+   "family": "trip_capacity",
+   "value": 0.0,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|8",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 8)",
+   "family": "trip_capacity",
+   "value": 2.4584,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|9",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 9)",
+   "family": "trip_capacity",
+   "value": 2.4152,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|10",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 10)",
+   "family": "trip_capacity",
+   "value": 2.364,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|11",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 11)",
+   "family": "trip_capacity",
+   "value": 6.220177,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|12",
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 12)",
+   "family": "trip_capacity",
+   "value": 6.136728,
+   "reliable": false,
+   "reason": "depends on trip or served-buyer decisions held fixed (conditional on integer choices)"
+  }
+ ],
+ "duals_available": true,
+ "probes": [
+  {
+   "constraint_key": "demand_day|buyer_tn_01|",
+   "label": "+10 % daily demand limit at Huilerie Sfax Export",
+   "change": {
+    "op": "buyer_demand",
+    "target": "buyer_tn_01",
+    "params": {
+     "field": "max_per_day_kg",
+     "mode": "relative_pct",
+     "value": 10
+    }
+   },
+   "outcome": "optimal",
+   "objective_value": 29213.5729,
+   "delta_objective": 38.7347,
+   "significant": false,
+   "delta_kpis": {
+    "realized_profit": 38.73,
+    "realized_revenue": 43.24,
+    "sold_kg": -0.3,
+    "lost_kg": 0.3,
+    "transport_cost": 0.0,
+    "storage_cost": 4.51,
+    "trips": 0.0
+   }
+  },
+  {
+   "constraint_key": "demand_max|buyer_tn_04|",
+   "label": "+10 % maximum demand at EU Import Consortium",
+   "change": {
+    "op": "buyer_demand",
+    "target": "buyer_tn_04",
+    "params": {
+     "field": "max_demand_kg",
+     "mode": "relative_pct",
+     "value": 10
+    }
+   },
+   "outcome": "optimal",
+   "objective_value": 29174.8382,
+   "delta_objective": 0.0,
+   "significant": false,
+   "delta_kpis": {
+    "realized_profit": 0.0,
+    "realized_revenue": 0.0,
+    "sold_kg": 0.0,
+    "lost_kg": 0.0,
+    "transport_cost": 0.0,
+    "storage_cost": 0.0,
+    "trips": 0.0
+   }
+  }
+ ],
+ "probes_computed": true,
+ "probe_gap": 0.01
+}

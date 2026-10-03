@@ -1,0 +1,6 @@
+[
+  {"tool_calls": [{"name": "get_run", "arguments": {}}]},
+  "Le profit réalisé de ce plan est de {{ref:r1.kpis.realized_profit}}.",
+  {"tool_calls": [{"name": "create_scenario", "arguments": {"name": "Copilot prix -10 %", "changes": [{"op": "buyer_price", "target": "*", "params": {"mode": "relative_pct", "value": -10}}]}}]},
+  "Je propose ce scénario : vérifiez-le puis confirmez-le ci-dessous."
+]

@@ -1,0 +1,882 @@
+{
+ "api_version": "v2",
+ "app_version": "2.0.0-dev",
+ "environment": "development",
+ "llm": {
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "configured": true
+ },
+ "limits": {
+  "max_body_bytes": 2000000,
+  "solver_time_limit_s": 30
+ },
+ "features": {
+  "datasets": true,
+  "runs": true,
+  "scenarios": true,
+  "explainability": true,
+  "copilot": false,
+  "reports": false
+ },
+ "objectives": [
+  "profit",
+  "revenue",
+  "waste",
+  "cost",
+  "weighted"
+ ],
+ "run_statuses": [
+  "queued",
+  "running",
+  "succeeded",
+  "infeasible",
+  "timeout",
+  "failed",
+  "cancelled",
+  "interrupted"
+ ],
+ "change_ops": [
+  {
+   "op": "buyer_price",
+   "description": "Buyer price (and price schedule)",
+   "target": "one_or_all",
+   "params_schema": {
+    "$defs": {
+     "ChangeMode": {
+      "enum": [
+       "absolute",
+       "relative_pct",
+       "delta"
+      ],
+      "title": "ChangeMode",
+      "type": "string"
+     }
+    },
+    "additionalProperties": false,
+    "properties": {
+     "mode": {
+      "$ref": "#/$defs/ChangeMode"
+     },
+     "value": {
+      "maximum": 100000000.0,
+      "minimum": -100000000.0,
+      "title": "Value",
+      "type": "number"
+     }
+    },
+    "required": [
+     "mode",
+     "value"
+    ],
+    "title": "NumericParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "buyer_demand",
+   "description": "Buyer demand: max_demand_kg, max_per_day_kg or min_contract_kg",
+   "target": "one_or_all",
+   "params_schema": {
+    "$defs": {
+     "ChangeMode": {
+      "enum": [
+       "absolute",
+       "relative_pct",
+       "delta"
+      ],
+      "title": "ChangeMode",
+      "type": "string"
+     }
+    },
+    "additionalProperties": false,
+    "properties": {
+     "mode": {
+      "$ref": "#/$defs/ChangeMode"
+     },
+     "value": {
+      "maximum": 100000000.0,
+      "minimum": -100000000.0,
+      "title": "Value",
+      "type": "number"
+     },
+     "field": {
+      "enum": [
+       "max_demand_kg",
+       "max_per_day_kg",
+       "min_contract_kg"
+      ],
+      "title": "Field",
+      "type": "string"
+     }
+    },
+    "required": [
+     "mode",
+     "value",
+     "field"
+    ],
+    "title": "BuyerDemandParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "harvest_quantity",
+   "description": "Quantity of a harvest lot",
+   "target": "one_or_all",
+   "params_schema": {
+    "$defs": {
+     "ChangeMode": {
+      "enum": [
+       "absolute",
+       "relative_pct",
+       "delta"
+      ],
+      "title": "ChangeMode",
+      "type": "string"
+     }
+    },
+    "additionalProperties": false,
+    "properties": {
+     "mode": {
+      "$ref": "#/$defs/ChangeMode"
+     },
+     "value": {
+      "maximum": 100000000.0,
+      "minimum": -100000000.0,
+      "title": "Value",
+      "type": "number"
+     }
+    },
+    "required": [
+     "mode",
+     "value"
+    ],
+    "title": "NumericParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "harvest_timing",
+   "description": "Shift the day a harvest lot becomes available",
+   "target": "one",
+   "params_schema": {
+    "additionalProperties": false,
+    "properties": {
+     "shift_days": {
+      "maximum": 365,
+      "minimum": -365,
+      "title": "Shift Days",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "shift_days"
+    ],
+    "title": "TimingParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "storage_capacity",
+   "description": "Capacity of a storage facility",
+   "target": "one",
+   "params_schema": {
+    "$defs": {
+     "ChangeMode": {
+      "enum": [
+       "absolute",
+       "relative_pct",
+       "delta"
+      ],
+      "title": "ChangeMode",
+      "type": "string"
+     }
+    },
+    "additionalProperties": false,
+    "properties": {
+     "mode": {
+      "$ref": "#/$defs/ChangeMode"
+     },
+     "value": {
+      "maximum": 100000000.0,
+      "minimum": -100000000.0,
+      "title": "Value",
+      "type": "number"
+     }
+    },
+    "required": [
+     "mode",
+     "value"
+    ],
+    "title": "NumericParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "storage_cost",
+   "description": "Storage cost per kg per day",
+   "target": "one_or_all",
+   "params_schema": {
+    "$defs": {
+     "ChangeMode": {
+      "enum": [
+       "absolute",
+       "relative_pct",
+       "delta"
+      ],
+      "title": "ChangeMode",
+      "type": "string"
+     }
+    },
+    "additionalProperties": false,
+    "properties": {
+     "mode": {
+      "$ref": "#/$defs/ChangeMode"
+     },
+     "value": {
+      "maximum": 100000000.0,
+      "minimum": -100000000.0,
+      "title": "Value",
+      "type": "number"
+     }
+    },
+    "required": [
+     "mode",
+     "value"
+    ],
+    "title": "NumericParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "add_storage",
+   "description": "Add a storage facility",
+   "target": "none",
+   "params_schema": {
+    "$defs": {
+     "StorageFacility": {
+      "additionalProperties": false,
+      "properties": {
+       "id": {
+        "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+        "title": "Id",
+        "type": "string"
+       },
+       "name": {
+        "maxLength": 120,
+        "minLength": 1,
+        "title": "Name",
+        "type": "string"
+       },
+       "capacity_kg": {
+        "maximum": 100000000.0,
+        "minimum": 0,
+        "title": "Capacity Kg",
+        "type": "number"
+       },
+       "refrigerated": {
+        "default": false,
+        "title": "Refrigerated",
+        "type": "boolean"
+       },
+       "cost_per_kg_per_day": {
+        "maximum": 1000.0,
+        "minimum": 0,
+        "title": "Cost Per Kg Per Day",
+        "type": "number"
+       }
+      },
+      "required": [
+       "id",
+       "name",
+       "capacity_kg",
+       "cost_per_kg_per_day"
+      ],
+      "title": "StorageFacility",
+      "type": "object"
+     }
+    },
+    "additionalProperties": false,
+    "properties": {
+     "facility": {
+      "$ref": "#/$defs/StorageFacility"
+     }
+    },
+    "required": [
+     "facility"
+    ],
+    "title": "AddStorageParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "remove_storage",
+   "description": "Remove a storage facility",
+   "target": "one",
+   "params_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "title": "EmptyParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "transport_cost",
+   "description": "Vehicle cost per km (fuel proxy) or fixed cost per trip",
+   "target": "one_or_all",
+   "params_schema": {
+    "$defs": {
+     "ChangeMode": {
+      "enum": [
+       "absolute",
+       "relative_pct",
+       "delta"
+      ],
+      "title": "ChangeMode",
+      "type": "string"
+     }
+    },
+    "additionalProperties": false,
+    "properties": {
+     "mode": {
+      "$ref": "#/$defs/ChangeMode"
+     },
+     "value": {
+      "maximum": 100000000.0,
+      "minimum": -100000000.0,
+      "title": "Value",
+      "type": "number"
+     },
+     "field": {
+      "enum": [
+       "cost_per_km",
+       "fixed_cost_per_trip"
+      ],
+      "title": "Field",
+      "type": "string"
+     }
+    },
+    "required": [
+     "mode",
+     "value",
+     "field"
+    ],
+    "title": "TransportCostParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "vehicle_count",
+   "description": "Number of vehicles of a type",
+   "target": "one",
+   "params_schema": {
+    "additionalProperties": false,
+    "properties": {
+     "mode": {
+      "enum": [
+       "absolute",
+       "delta"
+      ],
+      "title": "Mode",
+      "type": "string"
+     },
+     "value": {
+      "maximum": 1000,
+      "minimum": -1000,
+      "title": "Value",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "mode",
+     "value"
+    ],
+    "title": "VehicleCountParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "vehicle_capacity",
+   "description": "Capacity of a vehicle type",
+   "target": "one",
+   "params_schema": {
+    "$defs": {
+     "ChangeMode": {
+      "enum": [
+       "absolute",
+       "relative_pct",
+       "delta"
+      ],
+      "title": "ChangeMode",
+      "type": "string"
+     }
+    },
+    "additionalProperties": false,
+    "properties": {
+     "mode": {
+      "$ref": "#/$defs/ChangeMode"
+     },
+     "value": {
+      "maximum": 100000000.0,
+      "minimum": -100000000.0,
+      "title": "Value",
+      "type": "number"
+     }
+    },
+    "required": [
+     "mode",
+     "value"
+    ],
+    "title": "NumericParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "shelf_life",
+   "description": "Ambient or cold shelf life of a crop",
+   "target": "one",
+   "params_schema": {
+    "$defs": {
+     "ChangeMode": {
+      "enum": [
+       "absolute",
+       "relative_pct",
+       "delta"
+      ],
+      "title": "ChangeMode",
+      "type": "string"
+     }
+    },
+    "additionalProperties": false,
+    "properties": {
+     "mode": {
+      "$ref": "#/$defs/ChangeMode"
+     },
+     "value": {
+      "maximum": 100000000.0,
+      "minimum": -100000000.0,
+      "title": "Value",
+      "type": "number"
+     },
+     "field": {
+      "enum": [
+       "ambient",
+       "cold"
+      ],
+      "title": "Field",
+      "type": "string"
+     }
+    },
+    "required": [
+     "mode",
+     "value",
+     "field"
+    ],
+    "title": "ShelfLifeParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "add_buyer",
+   "description": "Add a buyer and its route",
+   "target": "none",
+   "params_schema": {
+    "$defs": {
+     "Buyer": {
+      "additionalProperties": false,
+      "properties": {
+       "id": {
+        "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+        "title": "Id",
+        "type": "string"
+       },
+       "name": {
+        "maxLength": 120,
+        "minLength": 1,
+        "title": "Name",
+        "type": "string"
+       },
+       "location": {
+        "maxLength": 120,
+        "minLength": 1,
+        "title": "Location",
+        "type": "string"
+       },
+       "crop_ids": {
+        "items": {
+         "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+         "type": "string"
+        },
+        "minItems": 1,
+        "title": "Crop Ids",
+        "type": "array"
+       },
+       "price_per_kg": {
+        "maximum": 10000.0,
+        "minimum": 0,
+        "title": "Price Per Kg",
+        "type": "number"
+       },
+       "price_schedule": {
+        "anyOf": [
+         {
+          "items": {
+           "$ref": "#/$defs/PricePoint"
+          },
+          "type": "array"
+         },
+         {
+          "type": "null"
+         }
+        ],
+        "default": null,
+        "title": "Price Schedule"
+       },
+       "max_demand_kg": {
+        "exclusiveMinimum": 0,
+        "maximum": 100000000.0,
+        "title": "Max Demand Kg",
+        "type": "number"
+       },
+       "max_per_day_kg": {
+        "anyOf": [
+         {
+          "exclusiveMinimum": 0,
+          "maximum": 100000000.0,
+          "type": "number"
+         },
+         {
+          "type": "null"
+         }
+        ],
+        "default": null,
+        "title": "Max Per Day Kg"
+       },
+       "min_contract_kg": {
+        "anyOf": [
+         {
+          "maximum": 100000000.0,
+          "minimum": 0,
+          "type": "number"
+         },
+         {
+          "type": "null"
+         }
+        ],
+        "default": null,
+        "title": "Min Contract Kg"
+       },
+       "min_order_kg": {
+        "anyOf": [
+         {
+          "maximum": 100000000.0,
+          "minimum": 0,
+          "type": "number"
+         },
+         {
+          "type": "null"
+         }
+        ],
+        "default": null,
+        "title": "Min Order Kg"
+       },
+       "window_start_day": {
+        "anyOf": [
+         {
+          "maximum": 365,
+          "minimum": 0,
+          "type": "integer"
+         },
+         {
+          "type": "null"
+         }
+        ],
+        "default": null,
+        "title": "Window Start Day"
+       },
+       "window_end_day": {
+        "anyOf": [
+         {
+          "maximum": 365,
+          "minimum": 0,
+          "type": "integer"
+         },
+         {
+          "type": "null"
+         }
+        ],
+        "default": null,
+        "title": "Window End Day"
+       },
+       "requires_cold_chain": {
+        "default": false,
+        "title": "Requires Cold Chain",
+        "type": "boolean"
+       },
+       "payment_terms_days": {
+        "anyOf": [
+         {
+          "maximum": 365,
+          "minimum": 0,
+          "type": "integer"
+         },
+         {
+          "type": "null"
+         }
+        ],
+        "default": null,
+        "title": "Payment Terms Days"
+       },
+       "priority": {
+        "$ref": "#/$defs/BuyerPriority",
+        "default": "spot"
+       }
+      },
+      "required": [
+       "id",
+       "name",
+       "location",
+       "crop_ids",
+       "price_per_kg",
+       "max_demand_kg"
+      ],
+      "title": "Buyer",
+      "type": "object"
+     },
+     "BuyerPriority": {
+      "enum": [
+       "contract",
+       "spot"
+      ],
+      "title": "BuyerPriority",
+      "type": "string"
+     },
+     "PricePoint": {
+      "additionalProperties": false,
+      "description": "From `day` on (until the next point), the buyer pays `price`.",
+      "properties": {
+       "day": {
+        "maximum": 365,
+        "minimum": 0,
+        "title": "Day",
+        "type": "integer"
+       },
+       "price": {
+        "maximum": 10000.0,
+        "minimum": 0,
+        "title": "Price",
+        "type": "number"
+       }
+      },
+      "required": [
+       "day",
+       "price"
+      ],
+      "title": "PricePoint",
+      "type": "object"
+     },
+     "RoadCondition": {
+      "enum": [
+       "good",
+       "fair",
+       "poor"
+      ],
+      "title": "RoadCondition",
+      "type": "string"
+     },
+     "Route": {
+      "additionalProperties": false,
+      "properties": {
+       "buyer_id": {
+        "pattern": "^[A-Za-z0-9_.\\-]{1,64}$",
+        "title": "Buyer Id",
+        "type": "string"
+       },
+       "distance_km": {
+        "maximum": 5000,
+        "minimum": 0,
+        "title": "Distance Km",
+        "type": "number"
+       },
+       "road_condition": {
+        "$ref": "#/$defs/RoadCondition",
+        "default": "fair"
+       },
+       "road_factor_override": {
+        "anyOf": [
+         {
+          "maximum": 5,
+          "minimum": 1,
+          "type": "number"
+         },
+         {
+          "type": "null"
+         }
+        ],
+        "default": null,
+        "title": "Road Factor Override"
+       },
+       "legacy_cost_per_kg_per_km": {
+        "anyOf": [
+         {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+         },
+         {
+          "type": "null"
+         }
+        ],
+        "default": null,
+        "title": "Legacy Cost Per Kg Per Km"
+       },
+       "toll_per_trip": {
+        "anyOf": [
+         {
+          "maximum": 100000.0,
+          "minimum": 0,
+          "type": "number"
+         },
+         {
+          "type": "null"
+         }
+        ],
+        "default": null,
+        "title": "Toll Per Trip"
+       }
+      },
+      "required": [
+       "buyer_id",
+       "distance_km"
+      ],
+      "title": "Route",
+      "type": "object"
+     }
+    },
+    "additionalProperties": false,
+    "properties": {
+     "buyer": {
+      "$ref": "#/$defs/Buyer"
+     },
+     "route": {
+      "$ref": "#/$defs/Route"
+     }
+    },
+    "required": [
+     "buyer",
+     "route"
+    ],
+    "title": "AddBuyerParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "remove_buyer",
+   "description": "Remove a buyer and its route",
+   "target": "one",
+   "params_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "title": "EmptyParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "route",
+   "description": "Route distance, road condition or toll",
+   "target": "one",
+   "params_schema": {
+    "$defs": {
+     "ChangeMode": {
+      "enum": [
+       "absolute",
+       "relative_pct",
+       "delta"
+      ],
+      "title": "ChangeMode",
+      "type": "string"
+     },
+     "RoadCondition": {
+      "enum": [
+       "good",
+       "fair",
+       "poor"
+      ],
+      "title": "RoadCondition",
+      "type": "string"
+     }
+    },
+    "additionalProperties": false,
+    "properties": {
+     "field": {
+      "enum": [
+       "distance_km",
+       "road_condition",
+       "toll_per_trip"
+      ],
+      "title": "Field",
+      "type": "string"
+     },
+     "mode": {
+      "anyOf": [
+       {
+        "$ref": "#/$defs/ChangeMode"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null
+     },
+     "value": {
+      "anyOf": [
+       {
+        "$ref": "#/$defs/RoadCondition"
+       },
+       {
+        "maximum": 100000000.0,
+        "minimum": -100000000.0,
+        "type": "number"
+       }
+      ],
+      "title": "Value"
+     }
+    },
+    "required": [
+     "field",
+     "value"
+    ],
+    "title": "RouteParams",
+    "type": "object"
+   }
+  },
+  {
+   "op": "cold_chain",
+   "description": "Cold-chain requirement of a buyer or a crop",
+   "target": "one",
+   "params_schema": {
+    "additionalProperties": false,
+    "properties": {
+     "required": {
+      "title": "Required",
+      "type": "boolean"
+     },
+     "entity": {
+      "default": "buyer",
+      "enum": [
+       "buyer",
+       "crop"
+      ],
+      "title": "Entity",
+      "type": "string"
+     }
+    },
+    "required": [
+     "required"
+    ],
+    "title": "ColdChainParams",
+    "type": "object"
+   }
+  }
+ ]
+}

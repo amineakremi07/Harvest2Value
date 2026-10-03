@@ -9,7 +9,9 @@ from fastapi import Request
 from sqlalchemy.orm import Session
 from starlette.concurrency import run_in_threadpool
 
+from ..ai.providers import LLMProvider
 from ..core.config import Settings
+from ..core.errors import LLMNotConfigured
 from ..core.security import RateLimiter
 from ..db.session import unit_of_work
 from ..optimization.engine import OptimizationEngine
@@ -59,3 +61,16 @@ async def in_transaction(request: Request, work: Callable[[Session], T]) -> T:
             return work(session)
 
     return await run_in_threadpool(_call)
+
+
+def get_llm(request: Request) -> LLMProvider:
+    """The app's LLM provider. Without a key the AI endpoints answer 503 LLM_NOT_CONFIGURED and
+    the rest of the application keeps working."""
+    settings = get_app_settings(request)
+    if not settings.llm_configured:
+        raise LLMNotConfigured(
+            "AI features are disabled: no LLM API key is configured (set LLM_API_KEY).",
+            details={"provider": settings.llm_provider},
+        )
+    provider: LLMProvider = request.app.state.llm_provider
+    return provider

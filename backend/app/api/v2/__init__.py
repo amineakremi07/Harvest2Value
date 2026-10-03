@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter
 
-from . import analytics, comparisons, datasets, explain, health, insights, meta, runs, scenarios
+from . import analytics, comparisons, copilot, datasets, explain, health, insights, meta, reports, runs, scenarios
 
 router = APIRouter(prefix="/api/v2")
 router.include_router(health.router)
@@ -12,5 +12,7 @@ router.include_router(runs.router)
 router.include_router(explain.router)
 router.include_router(insights.router)
 router.include_router(analytics.router)
+router.include_router(copilot.router)  # before scenarios: POST /scenarios/parse
 router.include_router(scenarios.router)
 router.include_router(comparisons.router)
+router.include_router(reports.router)

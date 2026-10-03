@@ -1,0 +1,614 @@
+{
+ "run_id": "2ddf966b-b4ed-4f5a-b48a-abd6e6593b01",
+ "decisions": [
+  {
+   "kind": "buyer",
+   "entity_id": "buyer_tn_04",
+   "name": "EU Import Consortium",
+   "decision": "6,000 kg allocated",
+   "metrics": {
+    "sold_kg": 6000.0,
+    "max_demand_kg": 6000.0,
+    "remaining_demand_kg": 0.0,
+    "fulfillment_pct": 100.0,
+    "revenue": 17347.8,
+    "transport_cost": 1395.6,
+    "net_price_per_kg": 2.6587,
+    "estimated_net_price_per_kg": 2.6674,
+    "market_rank": 1
+   },
+   "limiting_factor": {
+    "code": "DEMAND_CAP",
+    "message": "EU Import Consortium received its full maximum demand of 6,000 kg.",
+    "evidence": {
+     "sold_kg": 6000.0,
+     "max_demand_kg": 6000.0
+    },
+    "constraint_keys": [
+     "demand_max|buyer_tn_04|"
+    ]
+   },
+   "marginal_values": [
+    {
+     "kind": "probe",
+     "label": "+10 % maximum demand at EU Import Consortium",
+     "delta_objective": 0.0,
+     "change": {
+      "op": "buyer_demand",
+      "target": "buyer_tn_04",
+      "params": {
+       "field": "max_demand_kg",
+       "mode": "relative_pct",
+       "value": 10
+      }
+     },
+     "reliable": false
+    }
+   ],
+   "alternative": {
+    "buyer_id": "buyer_tn_01",
+    "buyer_name": "Huilerie Sfax Export",
+    "net_price_per_kg": 2.3531,
+    "difference_per_kg": -0.3056,
+    "message": "Sending these 6,000 kg to Huilerie Sfax Export instead of EU Import Consortium would lose 0.306 per kg (estimated at full truck load)."
+   }
+  },
+  {
+   "kind": "buyer",
+   "entity_id": "buyer_tn_01",
+   "name": "Huilerie Sfax Export",
+   "decision": "3,988 kg allocated",
+   "metrics": {
+    "sold_kg": 3987.96,
+    "max_demand_kg": 5000.0,
+    "remaining_demand_kg": 1012.04,
+    "fulfillment_pct": 79.76,
+    "revenue": 9560.31,
+    "transport_cost": 211.08,
+    "net_price_per_kg": 2.3444,
+    "estimated_net_price_per_kg": 2.3531,
+    "market_rank": 2
+   },
+   "limiting_factor": {
+    "code": "DAILY_DEMAND_CAP",
+    "message": "Huilerie Sfax Export took its daily maximum of 1,500 kg on 2 day(s).",
+    "evidence": {
+     "max_per_day_kg": 1500.0,
+     "days": [
+      0,
+      1
+     ],
+     "remaining_demand_kg": 1012.04
+    },
+    "constraint_keys": [
+     "demand_day|buyer_tn_01|0",
+     "demand_day|buyer_tn_01|1"
+    ]
+   },
+   "marginal_values": [
+    {
+     "kind": "probe",
+     "label": "+10 % daily demand limit at Huilerie Sfax Export",
+     "delta_objective": 38.7347,
+     "change": {
+      "op": "buyer_demand",
+      "target": "buyer_tn_01",
+      "params": {
+       "field": "max_per_day_kg",
+       "mode": "relative_pct",
+       "value": 10
+      }
+     },
+     "reliable": false
+    },
+    {
+     "kind": "dual",
+     "label": "+1 kg: Daily demand limit of Huilerie Sfax Export (day 1)",
+     "delta_objective": 0.108231,
+     "change": null,
+     "reliable": true
+    }
+   ],
+   "alternative": {
+    "buyer_id": "buyer_tn_03",
+    "buyer_name": "Cooperative Export Sousse",
+    "net_price_per_kg": 2.1186,
+    "difference_per_kg": -0.2258,
+    "message": "Sending these 3,988 kg to Cooperative Export Sousse instead of Huilerie Sfax Export would lose 0.226 per kg (estimated at full truck load)."
+   }
+  },
+  {
+   "kind": "buyer",
+   "entity_id": "buyer_tn_03",
+   "name": "Cooperative Export Sousse",
+   "decision": "1,997 kg allocated",
+   "metrics": {
+    "sold_kg": 1996.99,
+    "max_demand_kg": 4000.0,
+    "remaining_demand_kg": 2003.01,
+    "fulfillment_pct": 49.92,
+    "revenue": 4493.24,
+    "transport_cost": 394.2,
+    "net_price_per_kg": 2.0526,
+    "estimated_net_price_per_kg": 2.1186,
+    "market_rank": 3
+   },
+   "limiting_factor": {
+    "code": "OPPORTUNITY",
+    "message": "Better-paying outlets (EU Import Consortium, Huilerie Sfax Export) absorbed the volume before Cooperative Export Sousse.",
+    "evidence": {
+     "better_outlets": [
+      "EU Import Consortium",
+      "Huilerie Sfax Export"
+     ],
+     "remaining_demand_kg": 2003.01
+    },
+    "constraint_keys": []
+   },
+   "marginal_values": [],
+   "alternative": {
+    "buyer_id": "buyer_tn_01",
+    "buyer_name": "Huilerie Sfax Export",
+    "net_price_per_kg": 2.3531,
+    "difference_per_kg": 0.3005,
+    "message": "Sending these 1,997 kg to Huilerie Sfax Export instead of Cooperative Export Sousse would earn 0.300 per kg (estimated at full truck load)."
+   }
+  },
+  {
+   "kind": "buyer",
+   "entity_id": "buyer_tn_02",
+   "name": "Marche Central Tunis",
+   "decision": "Not served",
+   "metrics": {
+    "sold_kg": 0.0,
+    "max_demand_kg": 3500.0,
+    "remaining_demand_kg": 3500.0,
+    "fulfillment_pct": 0.0,
+    "revenue": 0.0,
+    "transport_cost": 0.0,
+    "net_price_per_kg": null,
+    "estimated_net_price_per_kg": 1.1961,
+    "market_rank": 4
+   },
+   "limiting_factor": {
+    "code": "OPPORTUNITY",
+    "message": "Better-paying outlets (EU Import Consortium, Huilerie Sfax Export, Cooperative Export Sousse) absorbed the volume before Marche Central Tunis.",
+    "evidence": {
+     "better_outlets": [
+      "EU Import Consortium",
+      "Huilerie Sfax Export",
+      "Cooperative Export Sousse"
+     ],
+     "remaining_demand_kg": 3500.0
+    },
+    "constraint_keys": []
+   },
+   "marginal_values": [],
+   "alternative": null
+  },
+  {
+   "kind": "storage",
+   "entity_id": "hangar_sfax",
+   "name": "Hangar ambiant Sfax",
+   "decision": "4,515 kg stored",
+   "metrics": {
+    "stored_kg": 4515.05,
+    "capacity_kg": 4000.0,
+    "peak_pct": 75.3,
+    "avg_pct": 3.13,
+    "cost": 225.63,
+    "usable": "yes"
+   },
+   "limiting_factor": null,
+   "marginal_values": [],
+   "alternative": null
+  },
+  {
+   "kind": "storage",
+   "entity_id": "cold_room_sfax",
+   "name": "Chambre froide Sfax",
+   "decision": "Not used",
+   "metrics": {
+    "stored_kg": 0.0,
+    "capacity_kg": 1500.0,
+    "peak_pct": 0.0,
+    "avg_pct": 0.0,
+    "cost": 0.0,
+    "usable": "yes"
+   },
+   "limiting_factor": null,
+   "marginal_values": [],
+   "alternative": null
+  },
+  {
+   "kind": "waste",
+   "entity_id": "waste",
+   "name": "Losses",
+   "decision": "15 kg lost (0.1 % of the harvest)",
+   "metrics": {
+    "lost_kg": 15.04,
+    "waste_rate_pct": 0.13,
+    "lost_value": 36.29,
+    "daily_loss_kg": 15.04
+   },
+   "limiting_factor": null,
+   "marginal_values": [],
+   "alternative": null
+  }
+ ],
+ "binding": [
+  {
+   "key": "demand_day|buyer_tn_01|0",
+   "family": "demand_day",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 0,
+   "label": "Daily demand limit of Huilerie Sfax Export (day 0)",
+   "sense": "<=",
+   "lhs": 1500.0,
+   "rhs": 1500.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 0.0,
+   "dual_reliable": false
+  },
+  {
+   "key": "demand_day|buyer_tn_01|1",
+   "family": "demand_day",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 1,
+   "label": "Daily demand limit of Huilerie Sfax Export (day 1)",
+   "sense": "<=",
+   "lhs": 1500.0,
+   "rhs": 1500.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 0.108231,
+   "dual_reliable": true
+  },
+  {
+   "key": "demand_max|buyer_tn_04|",
+   "family": "demand_max",
+   "entity": [
+    "buyer_tn_04"
+   ],
+   "day": null,
+   "label": "Maximum demand of EU Import Consortium",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 0.412791,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|0",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 0,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 0)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 0.15,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|1",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 1,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 1)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 0.0,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|2",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 2,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 2)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 0.066392,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|3",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 3,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 3)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 0.024485,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|4",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 4,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 4)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 0.0,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|6",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 6,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 6)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 0.0,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|7",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 7,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 7)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 0.0,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|8",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 8,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 8)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 2.4584,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|9",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 9,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 9)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 2.4152,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|10",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 10,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 10)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 2.364,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|11",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 11,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 11)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 6.220177,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|12",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 12,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 12)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 6.136728,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|13",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 13,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 13)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 6.053203,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|14",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 14,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 14)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 5.969601,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|15",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 15,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 15)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 5.885923,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|16",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 16,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 16)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 5.802169,
+   "dual_reliable": false
+  },
+  {
+   "key": "trip_capacity|buyer_tn_01|17",
+   "family": "trip_capacity",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "day": 17,
+   "label": "Truck capacity sent to Huilerie Sfax Export (day 17)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": -0.0,
+   "slack": 0.0,
+   "binding": true,
+   "dual": 5.718337,
+   "dual_reliable": false
+  }
+ ],
+ "bottlenecks": [
+  {
+   "key": "demand_day|buyer_tn_01|",
+   "family": "demand_day",
+   "entity": [
+    "buyer_tn_01"
+   ],
+   "label": "Daily demand limit of Huilerie Sfax Export",
+   "binding_days": [
+    0,
+    1
+   ],
+   "dual": 0.108231,
+   "probe_gain": null,
+   "suggested_change": {
+    "op": "buyer_demand",
+    "target": "buyer_tn_01",
+    "params": {
+     "field": "max_per_day_kg",
+     "mode": "relative_pct",
+     "value": 10
+    }
+   },
+   "suggested_label": "+10 % daily demand limit at Huilerie Sfax Export",
+   "rank": 1
+  },
+  {
+   "key": "demand_max|buyer_tn_04|",
+   "family": "demand_max",
+   "entity": [
+    "buyer_tn_04"
+   ],
+   "label": "Maximum demand of EU Import Consortium",
+   "binding_days": [
+    null
+   ],
+   "dual": null,
+   "probe_gain": null,
+   "suggested_change": {
+    "op": "buyer_demand",
+    "target": "buyer_tn_04",
+    "params": {
+     "field": "max_demand_kg",
+     "mode": "relative_pct",
+     "value": 10
+    }
+   },
+   "suggested_label": "+10 % maximum demand at EU Import Consortium",
+   "rank": 2
+  }
+ ],
+ "tradeoffs": [],
+ "sensitivity_computed": true
+}

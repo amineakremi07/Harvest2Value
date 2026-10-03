@@ -1,0 +1,248 @@
+{
+ "run_id": "2ddf966b-b4ed-4f5a-b48a-abd6e6593b01",
+ "day": null,
+ "nodes": [
+  {
+   "id": "producer:farm",
+   "kind": "producer",
+   "label": "Cooperative Oliviere Sfax",
+   "metrics": {
+    "harvest_kg": 12000.0
+   }
+  },
+  {
+   "id": "lot:olives_early",
+   "kind": "lot",
+   "label": "olives_early",
+   "metrics": {
+    "quantity_kg": 5000.0,
+    "day": 0
+   }
+  },
+  {
+   "id": "lot:olives_main",
+   "kind": "lot",
+   "label": "olives_main",
+   "metrics": {
+    "quantity_kg": 4000.0,
+    "day": 5
+   }
+  },
+  {
+   "id": "lot:olives_late",
+   "kind": "lot",
+   "label": "olives_late",
+   "metrics": {
+    "quantity_kg": 3000.0,
+    "day": 10
+   }
+  },
+  {
+   "id": "storage:hangar_sfax",
+   "kind": "storage",
+   "label": "Hangar ambiant Sfax",
+   "metrics": {
+    "capacity_kg": 4000.0,
+    "refrigerated": "no",
+    "peak_pct": 75.3,
+    "stock_end_kg": 3012.04
+   }
+  },
+  {
+   "id": "storage:cold_room_sfax",
+   "kind": "storage",
+   "label": "Chambre froide Sfax",
+   "metrics": {
+    "capacity_kg": 1500.0,
+    "refrigerated": "yes",
+    "peak_pct": 0.0,
+    "stock_end_kg": 0.0
+   }
+  },
+  {
+   "id": "direct:__direct__",
+   "kind": "direct",
+   "label": "Direct sale (harvest day)",
+   "metrics": {}
+  },
+  {
+   "id": "vehicle:truck_3t",
+   "kind": "vehicle",
+   "label": "Camion 3 t",
+   "metrics": {
+    "count": 3,
+    "capacity_kg": 3000.0
+   }
+  },
+  {
+   "id": "buyer:buyer_tn_01",
+   "kind": "buyer",
+   "label": "Huilerie Sfax Export",
+   "metrics": {
+    "sold_kg": 3987.96,
+    "revenue": 9560.31,
+    "fulfillment_pct": 79.76
+   }
+  },
+  {
+   "id": "buyer:buyer_tn_02",
+   "kind": "buyer",
+   "label": "Marche Central Tunis",
+   "metrics": {
+    "sold_kg": 0.0,
+    "revenue": 0.0,
+    "fulfillment_pct": 0.0
+   }
+  },
+  {
+   "id": "buyer:buyer_tn_03",
+   "kind": "buyer",
+   "label": "Cooperative Export Sousse",
+   "metrics": {
+    "sold_kg": 1996.99,
+    "revenue": 4493.24,
+    "fulfillment_pct": 49.92
+   }
+  },
+  {
+   "id": "buyer:buyer_tn_04",
+   "kind": "buyer",
+   "label": "EU Import Consortium",
+   "metrics": {
+    "sold_kg": 6000.0,
+    "revenue": 17347.8,
+    "fulfillment_pct": 100.0
+   }
+  }
+ ],
+ "edges": [
+  {
+   "source": "producer:farm",
+   "target": "lot:olives_early",
+   "kind": "harvest",
+   "kg": 5000.0,
+   "value": null,
+   "trips": null
+  },
+  {
+   "source": "producer:farm",
+   "target": "lot:olives_main",
+   "kind": "harvest",
+   "kg": 4000.0,
+   "value": null,
+   "trips": null
+  },
+  {
+   "source": "producer:farm",
+   "target": "lot:olives_late",
+   "kind": "harvest",
+   "kg": 3000.0,
+   "value": null,
+   "trips": null
+  },
+  {
+   "source": "lot:olives_early",
+   "target": "storage:hangar_sfax",
+   "kind": "placement",
+   "kg": 1503.01,
+   "value": null,
+   "trips": null
+  },
+  {
+   "source": "lot:olives_main",
+   "target": "storage:hangar_sfax",
+   "kind": "placement",
+   "kg": 3012.04,
+   "value": null,
+   "trips": null
+  },
+  {
+   "source": "lot:olives_early",
+   "target": "direct:__direct__",
+   "kind": "placement",
+   "kg": 3496.99,
+   "value": null,
+   "trips": null
+  },
+  {
+   "source": "lot:olives_late",
+   "target": "direct:__direct__",
+   "kind": "placement",
+   "kg": 3000.0,
+   "value": null,
+   "trips": null
+  },
+  {
+   "source": "lot:olives_main",
+   "target": "direct:__direct__",
+   "kind": "placement",
+   "kg": 987.96,
+   "value": null,
+   "trips": null
+  },
+  {
+   "source": "direct:__direct__",
+   "target": "buyer:buyer_tn_01",
+   "kind": "sale",
+   "kg": 2487.96,
+   "value": 5971.11,
+   "trips": null
+  },
+  {
+   "source": "direct:__direct__",
+   "target": "buyer:buyer_tn_03",
+   "kind": "sale",
+   "kg": 1996.99,
+   "value": 4493.24,
+   "trips": null
+  },
+  {
+   "source": "direct:__direct__",
+   "target": "buyer:buyer_tn_04",
+   "kind": "sale",
+   "kg": 3000.0,
+   "value": 8700.0,
+   "trips": null
+  },
+  {
+   "source": "storage:hangar_sfax",
+   "target": "buyer:buyer_tn_01",
+   "kind": "sale",
+   "kg": 1500.0,
+   "value": 3589.2,
+   "trips": null
+  },
+  {
+   "source": "storage:hangar_sfax",
+   "target": "buyer:buyer_tn_04",
+   "kind": "sale",
+   "kg": 3000.0,
+   "value": 8647.8,
+   "trips": null
+  },
+  {
+   "source": "vehicle:truck_3t",
+   "target": "buyer:buyer_tn_01",
+   "kind": "transport",
+   "kg": 9000.0,
+   "value": 211.08,
+   "trips": 3
+  },
+  {
+   "source": "vehicle:truck_3t",
+   "target": "buyer:buyer_tn_03",
+   "kind": "transport",
+   "kg": 3000.0,
+   "value": 394.2,
+   "trips": 1
+  },
+  {
+   "source": "vehicle:truck_3t",
+   "target": "buyer:buyer_tn_04",
+   "kind": "transport",
+   "kg": 6000.0,
+   "value": 1395.6,
+   "trips": 2
+  }
+ ]
+}

@@ -1,0 +1,53 @@
+{
+ "scenario": {
+  "id": "6cf625f7-a969-40d3-b3b3-49bb87eab86c",
+  "name": "Prix -10 %",
+  "description": null,
+  "dataset_id": "dc59457f-b826-4e9c-8b64-df5e66158cb8",
+  "base_version_no": 1,
+  "parent_id": null,
+  "status": "ready",
+  "tags": [],
+  "latest_run_id": "8a498b3e-f4dd-47f6-8c2a-383f37b28db0",
+  "created_at": "2026-10-02T19:13:14.033306Z",
+  "updated_at": "2026-10-02T19:13:14.570696Z"
+ },
+ "changes": [
+  {
+   "id": "c0e3d6af-c839-4ab6-b634-38a61b7a9c81",
+   "position": 0,
+   "op": "buyer_price",
+   "target": "*",
+   "params": {
+    "mode": "relative_pct",
+    "value": -10.0
+   },
+   "enabled": true,
+   "source": "manual",
+   "note": null
+  }
+ ],
+ "lineage": [
+  {
+   "id": "6cf625f7-a969-40d3-b3b3-49bb87eab86c",
+   "name": "Prix -10 %"
+  }
+ ],
+ "runs": [
+  {
+   "id": "8a498b3e-f4dd-47f6-8c2a-383f37b28db0",
+   "status": "succeeded",
+   "solver_outcome": "optimal",
+   "label": "Prix -10 %",
+   "dataset_id": "dc59457f-b826-4e9c-8b64-df5e66158cb8",
+   "version_no": 1,
+   "scenario_id": "6cf625f7-a969-40d3-b3b3-49bb87eab86c",
+   "objective": "profit",
+   "created_at": "2026-10-02T19:13:14.067021Z",
+   "finished_at": "2026-10-02T19:13:14.558218Z",
+   "headline": null
+  }
+ ],
+ "stale": false,
+ "current_version_no": 1
+}

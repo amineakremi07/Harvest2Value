@@ -1,0 +1,50 @@
+/* Printed reports (phase 13): the browser's "Save as PDF" is the PDF export, no PDF library. */
+@page {
+  size: A4;
+  margin: 16mm 14mm 18mm;
+}
+
+.print-root {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .report-section {
+    break-inside: avoid-page;
+  }
+
+  .report-table {
+    font-size: 9pt;
+  }
+
+  .report-table thead {
+    display: table-header-group; /* repeat headers on each printed page */
+  }
+
+  .report-table tr {
+    break-inside: avoid;
+  }
+}
+
+/* The report components are shared with the dark app: lighten them on paper. */
+.print-root .border-card-border,
+.print-root .border-card-border\/60 {
+  border-color: #cbd5e1;
+}
+
+.print-root .text-slate-300,
+.print-root .text-slate-400,
+.print-root .text-slate-500 {
+  color: #475569;
+}

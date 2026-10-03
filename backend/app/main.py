@@ -10,6 +10,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.concurrency import run_in_threadpool
 
+from .ai.providers import get_provider
 from .api.errors import install_error_handlers
 from .api.v2 import router as v2_router
 from .core.config import Settings, get_settings
@@ -64,6 +65,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Harvest2Value API", version="2.0.0-dev", lifespan=lifespan)
     app.state.settings = settings
     app.state.rate_limiter = RateLimiter()
+    app.state.llm_provider = get_provider(settings)  # tests replace it with a scripted MockProvider
 
     # Last added runs first: request id -> CORS -> body size limit -> app.
     app.add_middleware(BodySizeLimitMiddleware, max_bytes=settings.max_body_bytes)

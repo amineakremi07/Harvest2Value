@@ -37,7 +37,7 @@ def test_meta(make_client: Callable[..., TestClient]) -> None:
     assert body["api_version"] == "v2"
     assert body["llm"]["configured"] is True
     assert body["limits"] == {"max_body_bytes": 5000, "solver_time_limit_s": 30}
-    live = {"datasets", "runs", "scenarios", "explainability"}
+    live = {"datasets", "runs", "scenarios", "explainability", "copilot", "reports"}
     assert {k for k, v in body["features"].items() if v} == live
     assert "weighted" in body["objectives"] and "interrupted" in body["run_statuses"]
     ops = {o["op"]: o for o in body["change_ops"]}

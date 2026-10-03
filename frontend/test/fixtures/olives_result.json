@@ -1,0 +1,298 @@
+{
+ "outcome": "optimal",
+ "outcome_label": "Optimal within 1.0% of the best possible plan",
+ "gap_requested": 0.01,
+ "objective": "profit",
+ "crop_id": "olives",
+ "horizon_days": 60,
+ "kpis": {
+  "harvest_kg": 12000.0,
+  "sold_kg": 11984.96,
+  "realized_revenue": 31401.35,
+  "transport_cost": 2000.88,
+  "storage_cost": 225.63,
+  "disposal_cost": 0.0,
+  "total_cost": 2226.51,
+  "realized_profit": 29174.84,
+  "margin_pct": 92.91,
+  "ending_inventory_kg": 0.0,
+  "ending_inventory_value": 0.0,
+  "economic_value": 29174.84,
+  "lost_kg": 15.04,
+  "lost_value": 36.29,
+  "waste_rate_pct": 0.13,
+  "sold_rate_pct": 99.87,
+  "storage_rate_pct": 37.63,
+  "fulfillment_rate_pct": 64.78,
+  "vehicle_utilization_pct": 1.51,
+  "load_factor_pct": 66.58,
+  "storage_utilization_peak_pct": 75.3,
+  "storage_utilization_avg_pct": 1.57,
+  "trips": 6,
+  "avg_transport_cost_per_kg": 0.1669,
+  "avg_storage_days": 1.67,
+  "objective_value": 29174.8382,
+  "best_buyer_id": "buyer_tn_04"
+ },
+ "buyers": [
+  {
+   "buyer_id": "buyer_tn_01",
+   "buyer_name": "Huilerie Sfax Export",
+   "sold_kg": 3987.96,
+   "revenue": 9560.31,
+   "transport_cost": 211.08,
+   "net_revenue": 9349.23,
+   "net_price_per_kg": 2.3444,
+   "max_demand_kg": 5000.0,
+   "fulfillment_pct": 79.76
+  },
+  {
+   "buyer_id": "buyer_tn_02",
+   "buyer_name": "Marche Central Tunis",
+   "sold_kg": 0.0,
+   "revenue": 0.0,
+   "transport_cost": 0.0,
+   "net_revenue": 0.0,
+   "net_price_per_kg": null,
+   "max_demand_kg": 3500.0,
+   "fulfillment_pct": 0.0
+  },
+  {
+   "buyer_id": "buyer_tn_03",
+   "buyer_name": "Cooperative Export Sousse",
+   "sold_kg": 1996.99,
+   "revenue": 4493.24,
+   "transport_cost": 394.2,
+   "net_revenue": 4099.04,
+   "net_price_per_kg": 2.0526,
+   "max_demand_kg": 4000.0,
+   "fulfillment_pct": 49.92
+  },
+  {
+   "buyer_id": "buyer_tn_04",
+   "buyer_name": "EU Import Consortium",
+   "sold_kg": 6000.0,
+   "revenue": 17347.8,
+   "transport_cost": 1395.6,
+   "net_revenue": 15952.2,
+   "net_price_per_kg": 2.6587,
+   "max_demand_kg": 6000.0,
+   "fulfillment_pct": 100.0
+  }
+ ],
+ "allocations": [
+  {
+   "buyer_id": "buyer_tn_01",
+   "lot_id": "olives_early",
+   "facility_id": null,
+   "day": 0,
+   "kg": 1500.0,
+   "unit_price": 2.4,
+   "revenue": 3600.0
+  },
+  {
+   "buyer_id": "buyer_tn_03",
+   "lot_id": "olives_early",
+   "facility_id": null,
+   "day": 0,
+   "kg": 1996.99,
+   "unit_price": 2.25,
+   "revenue": 4493.24
+  },
+  {
+   "buyer_id": "buyer_tn_01",
+   "lot_id": "olives_early",
+   "facility_id": "hangar_sfax",
+   "day": 1,
+   "kg": 1500.0,
+   "unit_price": 2.3928,
+   "revenue": 3589.2
+  },
+  {
+   "buyer_id": "buyer_tn_01",
+   "lot_id": "olives_main",
+   "facility_id": null,
+   "day": 5,
+   "kg": 987.96,
+   "unit_price": 2.4,
+   "revenue": 2371.11
+  },
+  {
+   "buyer_id": "buyer_tn_04",
+   "lot_id": "olives_main",
+   "facility_id": "hangar_sfax",
+   "day": 7,
+   "kg": 3000.0,
+   "unit_price": 2.8826,
+   "revenue": 8647.8
+  },
+  {
+   "buyer_id": "buyer_tn_04",
+   "lot_id": "olives_late",
+   "facility_id": null,
+   "day": 10,
+   "kg": 3000.0,
+   "unit_price": 2.9,
+   "revenue": 8700.0
+  }
+ ],
+ "inventory": [
+  {
+   "day": 0,
+   "facility_id": "hangar_sfax",
+   "lot_id": "olives_early",
+   "kg_end": 1503.01,
+   "cost": 45.09
+  },
+  {
+   "day": 5,
+   "facility_id": "hangar_sfax",
+   "lot_id": "olives_main",
+   "kg_end": 3012.04,
+   "cost": 90.36
+  },
+  {
+   "day": 6,
+   "facility_id": "hangar_sfax",
+   "lot_id": "olives_main",
+   "kg_end": 3006.01,
+   "cost": 90.18
+  }
+ ],
+ "trips": [
+  {
+   "day": 0,
+   "buyer_id": "buyer_tn_01",
+   "vehicle_type_id": "truck_3t",
+   "trips": 1,
+   "capacity_kg": 3000.0,
+   "cost": 70.36,
+   "hours": 1.46
+  },
+  {
+   "day": 0,
+   "buyer_id": "buyer_tn_03",
+   "vehicle_type_id": "truck_3t",
+   "trips": 1,
+   "capacity_kg": 3000.0,
+   "cost": 394.2,
+   "hours": 6.37
+  },
+  {
+   "day": 1,
+   "buyer_id": "buyer_tn_01",
+   "vehicle_type_id": "truck_3t",
+   "trips": 1,
+   "capacity_kg": 3000.0,
+   "cost": 70.36,
+   "hours": 1.46
+  },
+  {
+   "day": 5,
+   "buyer_id": "buyer_tn_01",
+   "vehicle_type_id": "truck_3t",
+   "trips": 1,
+   "capacity_kg": 3000.0,
+   "cost": 70.36,
+   "hours": 1.46
+  },
+  {
+   "day": 7,
+   "buyer_id": "buyer_tn_04",
+   "vehicle_type_id": "truck_3t",
+   "trips": 1,
+   "capacity_kg": 3000.0,
+   "cost": 697.8,
+   "hours": 10.97
+  },
+  {
+   "day": 10,
+   "buyer_id": "buyer_tn_04",
+   "vehicle_type_id": "truck_3t",
+   "trips": 1,
+   "capacity_kg": 3000.0,
+   "cost": 697.8,
+   "hours": 10.97
+  }
+ ],
+ "waste": [
+  {
+   "day": 1,
+   "lot_id": "olives_early",
+   "facility_id": "hangar_sfax",
+   "kind": "daily_loss",
+   "kg": 3.01,
+   "value_lost": 7.25
+  },
+  {
+   "day": 6,
+   "lot_id": "olives_main",
+   "facility_id": "hangar_sfax",
+   "kind": "daily_loss",
+   "kg": 6.02,
+   "value_lost": 14.53
+  },
+  {
+   "day": 7,
+   "lot_id": "olives_main",
+   "facility_id": "hangar_sfax",
+   "kind": "daily_loss",
+   "kg": 6.01,
+   "value_lost": 14.5
+  }
+ ],
+ "constraints": [
+  {
+   "key": "storage_capacity|cold_room_sfax|0",
+   "family": "storage_capacity",
+   "entity": [
+    "cold_room_sfax"
+   ],
+   "day": 0,
+   "label": "Capacity of Chambre froide Sfax (day 0)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": 1500.0,
+   "slack": 1500.0,
+   "binding": false,
+   "dual": 0.0,
+   "dual_reliable": true
+  },
+  {
+   "key": "storage_capacity|cold_room_sfax|1",
+   "family": "storage_capacity",
+   "entity": [
+    "cold_room_sfax"
+   ],
+   "day": 1,
+   "label": "Capacity of Chambre froide Sfax (day 1)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": 1500.0,
+   "slack": 1500.0,
+   "binding": false,
+   "dual": 0.0,
+   "dual_reliable": true
+  },
+  {
+   "key": "storage_capacity|cold_room_sfax|2",
+   "family": "storage_capacity",
+   "entity": [
+    "cold_room_sfax"
+   ],
+   "day": 2,
+   "label": "Capacity of Chambre froide Sfax (day 2)",
+   "sense": "<=",
+   "lhs": 0.0,
+   "rhs": 1500.0,
+   "slack": 1500.0,
+   "binding": false,
+   "dual": 0.0,
+   "dual_reliable": true
+  }
+ ],
+ "warnings": [],
+ "solve_seconds": 0.182,
+ "sensitivity": null,
+ "diagnostics": null
+}
