@@ -79,7 +79,7 @@ def interpretations(raw: str) -> list[Candidate]:
 
 def _matches(candidate: Candidate, known: float) -> bool:
     tolerance = max(0.5 * 10 ** (-candidate.decimals), 0.005 * abs(known), 1e-9)
-    return abs(candidate.value - known) <= tolerance or abs(abs(candidate.value) - abs(known)) <= tolerance
+    return bool(abs(candidate.value - known) <= tolerance or abs(abs(candidate.value) - abs(known)) <= tolerance)
 
 
 @dataclass

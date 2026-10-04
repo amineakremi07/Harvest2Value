@@ -1,4 +1,4 @@
-"""Convert a v1 dataset (`data/tunisia_*.json` shape) into a v2 payload.
+"""Convert a v1 dataset (shape of `tests/fixtures/v1/tunisia_olives.json`) into a v2 payload.
 
 Compatibility mode (plan §10): a single lot on day 0 and a 1-day ambient shelf life, so
 the automatic horizon is 1 day and the plan is "sell today or lose it"; one vehicle type

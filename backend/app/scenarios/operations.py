@@ -107,7 +107,7 @@ def _numeric(
         old = item.get(field)
         new = compute(old, mode, value, field=f"{label} '{item['id']}'.{field}")
         if integer:
-            new = int(round(new))
+            new = round(new)
         _check(new, field=f"{label} '{item['id']}'.{field}", minimum=minimum, strict=strict, maximum=maximum)
         if not dry_run:
             item[field] = new
@@ -241,7 +241,7 @@ def _shelf_life(payload: Payload, change: ShelfLifeChange, dry_run: bool) -> str
     old = crop.get(field)
     name = f"crop '{crop['id']}'.{field}"
     raw = compute(old, change.params.mode, change.params.value, field=name)
-    new = int(round(raw))
+    new = round(raw)
     _check(new, field=name, minimum=1, maximum=730)
     ambient = new if field == "shelf_life_ambient_days" else crop["shelf_life_ambient_days"]
     cold = new if field == "shelf_life_cold_days" else crop.get("shelf_life_cold_days")
@@ -284,10 +284,10 @@ def _route(payload: Payload, change: RouteChange, dry_run: bool) -> str:
     old = route.get(p.field)
     name = f"route '{change.target}'.{p.field}"
     if p.field == "road_condition":
-        new: Any = RoadCondition(p.value).value
+        new: Any = RoadCondition(str(p.value)).value
     else:
         base = old if old is not None or p.field != "toll_per_trip" else 0.0
-        new = compute(base, p.mode or ChangeMode.ABSOLUTE, float(p.value), field=name)  # type: ignore[arg-type]
+        new = compute(base, p.mode or ChangeMode.ABSOLUTE, float(p.value), field=name)
         _check(new, field=name, maximum=5000 if p.field == "distance_km" else 1e5)
     if not dry_run:
         route[p.field] = new

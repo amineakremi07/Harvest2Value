@@ -67,7 +67,7 @@ export function ScenariosIndex() {
   return (
     <>
       <PageHeader title="Scenario Studio" subtitle="Décrivez des « et si » comme une suite de modifications typées, puis optimisez et comparez." />
-      <div className="grid gap-6 lg:grid-cols-[1fr_minmax(0,320px)]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,320px)]">
         <Card title="Scénarios">
           {scenarios.loading && !scenarios.data ? (
             <Loading />

@@ -12,7 +12,7 @@ from ..domain.run_config import RunConfig
 from .constraints import ConstraintModule, balance, cold_chain, demand, shelf_life, storage, transport
 from .instance import ProblemInstance
 from .keys import ConstraintRegistry
-from .objectives import CriterionBounds, apply_objective
+from .objectives import Criterion, CriterionBounds, apply_objective
 from .variables import VarSet, create_variables
 
 DEFAULT_MODULES: tuple[ConstraintModule, ...] = (
@@ -100,7 +100,7 @@ class ModelBuilder:
         config: RunConfig,
         *,
         objective: ObjectiveKind | None = None,
-        bounds: dict[str, CriterionBounds] | None = None,
+        bounds: dict[Criterion, CriterionBounds] | None = None,
     ) -> BuiltModel:
         """`objective` overrides config.objective (used for the weighted mode's payoff table)."""
         kind = objective or config.objective

@@ -78,7 +78,7 @@ def _effective_payload(session: Session, workspace_id: str, request: ParseReques
 
 
 def _entities(payload: DatasetPayload) -> str:
-    lines = [f"buyers: " + ", ".join(f"{b.id} ({b.name})" for b in payload.buyers)]
+    lines = ["buyers: " + ", ".join(f"{b.id} ({b.name})" for b in payload.buyers)]
     lines.append("harvest lots: " + ", ".join(f"{l.id} ({l.quantity_kg:g} kg, day {l.available_day})" for l in payload.harvest_lots))
     lines.append("storage: " + (", ".join(f"{f.id} ({f.name})" for f in payload.storage_facilities) or "none"))
     lines.append("vehicles: " + ", ".join(f"{v.id} ({v.name})" for v in payload.vehicle_types))
@@ -159,7 +159,8 @@ async def parse_scenario_text(provider: LLMProvider, factory: sessionmaker[Sessi
     ]
     reply = await complete_with_retry(provider, messages, response_format="json_object", max_tokens=900, temperature=0.0)
     data = _parse_json(reply.content or "")
-    raw_changes = data.get("changes") if isinstance(data.get("changes"), list) else []
+    changes_value = data.get("changes")
+    raw_changes: list[Any] = changes_value if isinstance(changes_value, list) else []
     questions = [str(q)[:300] for q in data.get("questions", []) if isinstance(q, (str, int, float))][:5] if isinstance(data.get("questions"), list) else []
     accepted, rejected = validate_proposals(payload, chain, text, raw_changes)
     return ParseResult(changes=accepted, rejected=rejected, questions=questions, prompt=prompt.id, model=reply.model)

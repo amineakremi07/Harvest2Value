@@ -102,12 +102,12 @@ def test_cache_reuses_an_identical_run(client: TestClient) -> None:
 
 
 def test_r5_health_answers_during_a_long_run(client: TestClient) -> None:
-    """R5 (audit): the solver used to block the event loop. A 2 s run must not delay /health."""
+    """R5 (audit): the solver used to block the event loop. A 2 s run must not delay the health checks."""
     dataset_id = create_dataset(client)
     client.app.state.optimization_engine = SlowEngine(2.0)
     run = start_run(client, dataset_id, wait=0, expect=202)
     wait_until_status(client, run["id"], "running")
-    for path in ("/api/v2/health", "/health"):
+    for path in ("/api/v2/health", "/api/v2/health/ready"):
         started = time.perf_counter()
         assert client.get(path).status_code == 200
         assert time.perf_counter() - started < 0.5

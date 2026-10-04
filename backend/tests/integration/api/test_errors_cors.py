@@ -1,4 +1,4 @@
-"""Error envelope (v2 only), v1 error formats unchanged, request id, CORS allow-list (R12), body limit."""
+"""Error envelope (v2 only), API v1 removed (404), request id, CORS allow-list (R12), body limit."""
 
 from __future__ import annotations
 
@@ -63,24 +63,20 @@ def test_unhandled_error_is_generic_500_without_internals(client: TestClient) ->
     assert "request id" in error["message"]
 
 
-# ---- v1 formats unchanged ----
+# ---- outside /api/v2 ----
 
-def test_v1_unknown_route_keeps_default_format(client: TestClient) -> None:
-    response = client.get("/api/v1/does-not-exist")
-    assert response.status_code == 404 and response.json() == {"detail": "Not Found"}
-
-
-def test_v1_validation_keeps_default_format(client: TestClient) -> None:
-    response = client.post("/api/v1/optimize", json={})
-    assert response.status_code == 422
-    assert isinstance(response.json()["detail"], list) and "error" not in response.json()
+def test_api_v1_is_gone(client: TestClient) -> None:
+    """Phase 14 removed API v1: its routes are plain 404s (no envelope outside /api/v2)."""
+    for method, path in (("POST", "/api/v1/optimize"), ("POST", "/api/v1/scenario"), ("POST", "/api/v1/explain"), ("GET", "/health")):
+        response = client.request(method, path, json={})
+        assert response.status_code == 404 and response.json() == {"detail": "Not Found"}
 
 
 # ---- request id ----
 
 def test_request_id_is_generated_and_echoed(client: TestClient) -> None:
     assert len(client.get("/api/v2/health").headers["x-request-id"]) == 36
-    assert client.get("/health").headers["x-request-id"]
+    assert client.get("/does-not-exist").headers["x-request-id"]
 
 
 def test_safe_incoming_request_id_is_reused(client: TestClient) -> None:
@@ -96,7 +92,7 @@ def test_unsafe_incoming_request_id_is_replaced(client: TestClient) -> None:
 
 def preflight(client: TestClient, origin: str):
     return client.options(
-        "/api/v1/optimize",
+        "/api/v2/runs",
         headers={"Origin": origin, "Access-Control-Request-Method": "POST", "Access-Control-Request-Headers": "content-type"},
     )
 

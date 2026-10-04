@@ -62,7 +62,7 @@ export function CopilotPage({ initialConversation }: { initialConversation?: str
           <ErrorBanner message={error} />
         </div>
       )}
-      <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
         <Card title="Conversations">
           {list.loading && !list.data ? (
             <Loading />

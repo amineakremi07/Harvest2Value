@@ -124,7 +124,7 @@ export function RunConfigForm({
     <form onSubmit={submit} className="space-y-5" aria-label="Configuration de l'exécution">
       <ObjectivePicker value={draft.objective} onChange={(o) => set("objective", o)} />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {crops.length > 1 && (
           <Field label="Culture" htmlFor={`${id}-crop`}>
             <select

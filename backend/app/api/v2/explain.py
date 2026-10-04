@@ -14,11 +14,12 @@ from ...domain.results import ConstraintInfo, SensitivityReport
 from ...services.explanation import ExplanationService
 from ...services.optimization import compute_sensitivity
 from ..deps import get_engine, get_executor, in_transaction
+from .schemas.common import Responses
 from .schemas.explain import MarginalValuesStatus
 
 router = APIRouter(tags=["explainability"])
 
-NOT_READY = {404: {"description": "Run not found"}, 409: {"description": "RUN_NOT_FINISHED, RUN_INFEASIBLE or RUN_NO_RESULT"}}
+NOT_READY: Responses = {404: {"description": "Run not found"}, 409: {"description": "RUN_NOT_FINISHED, RUN_INFEASIBLE or RUN_NO_RESULT"}}
 
 
 def get_service(session: Session = Depends(get_session, scope="function")) -> ExplanationService:

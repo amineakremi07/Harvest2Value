@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING, ClassVar, Literal
 
 from pulp import LpAffineExpression, LpMaximize, LpMinimize, LpProblem, lpSum
 
@@ -85,7 +85,7 @@ def _weighted_expression(
 class ObjectiveRegistry:
     """kind -> (sense, expression builder)."""
 
-    _builders: dict[ObjectiveKind, tuple[int, Callable[[Components], LpAffineExpression]]] = {
+    _builders: ClassVar[dict[ObjectiveKind, tuple[int, Callable[[Components], LpAffineExpression]]]] = {
         ObjectiveKind.PROFIT: (LpMaximize, lambda c: c.profit + c.salvage),
         ObjectiveKind.REVENUE: (LpMaximize, lambda c: c.revenue - EPS * c.cost),
         ObjectiveKind.WASTE: (LpMinimize, lambda c: c.waste_kg - EPS * c.profit),

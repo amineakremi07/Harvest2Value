@@ -45,7 +45,7 @@ def stored_lot_payload():
 
 
 def test_balance_constraints() -> None:
-    inst, v, reg = build(stored_lot_payload(), modules=[balance])
+    _inst, v, reg = build(stored_lot_payload(), modules=[balance])
     split = reg.by_key[ConstraintKey("lot_split", ("l1",))]
     assert rhs(split) == 1000 and coef(split, v.z[("l1", DIRECT)]) == 1 and coef(split, v.z[("l1", "s")]) == 1
 
@@ -65,7 +65,7 @@ def test_balance_constraints() -> None:
 
 
 def test_shelf_life_records_expiry_inside_horizon_only() -> None:
-    inst, v, reg = build(stored_lot_payload(), modules=[shelf_life])
+    _inst, v, reg = build(stored_lot_payload(), modules=[shelf_life])
     expired = reg.by_key[ConstraintKey("shelf_life", ("l1", "s"))]
     assert coef(expired, v.expired[("l1", "s")]) == 1 and coef(expired, v.inv[("l1", "s", 3)]) == -1
     assert max(t for (_, _, _, t) in v.x) == 3  # no sale after the last shelf-life day
@@ -77,7 +77,7 @@ def test_shelf_life_records_expiry_inside_horizon_only() -> None:
 # ---- storage ----
 
 def test_storage_capacity_per_facility_and_day() -> None:
-    inst, v, reg = build(
+    _inst, v, reg = build(
         make_payload(
             lots=[lot("l1", 1000, day=0), lot("l2", 500, day=1)],
             buyers=[buyer("b1")],
@@ -105,7 +105,7 @@ def test_demand_max_day_min_and_moq() -> None:
         crops=[crop(shelf_life_ambient_days=2)],
         storage_facilities=[storage_facility()],
     )
-    inst, v, reg = build(p, modules=[demand])
+    _inst, v, reg = build(p, modules=[demand])
     plain = reg.by_key[ConstraintKey("demand_max", ("plain",))]
     assert rhs(plain) == 800
 
@@ -141,7 +141,7 @@ def test_transport_constraints() -> None:
             vehicle("van", capacity=300, count=1, max_trips_per_day=3),
         ],
     )
-    inst, v, reg = build(p, modules=[transport])
+    _inst, v, reg = build(p, modules=[transport])
     cap = reg.by_key[ConstraintKey("trip_capacity", ("near",), 0)]
     assert coef(cap, v.x[("near", "l1", DIRECT, 0)]) == 1
     assert coef(cap, v.n[("near", "truck", 0)]) == -1000 and coef(cap, v.n[("near", "van", 0)]) == -300
@@ -168,7 +168,7 @@ def test_cold_chain_constraints() -> None:
         storage_facilities=[storage_facility("amb"), storage_facility("cold", refrigerated=True)],
         vehicles=[vehicle("truck"), vehicle("reefer", refrigerated=True)],
     )
-    inst, v, reg = build(p, modules=[cold_chain])
+    _inst, v, reg = build(p, modules=[cold_chain])
     blocked = reg.by_key[ConstraintKey("cold_chain_vehicle", ("b1", "truck"))]
     assert rhs(blocked) == 0 and coef(blocked, v.n[("b1", "truck", 0)]) == 1
     assert ConstraintKey("cold_chain_vehicle", ("b1", "reefer")) not in reg.by_key

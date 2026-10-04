@@ -2,7 +2,10 @@
 
 import { useState, type CSSProperties } from "react";
 import { cx, numClass, Table, tdClass, thClass } from "@/components/ui/primitives";
+import { blend, readableText } from "@/lib/color";
 import { fmtKg, fmtNum } from "@/lib/format";
+import type { Theme } from "@/lib/theme/theme";
+import { useTheme } from "@/lib/theme/useTheme";
 import type { AllocationRow, BuyerSummary } from "@/lib/api/types";
 import { nameOf, type NameIndex } from "./names";
 
@@ -46,10 +49,15 @@ export function buildMatrix(allocations: AllocationRow[], buyers: BuyerSummary[]
   return { rows, days, cells, dayTotals, max, total };
 }
 
-function cellStyle(kg: number, max: number): CSSProperties | undefined {
+const EMERALD: [number, number, number] = [16, 185, 129];
+const SURFACE = { dark: [19, 27, 46], light: [255, 255, 255] } as const;
+
+/** Heat color, and the text color that keeps WCAG AA contrast on it in the current theme. */
+export function cellStyle(kg: number, max: number, theme: Theme = "dark"): CSSProperties | undefined {
   if (kg <= 0 || max <= 0) return undefined;
-  const alpha = 0.12 + 0.6 * (kg / max);
-  return { backgroundColor: `rgba(16, 185, 129, ${alpha.toFixed(2)})` };
+  const alpha = Math.round((0.12 + 0.6 * (kg / max)) * 100) / 100;
+  const background = blend(EMERALD, alpha, [...SURFACE[theme]]);
+  return { backgroundColor: `rgb(${background.join(", ")})`, color: readableText(background) };
 }
 
 export function AllocationMatrix({
@@ -61,6 +69,7 @@ export function AllocationMatrix({
   buyers: BuyerSummary[];
   names?: NameIndex;
 }) {
+  const { theme } = useTheme();
   const matrix = buildMatrix(allocations, buyers);
   const [selected, setSelected] = useState<{ buyer: string; day: number } | null>(null);
   const detail = selected ? matrix.cells[selected.buyer]?.[selected.day] : undefined;
@@ -93,7 +102,7 @@ export function AllocationMatrix({
                 const cell = matrix.cells[row.buyerId]?.[d];
                 const isSelected = selected?.buyer === row.buyerId && selected.day === d;
                 return (
-                  <td key={d} className={cx(tdClass, numClass, "p-0")} style={cellStyle(cell?.kg ?? 0, matrix.max)}>
+                  <td key={d} className={cx(tdClass, numClass, "p-0")} style={cellStyle(cell?.kg ?? 0, matrix.max, theme)}>
                     {cell ? (
                       <button
                         type="button"

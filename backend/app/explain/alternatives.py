@@ -27,7 +27,7 @@ def best_alternative(ctx: RunContext, buyer_id: str) -> Alternative | None:
     ]
     if not candidates:
         return None
-    alt = max(candidates, key=lambda r: (r.net_price_per_kg, r.buyer_id))  # type: ignore[arg-type,return-value]
+    alt = max(candidates, key=lambda r: (r.net_price_per_kg or 0.0, r.buyer_id))
     assert alt.net_price_per_kg is not None
     diff = round(alt.net_price_per_kg - own, 4)
     verdict = "would earn" if diff > 0 else "would lose"

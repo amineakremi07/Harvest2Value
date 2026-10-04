@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import builtins
+
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
@@ -40,10 +42,10 @@ class ScenarioRepository:
         rows = self.session.scalars(query.order_by(Scenario.updated_at.desc(), Scenario.id).offset(offset).limit(limit)).all()
         return list(rows), total
 
-    def for_dataset(self, dataset_id: str) -> list[Scenario]:
+    def for_dataset(self, dataset_id: str) -> builtins.list[Scenario]:
         return list(self.session.scalars(select(Scenario).where(Scenario.dataset_id == dataset_id)).all())
 
-    def children(self, scenario_id: str) -> list[Scenario]:
+    def children(self, scenario_id: str) -> builtins.list[Scenario]:
         return list(self.session.scalars(select(Scenario).where(Scenario.parent_id == scenario_id)).all())
 
     def delete(self, scenario: Scenario) -> None:
@@ -52,7 +54,7 @@ class ScenarioRepository:
 
     # ---- changes ----
 
-    def changes(self, scenario_id: str) -> list[ScenarioChange]:
+    def changes(self, scenario_id: str) -> builtins.list[ScenarioChange]:
         return list(
             self.session.scalars(
                 select(ScenarioChange).where(ScenarioChange.scenario_id == scenario_id).order_by(ScenarioChange.position)
@@ -73,7 +75,7 @@ class ScenarioRepository:
         self.session.delete(change)
         self.session.flush()
 
-    def set_order(self, changes: list[ScenarioChange]) -> None:
+    def set_order(self, changes: builtins.list[ScenarioChange]) -> None:
         """Renumber 0..n-1 in the given order. Two passes because (scenario_id, position) is unique."""
         for offset, change in enumerate(changes):
             change.position = -1 - offset

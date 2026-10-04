@@ -1,12 +1,13 @@
 """Exception handlers.
 
-Paths under /api/v2 get the error envelope; every other path (v1, /health, docs)
-keeps FastAPI's default responses so v1 stays byte-for-byte unchanged.
+Paths under /api/v2 get the error envelope; every other path (OpenAPI docs, unknown
+routes) keeps FastAPI's default responses.
 """
 
 from __future__ import annotations
 
 import logging
+from typing import Any
 
 from fastapi import FastAPI, Request
 from fastapi.exception_handlers import http_exception_handler, request_validation_exception_handler
@@ -42,7 +43,7 @@ def _request_id(request: Request) -> str | None:
     return getattr(request.state, "request_id", None)
 
 
-def _envelope(request: Request, status: int, code: str, message: str, details: dict | None = None) -> JSONResponse:
+def _envelope(request: Request, status: int, code: str, message: str, details: dict[str, Any] | None = None) -> JSONResponse:
     request_id = _request_id(request)
     headers = {"X-Request-ID": request_id} if request_id else None
     return JSONResponse(error_body(code, message, details, request_id), status_code=status, headers=headers)

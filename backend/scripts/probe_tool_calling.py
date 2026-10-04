@@ -17,9 +17,9 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.ai.providers import ChatMessage, ToolSpec  # noqa: E402
-from app.ai.providers.factory import get_provider  # noqa: E402
-from app.core.config import get_settings  # noqa: E402
+from app.ai.providers import ChatMessage, ToolSpec
+from app.ai.providers.factory import get_provider
+from app.core.config import get_settings
 
 TOOLS = [
     ToolSpec(

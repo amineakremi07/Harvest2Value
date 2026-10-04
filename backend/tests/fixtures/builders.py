@@ -10,7 +10,8 @@ from typing import Any
 from app.domain.dataset import DatasetPayload
 
 REPO_DIR = Path(__file__).resolve().parents[3]
-V1_FIXTURES = sorted((REPO_DIR / "data").glob("tunisia_*.json"))
+# One v1 dataset kept to test the v1 -> v2 import (the v1 files left data/ in phase 14).
+V1_FIXTURES = sorted((Path(__file__).resolve().parent / "v1").glob("tunisia_*.json"))
 TEMPLATES = sorted((REPO_DIR / "data" / "templates").glob("*.json"))
 
 

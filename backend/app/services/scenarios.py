@@ -7,6 +7,7 @@ with SCENARIO_APPLY_ERROR (422) and nothing is saved.
 
 from __future__ import annotations
 
+import builtins
 from dataclasses import dataclass
 from typing import Any
 
@@ -197,7 +198,7 @@ class ScenarioService:
         *,
         name: str | None = None,
         description: str | None = None,
-        tags: list[str] | None = None,
+        tags: builtins.list[str] | None = None,
         archived: bool | None = None,
     ) -> Scenario:
         scenario = self.get(scenario_id)
@@ -295,7 +296,7 @@ class ScenarioService:
         self._changed(scenario)
         return scenario
 
-    def reorder(self, scenario_id: str, ids: list[str]) -> Scenario:
+    def reorder(self, scenario_id: str, ids: builtins.list[str]) -> Scenario:
         scenario = self.get(scenario_id)
         rows = {row.id: row for row in self.repo.changes(scenario.id)}
         if sorted(ids) != sorted(rows) or len(ids) != len(set(ids)):
@@ -322,7 +323,7 @@ class ScenarioService:
         applied = self.effective_input(scenario, base=version)
         return PreviewData(version, applied.effective, applied.diff, applied.applied, validate_business(applied.effective))
 
-    def apply_preview(self, dataset_id: str, version_no: int | None, changes: list[ScenarioChangeModel]) -> PreviewData:
+    def apply_preview(self, dataset_id: str, version_no: int | None, changes: builtins.list[ScenarioChangeModel]) -> PreviewData:
         version = self._version(self._dataset(dataset_id), version_no)
         applied = apply_changes(DatasetPayload.model_validate(version.payload), changes)
         return PreviewData(version, applied.effective, applied.diff, applied.applied, validate_business(applied.effective))

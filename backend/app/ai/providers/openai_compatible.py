@@ -1,7 +1,6 @@
 """Shared client for OpenAI-compatible /chat/completions endpoints.
 
-Error handling carried over from the v1 `NIMClient._post_chat_completion`: timeouts,
-transport errors, HTTP errors, missing choices, truncated (`finish_reason="length"`)
+Error handling: timeouts, transport errors, HTTP errors, missing choices, truncated (`finish_reason="length"`)
 and empty replies. The API key never appears in errors or logs.
 """
 

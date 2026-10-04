@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import builtins
 import csv
 import io
 import json
@@ -192,11 +193,11 @@ class DatasetService:
             raise NotFound(f"Version {version_no} does not exist.", details={"version_no": version_no})
         return version
 
-    def list_versions(self, dataset_id: str, *, page: int, page_size: int) -> tuple[list[DatasetVersion], int]:
+    def list_versions(self, dataset_id: str, *, page: int, page_size: int) -> tuple[builtins.list[DatasetVersion], int]:
         self._dataset(dataset_id)
         return self.repo.list_versions(dataset_id, offset=(page - 1) * page_size, limit=page_size)
 
-    def diff(self, dataset_id: str, from_no: int | None, to_no: int | None) -> tuple[int, int, list[FieldDiff]]:
+    def diff(self, dataset_id: str, from_no: int | None, to_no: int | None) -> tuple[int, int, builtins.list[FieldDiff]]:
         bundle = self.get(dataset_id)
         to_version = self.get_version(dataset_id, to_no) if to_no is not None else bundle.version
         from_no = from_no if from_no is not None else max(1, to_version.version_no - 1)
@@ -301,7 +302,7 @@ class DatasetService:
         *,
         version_no: int,
         note: str | None,
-        extra_assumptions: list[ValidationIssue] | None = None,
+        extra_assumptions: builtins.list[ValidationIssue] | None = None,
     ) -> DatasetVersion:
         document = payload.model_dump(mode="json")
         report = validate_business(payload)

@@ -10,7 +10,7 @@ Every value is computed by the backend (`app.scenarios.operations`), never by th
 
 from __future__ import annotations
 
-from typing import Annotated, Any, ClassVar, Literal, Union, get_args
+from typing import Annotated, Any, ClassVar, Literal, get_args
 
 from pydantic import Field, StringConstraints, TypeAdapter, model_validator
 
@@ -200,24 +200,24 @@ class ColdChainChange(_Change):
 
 
 ScenarioChangeModel = Annotated[
-    Union[
-        BuyerPriceChange,
-        BuyerDemandChange,
-        HarvestQuantityChange,
-        HarvestTimingChange,
-        StorageCapacityChange,
-        StorageCostChange,
-        AddStorageChange,
-        RemoveStorageChange,
-        TransportCostChange,
-        VehicleCountChange,
-        VehicleCapacityChange,
-        ShelfLifeChange,
-        AddBuyerChange,
-        RemoveBuyerChange,
-        RouteChange,
-        ColdChainChange,
-    ],
+    (
+        BuyerPriceChange
+        | BuyerDemandChange
+        | HarvestQuantityChange
+        | HarvestTimingChange
+        | StorageCapacityChange
+        | StorageCostChange
+        | AddStorageChange
+        | RemoveStorageChange
+        | TransportCostChange
+        | VehicleCountChange
+        | VehicleCapacityChange
+        | ShelfLifeChange
+        | AddBuyerChange
+        | RemoveBuyerChange
+        | RouteChange
+        | ColdChainChange
+    ),
     Field(discriminator="op"),
 ]
 

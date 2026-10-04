@@ -82,7 +82,7 @@ def safe_error_message(run: OptimizationRun) -> str | None:
 
 def result_model(run: OptimizationRun, row: OptimizationResult) -> OptimizationResultModel:
     return OptimizationResultModel(
-        outcome=SolverOutcome(run.solver_outcome),
+        outcome=SolverOutcome(run.solver_outcome or SolverOutcome.ERROR),
         **row.meta,
         kpis=Kpis.model_validate(row.kpis),
         buyers=[BuyerSummary.model_validate(b) for b in row.buyers],
@@ -123,13 +123,14 @@ class OptimizationService:
         dataset = self.datasets.get(dataset_id, self.workspace_id)
         if dataset is None:
             raise NotFound(f"Dataset '{dataset_id}' does not exist.", details={"dataset_id": dataset_id})
+        found: DatasetVersion | None
         if version_no is None:
-            version = self.datasets.get_version_by_id(dataset.current_version_id) if dataset.current_version_id else None
+            found = self.datasets.get_version_by_id(dataset.current_version_id) if dataset.current_version_id else None
         else:
-            version = self.datasets.get_version(dataset_id, version_no)
-        if version is None:
+            found = self.datasets.get_version(dataset_id, version_no)
+        if found is None:
             raise NotFound(f"Version {version_no} of dataset '{dataset_id}' does not exist.", details={"version_no": version_no})
-        return ResolvedInput(dataset_id, version, None, DatasetPayload.model_validate(version.payload), [])
+        return ResolvedInput(dataset_id, found, None, DatasetPayload.model_validate(found.payload), [])
 
     def create_run(
         self,

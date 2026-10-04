@@ -14,7 +14,7 @@ from typing import Any
 from pydantic import Field, ValidationError
 
 from ...domain.enums import ObjectiveKind
-from ...domain.report import REPORT_SECTIONS, ReportSection, ReportSpec
+from ...domain.report import DEFAULT_SECTIONS, REPORT_SECTIONS, ReportSection, ReportSpec
 from ...domain.run_config import RunConfig
 from ...services.scenarios import ScenarioService
 from ..guards import numeric_params, ungrounded_numbers
@@ -112,7 +112,7 @@ class GenerateReportArgs(ToolArgs):
     title: str = Field(min_length=1, max_length=160)
     run_id: str | None = Field(default=None, max_length=64, description="Main run (alias or id); omit for the run on screen")
     compare_run_ids: list[str] = Field(default_factory=list, max_length=3)
-    sections: list[ReportSection] = Field(default_factory=lambda: ["summary", "financial", "buyers", "insights"], description=f"Among {', '.join(REPORT_SECTIONS)}")
+    sections: list[ReportSection] = Field(default_factory=lambda: list(DEFAULT_SECTIONS), description=f"Among {', '.join(REPORT_SECTIONS)}")
     include_narrative: bool = False
 
 

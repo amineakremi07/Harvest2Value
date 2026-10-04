@@ -28,8 +28,10 @@ type Query = Record<string, string | number | boolean | null | undefined>;
 
 export interface RequestOptions {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  /** JSON body, or a FormData sent as multipart (file uploads). */
   body?: unknown;
   query?: Query;
+  headers?: Record<string, string>;
   signal?: AbortSignal;
 }
 
@@ -43,13 +45,16 @@ function buildUrl(path: string, query?: Query): string {
 
 export async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const { method = "GET", body, query, signal } = options;
+  const multipart = typeof FormData !== "undefined" && body instanceof FormData;
+  const headers: Record<string, string> = { ...options.headers };
+  if (body !== undefined && !multipart) headers["Content-Type"] = "application/json";
   let response: Response;
   try {
     response = await fetch(buildUrl(path, query), {
       method,
       signal,
-      headers: body === undefined ? undefined : { "Content-Type": "application/json" },
-      body: body === undefined ? undefined : JSON.stringify(body),
+      headers: Object.keys(headers).length > 0 ? headers : undefined,
+      body: body === undefined ? undefined : multipart ? (body as FormData) : JSON.stringify(body),
     });
   } catch (err) {
     if (err instanceof DOMException && err.name === "AbortError") throw err;

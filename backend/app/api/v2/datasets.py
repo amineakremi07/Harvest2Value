@@ -100,7 +100,7 @@ async def import_dataset(
 ) -> ImportResult:
     content = await file.read()
     bundle, assumptions, fmt = service.import_file(file.filename or "dataset.json", content, name=name)
-    return ImportResult(source_format=fmt, assumptions=assumptions, dataset=_detail(bundle))  # type: ignore[arg-type]
+    return ImportResult(source_format=fmt, assumptions=assumptions, dataset=_detail(bundle))
 
 
 @router.get("/datasets/{dataset_id}", response_model=DatasetDetail)

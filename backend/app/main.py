@@ -20,10 +20,8 @@ from .db.engine import make_engine, make_session_factory
 from .db.session import ensure_default_workspace, unit_of_work, upgrade_database
 from .optimization.engine import OptimizationEngine
 from .optimization.runner import SolverRunner
-from .routers import chat, explain, optimize, scenario
 from .services.jobs import RunExecutor
 from .services.optimization import OptimizationService
-
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +41,6 @@ def _init_database(app: FastAPI, settings: Settings) -> None:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    # The database is only needed by /api/v2; v1 keeps working without it.
     await run_in_threadpool(_init_database, app, app.state.settings)
     settings: Settings = app.state.settings
     app.state.optimization_engine = OptimizationEngine(
@@ -74,15 +71,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     install_error_handlers(app)
 
-    # API v1 — unchanged until Phase 14.
-    app.include_router(optimize.router)
-    app.include_router(scenario.router)
-    app.include_router(explain.router)
-    app.include_router(chat.router)
-
-    @app.get("/health")
-    async def health() -> dict[str, str]:
-        return {"status": "healthy", "service": "Harvest2Value"}
 
     app.include_router(v2_router)
     return app

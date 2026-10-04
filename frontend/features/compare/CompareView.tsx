@@ -89,7 +89,7 @@ export function CompareView({ initialBaseline, initialRuns }: { initialBaseline?
             <Card title="Changements notables">
               <NotableChanges changes={result.notable_changes} labels={labels} />
             </Card>
-            <div className="grid gap-6 xl:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
               <Card title="Du profit de référence au profit comparé">
                 <ProfitWaterfall rows={result.kpi_table} baselineId={result.baseline_run_id} runIds={shownRuns} labels={labels} />
               </Card>

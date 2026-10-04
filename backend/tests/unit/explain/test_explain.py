@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from app.domain.explanation import LIMITING_ORDER
 from app.domain.enums import SolverOutcome
+from app.domain.explanation import LIMITING_ORDER
 from app.domain.results import ProbeResult, SensitivityReport
 from app.explain.alternatives import best_alternative, tradeoffs
 from app.explain.binding import bottlenecks, really_binding

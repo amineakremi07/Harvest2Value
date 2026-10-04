@@ -11,7 +11,7 @@ from __future__ import annotations
 import copy
 import csv
 import io
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from sqlalchemy.orm import Session
@@ -81,11 +81,11 @@ def _section(session: Session, workspace_id: str, section: ReportSection, spec: 
             ]
         }
     if section == "comparison":
-        result = ComparisonService(session, workspace_id=workspace_id).compare(spec.run_id, spec.compare_run_ids)
-        ids = [result.baseline_run_id, *result.run_ids]
-        labels = {r.run_id: r.label or r.run_id[:8] for r in result.runs}
+        comparison = ComparisonService(session, workspace_id=workspace_id).compare(spec.run_id, spec.compare_run_ids)
+        ids = [comparison.baseline_run_id, *comparison.run_ids]
+        labels = {r.run_id: r.label or r.run_id[:8] for r in comparison.runs}
         kpi_rows = []
-        for row in result.kpi_table:
+        for row in comparison.kpi_table:
             item: dict[str, Any] = {"kpi": row.kpi, "label": row.label, "unit": row.unit, "better": row.better}
             for run_id in ids:
                 item[labels[run_id]] = row.values.get(run_id)
@@ -94,22 +94,22 @@ def _section(session: Session, workspace_id: str, section: ReportSection, spec: 
                     item[f"{labels[run_id]} (Δ %)"] = row.deltas[run_id].pct
             kpi_rows.append(item)
         buyer_rows = []
-        for buyer in result.buyer_matrix:
+        for buyer in comparison.buyer_matrix:
             item = {"buyer_id": buyer.buyer_id, "buyer_name": buyer.buyer_name}
             for run_id in ids:
                 cell = buyer.cells.get(run_id)
                 item[f"{labels[run_id]} kg"] = cell.sold_kg if cell else None
-                if run_id != result.baseline_run_id and cell:
+                if run_id != comparison.baseline_run_id and cell:
                     item[f"{labels[run_id]} Δ kg"] = cell.delta_kg
                     item[f"{labels[run_id]} statut"] = cell.status
             buyer_rows.append(item)
         return {
-            "baseline_run_id": result.baseline_run_id,
-            "run_ids": result.run_ids,
+            "baseline_run_id": comparison.baseline_run_id,
+            "run_ids": comparison.run_ids,
             "labels": labels,
             "kpi_rows": kpi_rows,
             "buyer_rows": buyer_rows,
-            "notable_changes": [{"run": labels.get(c.run_id, c.run_id), "message": c.message} for c in result.notable_changes],
+            "notable_changes": [{"run": labels.get(c.run_id, c.run_id), "message": c.message} for c in comparison.notable_changes],
         }
     raise ValidationFailed(f"Unknown section {section!r}")
 
@@ -134,7 +134,7 @@ class ReportService:
             compared.append({"id": other.id, "label": other.label, "scenario_id": other.scenario_id, "created_at": other.created_at.isoformat()})
         snapshot = {
             "schema": SNAPSHOT_SCHEMA,
-            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "generated_at": datetime.now(UTC).isoformat(),
             "title": spec.title,
             "currency": payload.get("currency") or "TND",
             "run": {

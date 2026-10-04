@@ -17,9 +17,9 @@ from .copilot import complete_with_retry, verify_and_render
 from .prompts import load
 from .providers import ChatMessage, LLMProvider
 from .rendering import Locale
-from .tools.registry import ToolContext, ToolFailure
 from .tools import analysis, runs, scenarios
-from .tools.common import RunArg
+from .tools.common import RunArg, resolve_run
+from .tools.registry import ToolContext, ToolFailure
 from .verification import numbers_in_text
 
 
@@ -101,7 +101,7 @@ def comparison_facts(factory: sessionmaker[Session], workspace_id: str, baseline
         facts = scenarios.compare_runs(ctx, scenarios.CompareArgs(baseline_run_id=baseline_run_id, run_ids=run_ids)).facts
         for run_id in [baseline_run_id, *run_ids]:
             alias = aliases.alias("run", run_id)
-            run = runs.resolve_run(ctx, run_id)
+            run = resolve_run(ctx, run_id)
             facts[f"{alias}.label"] = run.label or alias
         return _Facts(facts, refs, ctx.currency)
 

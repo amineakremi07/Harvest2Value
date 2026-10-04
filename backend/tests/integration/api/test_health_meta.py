@@ -44,6 +44,3 @@ def test_meta(make_client: Callable[..., TestClient]) -> None:
     assert len(ops) == 16 and ops["buyer_price"]["target"] == "one_or_all" and ops["add_buyer"]["target"] == "none"
     assert "mode" in ops["buyer_price"]["params_schema"]["properties"]
 
-
-def test_v1_health_is_unchanged(make_client: Callable[..., TestClient]) -> None:
-    assert make_client().get("/health").json() == {"status": "healthy", "service": "Harvest2Value"}

@@ -25,7 +25,7 @@ export function DashboardView() {
       <>
         <PageHeader title="Tableau de bord" />
         <EmptyState title="Aucun plan optimisé pour l'instant.">
-          <Link href="/optimize" className="text-cyan-300 hover:underline">
+          <Link href="/optimize" className="text-cyan-300 underline underline-offset-2">
             Partez d&apos;un modèle et lancez une première optimisation
           </Link>
         </EmptyState>
@@ -44,7 +44,7 @@ export function DashboardView() {
         subtitle={
           <>
             Dernier plan :{" "}
-            <Link href={`/runs/${data.run.run_id}/summary`} className="text-cyan-300 hover:underline">
+            <Link href={`/runs/${data.run.run_id}/summary`} className="text-cyan-300 underline underline-offset-2">
               {data.run.label ?? shortId(data.run.run_id)}
             </Link>{" "}
             · {fmtDate(data.run.created_at)}
@@ -52,7 +52,7 @@ export function DashboardView() {
               <>
                 {" "}
                 · comparé à la référence{" "}
-                <Link href={`/compare?baseline=${data.baseline_run_id}&runs=${data.run.run_id}`} className="text-cyan-300 hover:underline">
+                <Link href={`/compare?baseline=${data.baseline_run_id}&runs=${data.run.run_id}`} className="text-cyan-300 underline underline-offset-2">
                   {shortId(data.baseline_run_id)}
                 </Link>
               </>
@@ -62,7 +62,7 @@ export function DashboardView() {
       />
       <div className="space-y-6">
         <ExecutiveKpis kpis={data.kpis} deltas={data.kpi_deltas} hasBaseline={data.baseline_run_id != null} />
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="space-y-6 lg:col-span-2">
             <Card title="Ventes et stock par jour">
               <StackedTimeline

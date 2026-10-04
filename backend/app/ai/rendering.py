@@ -30,7 +30,7 @@ _UNIT_TEXT: dict[str, dict[Locale, str]] = {
 
 
 def _group(integer: str, sep: str) -> str:
-    out = []
+    out: list[str] = []
     while len(integer) > 3:
         out.insert(0, integer[-3:])
         integer = integer[:-3]

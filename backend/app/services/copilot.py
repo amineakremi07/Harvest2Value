@@ -9,6 +9,7 @@ result), and an expired or rejected action can never run.
 
 from __future__ import annotations
 
+import builtins
 from dataclasses import dataclass
 from datetime import timedelta
 from typing import Any
@@ -97,10 +98,10 @@ class CopilotService:
     def delete(self, conversation_id: str) -> None:
         self.conversations.delete(self.get(conversation_id))
 
-    def messages(self, conversation_id: str) -> list[Message]:
+    def messages(self, conversation_id: str) -> builtins.list[Message]:
         return self.conversations.messages(self.get(conversation_id).id)
 
-    def actions_of(self, conversation_id: str) -> list[CopilotAction]:
+    def actions_of(self, conversation_id: str) -> builtins.list[CopilotAction]:
         actions = self.actions.for_conversation(self.get(conversation_id).id)
         for action in actions:
             self._expire_if_needed(action)
@@ -135,7 +136,7 @@ class CopilotService:
         )
         return PreparedTurn(state, history, message.id)
 
-    def save_turn(self, conversation_id: str, state: TurnState, result: TurnResult) -> tuple[Message, list[CopilotAction]]:
+    def save_turn(self, conversation_id: str, state: TurnState, result: TurnResult) -> tuple[Message, builtins.list[CopilotAction]]:
         conversation = self.get(conversation_id)
         message = self.conversations.add_message(
             Message(

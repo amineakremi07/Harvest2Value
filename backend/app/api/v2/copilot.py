@@ -9,8 +9,8 @@ from __future__ import annotations
 
 import json
 import logging
-from functools import partial
 from collections.abc import AsyncIterator
+from functools import partial
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, Query, Request, Response, status
@@ -30,7 +30,7 @@ from ...services.copilot import CopilotService
 from ...services.optimization import execute_run
 from ..deps import get_app_settings, get_engine, get_executor, get_llm, in_transaction, rate_limit
 from .reports import report_narrative
-from .schemas.common import Page
+from .schemas.common import Page, Responses
 from .schemas.copilot import (
     ActionView,
     ComparisonNarrativeRequest,
@@ -51,7 +51,7 @@ router = APIRouter(tags=["copilot"])
 
 PageNo = Annotated[int, Query(ge=1)]
 PageSize = Annotated[int, Query(ge=1, le=100)]
-LLM_ERRORS = {
+LLM_ERRORS: Responses = {
     429: {"description": "RATE_LIMITED"},
     502: {"description": "LLM_UPSTREAM_ERROR"},
     503: {"description": "LLM_NOT_CONFIGURED: AI disabled"},
@@ -108,7 +108,7 @@ def delete_conversation(conversation_id: str, service: Service) -> Response:
 
 
 def _sse(event: str, data: Any) -> bytes:
-    return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False, default=str)}\n\n".encode("utf-8")
+    return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False, default=str)}\n\n".encode()
 
 
 def _wants_stream(request: Request, stream: bool | None) -> bool:
@@ -174,7 +174,7 @@ async def post_message(
         except AppError as exc:
             error = await fail(exc)
             yield _sse("error", {"code": exc.code, "message": exc.message, "message_view": error.model_dump(mode="json")})
-        except Exception:  # noqa: BLE001 - never leak internals into the stream
+        except Exception:
             logger.exception("Copilot turn failed")
             yield _sse("error", {"code": "INTERNAL_ERROR", "message": "The copilot failed. Please retry."})
         yield _sse("done", {})

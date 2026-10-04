@@ -1,28 +1,50 @@
+# Production stack: `docker compose up --build` -> web app on http://localhost:3000, API on :8000.
+# LLM settings come from the environment or the repository .env file (never baked into images).
+# Without an API key the app works fully; only the AI features say "IA désactivée".
 services:
   backend:
     build:
       context: ./backend
+    environment:
+      APP_ENV: production
+      DATABASE_URL: sqlite:////data/harvest2value.db
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+      LLM_PROVIDER: ${LLM_PROVIDER:-groq}
+      LLM_API_KEY: ${LLM_API_KEY:-${GROQ_API_KEY:-}}
+      LLM_MODEL: ${LLM_MODEL:-}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_TIMEOUT_S: ${LLM_TIMEOUT_S:-30}
+      SOLVER_TIME_LIMIT_S: ${SOLVER_TIME_LIMIT_S:-30}
+      SOLVER_MAX_CONCURRENCY: ${SOLVER_MAX_CONCURRENCY:-2}
     ports:
       - "8000:8000"
-    environment:
-      - NIM_API_KEY=${NIM_API_KEY}
-      - NIM_ENDPOINT=${NIM_ENDPOINT:-https://api.nvidia.com/v1/llm/meta/llama-3.1-70b-instruct}
     volumes:
-      - ./backend:/app
-      - ./data:/app/data
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      - h2v-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys, urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/v2/health/ready', timeout=4).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      start_period: 20s
+      retries: 5
+    restart: unless-stopped
 
   frontend:
     build:
       context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:8000}
     ports:
-      - "5173:5173"
-    environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8000
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
+      - "3000:3000"
     depends_on:
-      - backend
-    command: npm run dev -- -p 5173
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/dashboard"]
+      interval: 15s
+      timeout: 5s
+      start_period: 20s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  h2v-data:

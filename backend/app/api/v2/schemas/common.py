@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Generic, TypeVar
+from typing import Any, Generic, TypeVar
 
 from pydantic import BaseModel
 
@@ -14,3 +14,7 @@ class Page(BaseModel, Generic[T]):
     total: int
     page: int
     page_size: int
+
+
+# OpenAPI `responses=` of a route (FastAPI expects str | int keys).
+Responses = dict[int | str, dict[str, Any]]

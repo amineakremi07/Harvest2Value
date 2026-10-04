@@ -24,6 +24,10 @@ export type DatasetDetail = S["DatasetDetail"];
 export type DatasetPayload = S["DatasetPayload"];
 export type DatasetVersionOut = S["DatasetVersionOut"];
 export type ValidationReport = S["ValidationReport"];
+export type ValidationIssue = S["ValidationIssue"];
+export type DatasetVersionSummary = S["DatasetVersionSummary"];
+export type DatasetDiff = S["DatasetDiff"];
+export type ImportResult = S["ImportResult"];
 
 // Runs
 export type ObjectiveKind = S["ObjectiveKind"];

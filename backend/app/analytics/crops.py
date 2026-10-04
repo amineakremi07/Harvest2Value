@@ -72,7 +72,7 @@ def crops(ctx: RunContext) -> CropsSection:
             value_per_kg=round(crop.reference_price_per_kg * max(0.0, 1 - decay * age), 4),
             remaining_ambient_kg_per_kg=round((1 - loss) ** age, 4),
         )
-        for age in range(0, min(longest, 60) + 1)
+        for age in range(min(longest, 60) + 1)
     ]
 
     sold: dict[str, float] = defaultdict(float)

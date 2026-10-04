@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import builtins
+
 from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session
 
@@ -71,7 +73,7 @@ class DatasetRepository:
             select(func.coalesce(func.max(DatasetVersion.version_no), 0)).where(DatasetVersion.dataset_id == dataset_id)
         ) or 0
 
-    def list_versions(self, dataset_id: str, *, offset: int = 0, limit: int = 20) -> tuple[list[DatasetVersion], int]:
+    def list_versions(self, dataset_id: str, *, offset: int = 0, limit: int = 20) -> tuple[builtins.list[DatasetVersion], int]:
         query = select(DatasetVersion).where(DatasetVersion.dataset_id == dataset_id)
         total = self.session.scalar(select(func.count()).select_from(query.subquery())) or 0
         versions = self.session.scalars(query.order_by(DatasetVersion.version_no.desc()).offset(offset).limit(limit)).all()

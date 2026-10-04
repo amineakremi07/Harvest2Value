@@ -103,5 +103,5 @@ class ConstraintRegistry:
 
 def _constant_holds(constraint: LpConstraint, tol: float = 1e-9) -> bool:
     # PuLP stores `lhs (sense) rhs` as `lhs - rhs (sense) 0`; with no variables only the constant remains.
-    value = constraint.constant
-    return {-1: value <= tol, 1: value >= -tol, 0: abs(value) <= tol}[constraint.sense]
+    value = float(constraint.constant)
+    return {-1: value <= tol, 1: value >= -tol, 0: abs(value) <= tol}[int(constraint.sense)]

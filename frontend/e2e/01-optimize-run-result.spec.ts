@@ -68,8 +68,13 @@ test("E2E n°1: template data -> optimization run -> every result tab", async ({
   await expect(page.getByLabel("Indicateurs exécutifs")).toContainText(profit);
 });
 
-test("settings link to the legacy interface", async ({ page }) => {
+test("light / dark theme from the settings, remembered across visits; v1 is gone", async ({ page }) => {
   await page.goto("/settings");
-  await page.getByRole("link", { name: "Ancienne interface" }).click();
-  await expect(page).toHaveURL(/\/legacy$/);
+  await page.getByText("Clair", { exact: true }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await page.getByRole("button", { name: "Passer au thème sombre" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  expect((await page.goto("/legacy"))?.status()).toBe(404);
 });

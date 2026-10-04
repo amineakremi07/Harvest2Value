@@ -172,7 +172,7 @@ export function ScenarioStudio({ scenarioId }: { scenarioId: string }) {
         </div>
       )}
 
-      <div className="grid gap-6 xl:grid-cols-[1fr_minmax(0,380px)]">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,380px)]">
         <div className="space-y-6">
           <Card title={`Modifications (${changes.length})`}>
             <ChangeList changes={changes} applied={preview.data?.applied} onToggle={toggle} onDelete={remove} onMove={move} busy={busy !== null} />

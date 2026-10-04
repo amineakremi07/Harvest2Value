@@ -16,10 +16,11 @@ from ...analytics.network import NetworkGraph
 from ...analytics.operational import OperationalSection
 from ...db.session import get_session
 from ...services.analytics import AnalyticsService, DashboardData
+from .schemas.common import Responses
 
 router = APIRouter(tags=["analytics"])
 
-NOT_READY = {404: {"description": "Run not found"}, 409: {"description": "RUN_NOT_FINISHED, RUN_INFEASIBLE or RUN_NO_RESULT"}}
+NOT_READY: Responses = {404: {"description": "Run not found"}, 409: {"description": "RUN_NOT_FINISHED, RUN_INFEASIBLE or RUN_NO_RESULT"}}
 
 
 def get_service(session: Session = Depends(get_session, scope="function")) -> AnalyticsService:

@@ -18,3 +18,6 @@ class ResizeObserverStub {
   disconnect() {}
 }
 globalThis.ResizeObserver ??= ResizeObserverStub as unknown as typeof ResizeObserver;
+
+// cmdk scrolls the selected item into view; jsdom has no layout.
+Element.prototype.scrollIntoView ??= function scrollIntoView() {};

@@ -183,7 +183,7 @@ def _duplicates(ids: list[str]) -> list[str]:
 
 
 class DatasetPayload(DomainModel):
-    schema_version: Literal["2.0"] = SCHEMA_VERSION
+    schema_version: Literal["2.0"] = "2.0"
     currency: Annotated[str, StringConstraints(pattern=r"^[A-Z]{3}$")] | None = None
     producer: Producer
     crops: list[Crop] = Field(min_length=1, max_length=20)

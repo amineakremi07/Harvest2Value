@@ -9,7 +9,7 @@ from .openai_compatible import OpenAICompatibleProvider
 
 class GroqProvider(OpenAICompatibleProvider):
     DEFAULT_BASE_URL = "https://api.groq.com/openai/v1"
-    # Same model as the v1 client; override with LLM_MODEL.
+    # Validated for tool calling (docs/v2/phase11-tool-calling-probe.md); override with LLM_MODEL.
     DEFAULT_MODEL = "openai/gpt-oss-120b"
 
     def __init__(

@@ -2,31 +2,33 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, Bot, FileText, GitBranch, History, LayoutDashboard, LineChart, Settings, SlidersHorizontal, Sprout } from "lucide-react";
+import { Search, Sprout } from "lucide-react";
 import { cx } from "@/components/ui/primitives";
-
-const NAV = [
-  { href: "/dashboard", label: "Tableau de bord", icon: LayoutDashboard },
-  { href: "/optimize", label: "Optimiser", icon: SlidersHorizontal },
-  { href: "/runs", label: "Exécutions", icon: History },
-  { href: "/scenarios", label: "Scénarios", icon: GitBranch },
-  { href: "/compare", label: "Comparer", icon: BarChart3 },
-  { href: "/analytics", label: "Analyses", icon: LineChart },
-  { href: "/reports", label: "Rapports", icon: FileText },
-  { href: "/copilot", label: "Copilot", icon: Bot },
-  { href: "/settings", label: "Réglages", icon: Settings },
-] as const;
+import { openCommandPalette } from "./CommandPalette";
+import { NAV } from "./nav";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function AppSidebar() {
   const pathname = usePathname();
   return (
-    <aside className="border-b border-card-border bg-sidebar-surface lg:fixed lg:inset-y-0 lg:left-0 lg:w-60 lg:border-b-0 lg:border-r">
+    <aside className="border-b border-card-border bg-sidebar-surface lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-60 lg:flex-col lg:border-b-0 lg:border-r">
       <div className="flex items-center gap-2 px-5 py-4 lg:py-6">
         <Sprout className="h-6 w-6 text-emerald-accent" aria-hidden="true" />
         <span className="text-base font-bold text-white">Harvest2Value</span>
-        <span className="rounded bg-emerald-500/15 px-1.5 text-[10px] font-bold text-emerald-300">V2</span>
+        <span className="ml-auto flex items-center gap-1">
+          <button
+            type="button"
+            onClick={openCommandPalette}
+            aria-label="Rechercher une page ou une action (Ctrl+K)"
+            title="Rechercher (Ctrl+K)"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-300 hover:bg-white/5"
+          >
+            <Search className="h-4 w-4" aria-hidden="true" />
+          </button>
+          <ThemeToggle />
+        </span>
       </div>
-      <nav aria-label="Navigation principale" className="overflow-x-auto px-3 pb-3">
+      <nav aria-label="Navigation principale" className="overflow-x-auto px-3 pb-3 lg:flex-1 lg:overflow-y-auto">
         <ul className="flex gap-1 lg:flex-col">
           {NAV.map(({ href, label, icon: Icon }) => {
             const active = pathname === href || pathname.startsWith(`${href}/`);
@@ -48,6 +50,10 @@ export function AppSidebar() {
           })}
         </ul>
       </nav>
+      <p className="hidden px-5 pb-4 text-xs text-slate-500 lg:block">
+        <kbd className="rounded border border-card-border px-1 font-mono">Ctrl</kbd> + <kbd className="rounded border border-card-border px-1 font-mono">K</kbd>{" "}
+        pour tout trouver
+      </p>
     </aside>
   );
 }

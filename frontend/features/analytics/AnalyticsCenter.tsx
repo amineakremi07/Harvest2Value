@@ -175,7 +175,7 @@ export function AnalyticsCenter({ initialRun, initialCompare }: { initialRun?: s
       ) : (
         <div className="space-y-6">
           <Card>
-            <div className="grid gap-4 md:grid-cols-2" role="group" aria-label="Filtre des exécutions">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2" role="group" aria-label="Filtre des exécutions">
               <Field label="Exécution" htmlFor="analytics-run">
                 <select id="analytics-run" className={inputClass} value={runId ?? ""} onChange={(e) => update(e.target.value, compareId === e.target.value ? null : compareId)}>
                   {items.map((r) => (
@@ -238,7 +238,7 @@ export function AnalyticsCenter({ initialRun, initialCompare }: { initialRun?: s
                 ) : (
                   <Loading />
                 )}
-                <div className="grid gap-6 2xl:grid-cols-2">
+                <div className="grid grid-cols-1 gap-6 2xl:grid-cols-2">
                   <section aria-label={`Analyse : ${runName(byId(runId), runId as string)}`}>
                     <h2 className="mb-3 text-sm font-semibold text-slate-300">{runName(byId(runId), runId as string)}</h2>
                     <SectionBody section={section} data={main.data} currency={currency} />

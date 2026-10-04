@@ -2,7 +2,8 @@
 
 Five Tunisian templates, read-only starting points for `POST /api/v2/datasets {"template_key": ...}`.
 They validate against `data/schema.v2.json` (generated from the Pydantic model) and have no
-business-validation error. The v1 files `data/tunisia_*.json` are unchanged and still serve API v1.
+business-validation error. The v1 files and API v1 were removed in phase 14; one v1 example is kept in
+`backend/tests/fixtures/v1/` to test the v1 import.
 
 ## How they were built
 

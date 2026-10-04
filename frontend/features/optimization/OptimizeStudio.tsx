@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Database, LayoutTemplate } from "lucide-react";
@@ -21,6 +22,9 @@ function DatasetOverview({ detail }: { detail: DatasetDetail }) {
         <Badge tone={detail.current_version.is_valid ? "success" : "danger"}>
           {detail.current_version.is_valid ? "Valide" : "Invalide"}
         </Badge>
+        <Link href={`/datasets/${detail.dataset.id}`} className="ml-auto text-xs font-semibold text-cyan-300 hover:underline">
+          Modifier les données
+        </Link>
       </div>
       <p className="text-sm text-slate-400">
         {payload.producer.name} · {payload.producer.region} · {payload.crops.map((c) => c.name).join(", ")} ·{" "}
@@ -97,7 +101,7 @@ export function OptimizeStudio({ initialDatasetId }: { initialDatasetId?: string
           <ErrorBanner message={error} />
         </div>
       )}
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,320px)_1fr]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)]">
         <div className="space-y-6">
           <Card title="Modèles">
             {templates.loading ? (

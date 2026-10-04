@@ -72,7 +72,7 @@ export function ChangeBuilder({
 
   return (
     <form onSubmit={submit} className="space-y-4" aria-label="Nouvelle modification">
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <Field label="Opération" htmlFor={`${id}-op`} hint={info?.description}>
           <select id={`${id}-op`} className={inputClass} value={op} onChange={(e) => changeOp(e.target.value)}>
             {ops.map((o) => (

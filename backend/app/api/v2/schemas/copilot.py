@@ -60,7 +60,7 @@ class MessageView(BaseModel):
         content = row.rendered if row.role == "assistant" and row.rendered is not None else row.content
         return cls(
             id=row.id,
-            role=row.role,  # type: ignore[arg-type]
+            role=row.role,
             content=content,
             verification=row.verification,
             tool_trace=row.tool_trace,

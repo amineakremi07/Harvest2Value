@@ -4,6 +4,7 @@ import "@xyflow/react/dist/style.css";
 import { Background, Controls, Handle, Position, ReactFlow, type NodeProps } from "@xyflow/react";
 import { useMemo } from "react";
 import type { NetworkGraph } from "@/lib/api/types";
+import { useTheme } from "@/lib/theme/useTheme";
 import { layoutNetwork, type SupplyNode } from "./layout";
 
 const KIND_STYLE: Record<SupplyNode["data"]["kind"], { label: string; color: string }> = {
@@ -39,7 +40,8 @@ function SupplyNodeView({ data }: NodeProps<SupplyNode>) {
   return (
     <div className="w-48 rounded-lg border bg-card-surface px-3 py-2 text-left shadow" style={{ borderColor: style.color }}>
       <Handle type="target" position={Position.Left} className="!bg-slate-500" />
-      <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: style.color }}>
+      <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+        <span className="h-2 w-2 rounded-full" style={{ background: style.color }} aria-hidden="true" />
         {style.label}
       </p>
       <p className="truncate text-xs font-semibold text-white" title={data.label}>
@@ -59,11 +61,12 @@ const nodeTypes = { supply: SupplyNodeView };
 
 export function SupplyChainGraph({ graph, height = 560 }: { graph: NetworkGraph; height?: number }) {
   const { nodes, edges } = useMemo(() => layoutNetwork(graph), [graph]);
+  const { theme } = useTheme();
   return (
     <div
       style={{ height }}
       className="overflow-hidden rounded-xl border border-card-border bg-navy-deep"
-      role="img"
+      role="region"
       aria-label={`Réseau logistique ${graph.day == null ? "sur toute la période" : `du jour ${graph.day}`} : ${nodes.length} nœuds, ${edges.length} flux`}
       data-testid="supply-chain-graph"
     >
@@ -75,10 +78,10 @@ export function SupplyChainGraph({ graph, height = 560 }: { graph: NetworkGraph;
         nodesDraggable={false}
         nodesConnectable={false}
         proOptions={{ hideAttribution: true }}
-        colorMode="dark"
+        colorMode={theme}
         minZoom={0.2}
       >
-        <Background color="#1E293B" gap={20} />
+        <Background color={theme === "dark" ? "#1E293B" : "#CBD5E1"} gap={20} />
         <Controls showInteractive={false} />
       </ReactFlow>
     </div>

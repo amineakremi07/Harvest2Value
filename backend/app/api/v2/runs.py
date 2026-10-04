@@ -13,7 +13,7 @@ from ...domain.enums import RunStatus
 from ...domain.results import Diagnostics, OptimizationResultModel
 from ...services.optimization import TERMINAL, CreatedRun, OptimizationService, execute_run
 from ..deps import get_engine, get_executor, in_transaction, rate_limit
-from .schemas.common import Page
+from .schemas.common import Page, Responses
 from .schemas.runs import RunCreate, RunDetail, RunRerun, RunSummary
 
 router = APIRouter(tags=["runs"])
@@ -22,7 +22,7 @@ PageNo = Annotated[int, Query(ge=1)]
 PageSize = Annotated[int, Query(ge=1, le=100)]
 Wait = Annotated[float, Query(ge=0, le=15, description="Seconds to wait for the run to finish before answering 202")]
 
-RUN_ERRORS = {
+RUN_ERRORS: Responses = {
     404: {"description": "Dataset, version, scenario or run not found"},
     422: {"description": "DATASET_INVALID, CONFIG_INVALID or SCENARIO_APPLY_ERROR (details.change_index)"},
     429: {"description": "RATE_LIMITED"},

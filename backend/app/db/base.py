@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from sqlalchemy import JSON, DateTime, MetaData, String
@@ -27,7 +27,7 @@ NAMING_CONVENTION = {
 
 
 def utcnow() -> datetime:
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 class UTCDateTime(TypeDecorator[datetime]):
@@ -41,12 +41,13 @@ class UTCDateTime(TypeDecorator[datetime]):
             return None
         if value.tzinfo is None:
             raise ValueError("UTCDateTime requires timezone-aware datetimes")
-        return value.astimezone(timezone.utc).replace(tzinfo=None)
+        return value.astimezone(UTC).replace(tzinfo=None)
 
     def process_result_value(self, value: Any, dialect: Dialect) -> datetime | None:
         if value is None:
             return None
-        return value.replace(tzinfo=timezone.utc)
+        result: datetime = value.replace(tzinfo=UTC)
+        return result
 
 
 class Base(DeclarativeBase):

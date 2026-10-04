@@ -9,7 +9,9 @@ from __future__ import annotations
 
 from collections import defaultdict
 
+from ..analytics.kpis import KpiInputs, compute_kpis
 from ..core.errors import AppError
+from ..domain.enums import SolverOutcome
 from ..domain.results import (
     AllocationRow,
     BuyerSummary,
@@ -19,8 +21,6 @@ from ..domain.results import (
     TripRow,
     WasteRow,
 )
-from ..analytics.kpis import KpiInputs, compute_kpis
-from ..domain.enums import SolverOutcome
 from ..domain.run_config import DEFAULT_GAP
 from .builder import BuiltModel
 from .instance import DIRECT
@@ -141,12 +141,12 @@ def extract(built: BuiltModel, raw: RawSolution) -> OptimizationResultModel:
             return
         lost_by_lot[lot_id] += kg
         waste.append(
-            WasteRow(day=day, lot_id=lot_id, facility_id=facility_id, kind=kind, kg=_kg(kg), value_lost=round(kg * inst.reference_price, 2))  # type: ignore[arg-type]
+            WasteRow(day=day, lot_id=lot_id, facility_id=facility_id, kind=kind, kg=_kg(kg), value_lost=round(kg * inst.reference_price, 2))
         )
 
     for lot in inst.lots:
         lose(lot.day, lot.id, None, "unsold_direct", _val(v.unsold[lot.id]))
-    for (l, f, t), var in v.inv.items():
+    for l, f, t in v.inv:
         if t > lots[l].day and facilities[f].loss_rate > 0:
             lose(t, l, f, "daily_loss", facilities[f].loss_rate * _val(v.inv[(l, f, t - 1)]))
     for (l, f), var in v.expired.items():
@@ -235,7 +235,7 @@ def _fleet_hours_available(built: BuiltModel) -> float | None:
     limited = [k for k in built.instance.vehicles if k.hours_per_day is not None]
     if not limited:
         return None
-    return sum(k.count * k.hours_per_day for k in limited) * built.instance.horizon  # type: ignore[operator]
+    return sum(k.count * (k.hours_per_day or 0.0) for k in limited) * built.instance.horizon
 
 
 def constraint_report(built: BuiltModel) -> list[ConstraintInfo]:
@@ -258,7 +258,7 @@ def constraint_report(built: BuiltModel) -> list[ConstraintInfo]:
                 entity=list(registered.key.entity),
                 day=registered.key.day,
                 label=registered.key.label(names),
-                sense=registered.sense,  # type: ignore[arg-type]
+                sense=registered.sense,
                 lhs=round(lhs, 4),
                 rhs=round(rhs, 4),
                 slack=round(slack, 4),

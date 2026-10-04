@@ -135,16 +135,16 @@ def build_instance(payload: DatasetPayload, config: RunConfig) -> ProblemInstanc
     warnings: list[str] = []
 
     facilities_all: list[FacilityData] = []
-    for f in payload.storage_facilities:
-        if f.capacity_kg <= 0:
+    for sf in payload.storage_facilities:
+        if sf.capacity_kg <= 0:
             continue
-        cold = f.refrigerated
+        cold = sf.refrigerated
         facilities_all.append(
             FacilityData(
-                id=f.id,
-                name=f.name,
-                capacity=f.capacity_kg,
-                cost_per_kg_day=f.cost_per_kg_per_day,
+                id=sf.id,
+                name=sf.name,
+                capacity=sf.capacity_kg,
+                cost_per_kg_day=sf.cost_per_kg_per_day,
                 refrigerated=cold,
                 shelf_life=(crop.shelf_life_cold_days or crop.shelf_life_ambient_days) if cold else crop.shelf_life_ambient_days,
                 loss_rate=(
@@ -157,7 +157,7 @@ def build_instance(payload: DatasetPayload, config: RunConfig) -> ProblemInstanc
             )
         )
         if crop.requires_cold_chain and not cold:
-            warnings.append(f"Storage '{f.name}' is not refrigerated and cannot hold cold-chain crop '{crop.name}'.")
+            warnings.append(f"Storage '{sf.name}' is not refrigerated and cannot hold cold-chain crop '{crop.name}'.")
 
     crop_lots = [lot for lot in payload.harvest_lots if lot.crop_id == crop_id]
     longest_shelf = max([1] + [f.shelf_life for f in facilities_all if f.usable])
@@ -167,32 +167,32 @@ def build_instance(payload: DatasetPayload, config: RunConfig) -> ProblemInstanc
         horizon = min(MAX_HORIZON_DAYS, max(lot.available_day + longest_shelf for lot in crop_lots))
 
     lots = tuple(LotData(lot.id, lot.quantity_kg, lot.available_day) for lot in crop_lots if lot.available_day < horizon)
-    for lot in crop_lots:
-        if lot.available_day >= horizon:
-            warnings.append(f"Lot '{lot.id}' (day {lot.available_day}) is after the {horizon}-day horizon and is ignored.")
+    for raw_lot in crop_lots:
+        if raw_lot.available_day >= horizon:
+            warnings.append(f"Lot '{raw_lot.id}' (day {raw_lot.available_day}) is after the {horizon}-day horizon and is ignored.")
     if not lots:
         raise ValidationFailed(f"No harvest lot of '{crop.name}' falls within the {horizon}-day horizon.", code="CONFIG_INVALID")
 
     buyers: list[BuyerData] = []
-    for b in payload.buyers:
-        if crop_id not in b.crop_ids:
+    for pb in payload.buyers:
+        if crop_id not in pb.crop_ids:
             continue
-        start = b.window_start_day or 0
-        end = min(b.window_end_day if b.window_end_day is not None else horizon - 1, horizon - 1)
+        start = pb.window_start_day or 0
+        end = min(pb.window_end_day if pb.window_end_day is not None else horizon - 1, horizon - 1)
         if start > end:
-            warnings.append(f"Buyer '{b.name}' receives nothing within the {horizon}-day horizon (delivery window).")
+            warnings.append(f"Buyer '{pb.name}' receives nothing within the {horizon}-day horizon (delivery window).")
             continue
-        route = payload.route_for(b.id)
+        route = payload.route_for(pb.id)
         buyers.append(
             BuyerData(
-                id=b.id,
-                name=b.name,
-                max_demand=b.max_demand_kg,
-                max_per_day=b.max_per_day_kg,
-                min_contract=b.min_contract_kg or 0.0,
-                min_order=b.min_order_kg or 0.0,
+                id=pb.id,
+                name=pb.name,
+                max_demand=pb.max_demand_kg,
+                max_per_day=pb.max_per_day_kg,
+                min_contract=pb.min_contract_kg or 0.0,
+                min_order=pb.min_order_kg or 0.0,
                 window=(start, end),
-                requires_cold_chain=b.requires_cold_chain or crop.requires_cold_chain,
+                requires_cold_chain=pb.requires_cold_chain or crop.requires_cold_chain,
                 legacy_cost_per_kg=(route.legacy_cost_per_kg_per_km or 0.0) * route.distance_km,
             )
         )

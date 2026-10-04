@@ -14,7 +14,7 @@ from ...services.optimization import OptimizationService
 from ...services.scenarios import ScenarioService
 from ..deps import get_executor, in_transaction, rate_limit
 from .runs import RUN_ERRORS, submit_and_wait
-from .schemas.common import Page
+from .schemas.common import Page, Responses
 from .schemas.runs import RunDetail
 from .schemas.scenarios import (
     ApplyPreviewRequest,
@@ -34,7 +34,7 @@ router = APIRouter(tags=["scenarios"])
 
 PageNo = Annotated[int, Query(ge=1)]
 PageSize = Annotated[int, Query(ge=1, le=100)]
-APPLY_ERRORS = {404: {"description": "Scenario, dataset or change not found"}, 422: {"description": "SCENARIO_APPLY_ERROR (details.change_index, reason)"}}
+APPLY_ERRORS: Responses = {404: {"description": "Scenario, dataset or change not found"}, 422: {"description": "SCENARIO_APPLY_ERROR (details.change_index, reason)"}}
 
 
 def get_service(session: Session = Depends(get_session, scope="function")) -> ScenarioService:

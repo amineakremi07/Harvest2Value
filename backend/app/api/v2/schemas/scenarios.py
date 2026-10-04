@@ -18,6 +18,7 @@ from ....domain.validation import ValidationReport
 from ....services.scenarios import PreviewData, ScenarioDetailData
 from .runs import RunSummary
 
+
 class ScenarioCreate(BaseModel):
     name: str = Field(min_length=1, max_length=120)
     description: str | None = Field(default=None, max_length=2000)

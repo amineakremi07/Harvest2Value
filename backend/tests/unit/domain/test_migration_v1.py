@@ -10,7 +10,7 @@ from tests.fixtures.builders import V1_FIXTURES, load_json
 
 
 def test_all_five_fixtures_are_present() -> None:
-    assert len(V1_FIXTURES) == 5
+    assert [p.stem for p in V1_FIXTURES] == ["tunisia_olives"]
 
 
 @pytest.mark.parametrize("path", V1_FIXTURES, ids=lambda p: p.stem)

@@ -112,14 +112,14 @@ function ExplainBody({ run }: { run: RunDetail }) {
 
       <section aria-label="Décisions">
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-300">Décisions : pourquoi, et pourquoi pas plus</h2>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {cards.map((c) => (
             <DecisionCard key={`${c.kind}-${c.entity_id}`} card={c} currency={currency} />
           ))}
         </div>
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <Card title="Goulots d'étranglement">
           <BottleneckList bottlenecks={e.bottlenecks} currency={currency} onTest={testBottleneck} testing={testing} measured={e.sensitivity_computed} />
         </Card>

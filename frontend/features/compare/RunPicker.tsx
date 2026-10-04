@@ -57,7 +57,7 @@ export function RunPicker({
   };
 
   return (
-    <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
       <Field label="Référence" htmlFor={`${id}-baseline`}>
         <select
           id={`${id}-baseline`}

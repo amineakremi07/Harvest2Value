@@ -57,7 +57,7 @@ def unit_for(key: str) -> Unit:
             return parent
     if name.endswith("_pct") or name in ("margin", "share"):
         return "%"
-    if name.endswith("per_kg") or name.endswith("_price") or name == "price" or name == "unit_price":
+    if name.endswith(("per_kg", "_price")) or name == "price" or name == "unit_price":
         return "currency/kg"
     if name.endswith("_kg") or name in ("kg", "quantity"):
         return "kg"

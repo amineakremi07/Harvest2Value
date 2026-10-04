@@ -7,6 +7,7 @@ from typing import Literal
 from pydantic import BaseModel, Field, model_validator
 
 ReportSection = Literal["summary", "financial", "operational", "buyers", "logistics", "crops", "insights", "comparison"]
+DEFAULT_SECTIONS: tuple[ReportSection, ...] = ("summary", "financial", "buyers", "insights")
 REPORT_SECTIONS: tuple[ReportSection, ...] = ("summary", "financial", "operational", "buyers", "logistics", "crops", "insights", "comparison")
 
 
@@ -14,7 +15,7 @@ class ReportSpec(BaseModel):
     title: str = Field(min_length=1, max_length=160)
     run_id: str = Field(max_length=64, description="Main run of the report")
     compare_run_ids: list[str] = Field(default_factory=list, max_length=3, description="Runs compared with the main run")
-    sections: list[ReportSection] = Field(default_factory=lambda: ["summary", "financial", "buyers", "insights"], min_length=1)
+    sections: list[ReportSection] = Field(default_factory=lambda: list(DEFAULT_SECTIONS), min_length=1)
     include_narrative: bool = False
 
     @model_validator(mode="after")

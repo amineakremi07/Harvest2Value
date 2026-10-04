@@ -119,7 +119,7 @@ def _buyer_matrix(baseline: ComparedRun, runs: list[ComparedRun]) -> list[BuyerR
             else:
                 status = "common" if here else "absent"
             cells[r.run_id] = BuyerCell(
-                status=status,  # type: ignore[arg-type]
+                status=status,
                 sold_kg=kg,
                 delta_kg=None if r is baseline else round((kg or 0.0) - (base_kg or 0.0), 2),
             )

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import builtins
 from datetime import datetime
 from typing import Any
 
@@ -103,7 +104,7 @@ class InsightService:
         self.session.flush()
         return InsightView.of(row)
 
-    def suggested_changes(self, insight_id: str) -> tuple[Insight, list[dict[str, Any]]]:
+    def suggested_changes(self, insight_id: str) -> tuple[Insight, builtins.list[dict[str, Any]]]:
         row = self.get(insight_id)
         if not row.suggested_changes:
             raise ValidationFailed("This insight has no suggested change to try.", code="NO_SUGGESTED_CHANGE")

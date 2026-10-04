@@ -7,6 +7,10 @@ import type {
   ConversationDetail,
   ConversationSummary,
   CropsSection,
+  DatasetDiff,
+  DatasetVersionSummary,
+  ImportResult,
+  ValidationReport,
   FinancialSection,
   NarrativeResponse,
   OperationalSection,
@@ -22,6 +26,7 @@ import type {
   ComparisonResult,
   DashboardData,
   DatasetDetail,
+  DatasetPayload,
   DatasetSummary,
   DatasetVersionOut,
   InsightView,
@@ -51,12 +56,34 @@ export const api = {
 
   // Datasets
   templates: () => request<TemplateInfo[]>("/templates"),
-  datasets: (query: { page_size?: number; q?: string } = {}) =>
+  datasets: (query: { page_size?: number; q?: string; archived?: boolean | null } = {}) =>
     request<Page<DatasetSummary>>("/datasets", { query: { page_size: 100, ...query } }),
   dataset: (id: string) => request<DatasetDetail>(`/datasets/${id}`),
   datasetVersion: (id: string, versionNo: number) => request<DatasetVersionOut>(`/datasets/${id}/versions/${versionNo}`),
   createDatasetFromTemplate: (template_key: string, name?: string) =>
     request<DatasetDetail>("/datasets", { method: "POST", body: { template_key, name } }),
+  importDataset: (file: File, name?: string) => {
+    const form = new FormData();
+    form.append("file", file);
+    if (name) form.append("name", name);
+    return request<ImportResult>("/datasets/import", { method: "POST", body: form });
+  },
+  patchDataset: (id: string, patch: { name?: string; description?: string | null; archived?: boolean }) =>
+    request<DatasetSummary>(`/datasets/${id}`, { method: "PATCH", body: patch }),
+  /** New version; `expectedVersion` (If-Match) makes a concurrent edit fail with VERSION_CONFLICT. */
+  saveDatasetPayload: (id: string, payload: DatasetPayload, expectedVersion: number, note?: string) =>
+    request<DatasetVersionOut>(`/datasets/${id}/payload`, {
+      method: "PUT",
+      body: { payload, note: note || undefined },
+      headers: { "If-Match": `"${expectedVersion}"` },
+    }),
+  validateDataset: (id: string, payload?: unknown) =>
+    request<ValidationReport>(`/datasets/${id}/validate`, { method: "POST", body: payload === undefined ? undefined : { payload } }),
+  duplicateDataset: (id: string, name?: string) =>
+    request<DatasetDetail>(`/datasets/${id}/duplicate`, { method: "POST", body: name ? { name } : undefined }),
+  deleteDataset: (id: string) => request<void>(`/datasets/${id}`, { method: "DELETE" }),
+  datasetVersions: (id: string) => request<Page<DatasetVersionSummary>>(`/datasets/${id}/versions`, { query: { page_size: 100 } }),
+  datasetDiff: (id: string, from: number, to: number) => request<DatasetDiff>(`/datasets/${id}/diff`, { query: { from, to } }),
 
   // Runs
   createRun: (body: RunCreate, wait = 0) => request<RunDetail>("/runs", { method: "POST", body, query: { wait } }),
@@ -146,6 +173,8 @@ export const api = {
 
 /** Download URLs (plain links: the browser saves the file). */
 export const downloads = {
+  datasetExport: (id: string, format: "json" | "csv", version?: number) =>
+    `${API_V2}/datasets/${id}/export?${new URLSearchParams(version ? { format, version: String(version) } : { format }).toString()}`,
   reportJson: (id: string) => `${API_V2}/reports/${id}/export.json`,
   reportCsv: (id: string, section: string, table?: string) =>
     `${API_V2}/reports/${id}/export.csv?${new URLSearchParams(table ? { section, table } : { section }).toString()}`,

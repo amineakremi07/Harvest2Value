@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import builtins
+
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
@@ -33,7 +35,7 @@ class ConversationRepository:
         self.session.delete(conversation)
         self.session.flush()
 
-    def messages(self, conversation_id: str, *, limit: int | None = None) -> list[Message]:
+    def messages(self, conversation_id: str, *, limit: int | None = None) -> builtins.list[Message]:
         query = select(Message).where(Message.conversation_id == conversation_id).order_by(Message.seq)
         rows = list(self.session.scalars(query).all())
         return rows[-limit:] if limit else rows

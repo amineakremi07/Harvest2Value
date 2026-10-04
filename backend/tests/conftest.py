@@ -17,7 +17,7 @@ LLM_ENV_VARS = ("LLM_PROVIDER", "LLM_API_KEY", "GROQ_API_KEY", "LLM_MODEL", "LLM
 
 @pytest.fixture
 def clean_llm_env(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Hide real keys: the v1 client calls load_dotenv() at import, which fills os.environ."""
+    """Hide real keys that the developer's shell or .env may define."""
     for name in LLM_ENV_VARS:
         monkeypatch.delenv(name, raising=False)
 
